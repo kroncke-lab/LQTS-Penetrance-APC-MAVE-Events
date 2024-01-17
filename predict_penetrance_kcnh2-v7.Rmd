@@ -1,0 +1,1413 @@
+---
+title: "Predict Variant Diagnosis Probability Using Structure, Function, and *In Silico* Features (*KCNH2* and LQT2)"
+author: "Brett Kroncke"
+date: "November 01, 2023"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: false
+      # collapsed: true
+    smooth_scroll: true
+    code_folding: hide
+    highlight: zenburn #textmate
+    theme: flatly
+    # number_sections: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r preamble,include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(purrr)
+library(survival)
+library(survminer)
+library("nnet")
+library("DBI")
+library("RSQLite")
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+library(caret)
+library(plotrix)
+library(glmnet)
+library(meta)
+library(reshape2)
+library(psych)
+require(Hmisc)
+library(tableone)
+library(wCorr)
+library(rms)
+library(boot)
+library(leaps)
+library(car)
+library(reticulate)
+library(rootSolve)
+library(pROC)
+library(wCorr)
+library(MALDIquant)
+library(tidyverse)      # data manipulation and visualization
+library(lubridate)      # easily work with dates and times
+library(fpp2)           # working with time series data
+library(zoo)            # working with time series data
+library(latex2exp)
+library(forestplot)
+library(RSQLite)
+library(flexsurv)
+library(survivalROC)
+source('/Users/KRONCKE/OneDrive - VUMC/Kroncke_Lab/GitHub/Bayes_KCNH2_LQT2_Penetrance/func_dist_seq.R')
+
+#Brier Score
+brierScore <- function(data,prediction,num_positive,num_negative){
+  sum(data[,num_positive]*(data[,prediction]-1)^2 +
+        data[,num_negative]*(data[,prediction]-0)^2)/sum(data[,num_negative]+data[,num_positive])
+}
+
+#Reference Brier Score
+brierScore_ref <- function(data, a_0, b_0,num_positive,num_negative){ 
+  sum(data[,num_positive]*((a_0/(a_0+b_0))-1)^2 +
+        data[,num_negative]*((a_0/(a_0+b_0))-0)^2)/sum(data[,num_negative]+data[,num_positive])
+}
+
+#Alternative Reference Brier Score
+brierScore_alt_ref <- function(data, num_positive, num_negative){ 
+  sum(data[,num_positive]*(alt_mean-1)^2 +
+        data[,num_negative]*(alt_mean-0)^2)/sum(data[,num_negative]+data[,num_positive])
+}
+
+#Binary Cross-Entropy/Log Loss
+BCE <- function(data, prediction, Truth){
+  -sum(data[,Truth]*log(data[,prediction]) + (1-data[,Truth])*log(1-data[,prediction]))/length(data[,prediction])
+}
+
+#Binary Cross-Entropy/Log Loss
+KL_div <- function(data, prediction, Truth){
+  -sum(data[,Truth]*log(data[,Truth]/data[,prediction]))
+}
+
+#Net Benefit
+netbenefit <- function(data, th, predictor, num_positive, num_total){
+  sum(data[data[,predictor]>th, num_positive])/sum(data[, num_total]) -
+    ((sum(data[data[,predictor]>th, num_total])-sum(data[data[,predictor]>th, num_positive]))/
+       sum(data[, num_total]))*(th/(1-th))
+}
+
+#Net Benefit Previous
+netbenefit_fig <- function(data, th, predictor, num_positive, num_total){
+  nb<-data.frame()
+  i <- 0
+  for (i in seq(0,100,1)){
+    nb[i+1,predictor] <- sum(data[data[,predictor]>i/250, num_positive])/sum(data[, num_total])  -
+    ((sum(data[data[,predictor]>i/250, num_total])-sum(data[data[,predictor]>i/250, num_positive]))/
+       sum(data[, num_total]))*(i/250/(1-i/250))
+    nb[i+1,"threshold"] <- i/250
+  }
+  return(nb)
+}
+
+calcPval=function(xName,yName,weightName,nPerms,new.mat2){
+  # Pulls out variables
+
+  x=new.mat2[,xName] 
+  y=new.mat2[,yName] 
+  w=new.mat2[,weightName]
+  x2=x[!is.na(x)]
+  y2=y[!is.na(x)]
+  w2=w[!is.na(x)]
+
+  # Calculate the real correlation
+  realCorr=weightedCorr(x2,y2,method='spearman',weights=w2)
+  # Do permutations, calculate fake correlations
+  permutedCorrList=c()
+  for(permNum in 1:nPerms){
+    permutedX=sample(x2,length(x2),replace=FALSE)
+    wCorrSim=weightedCorr(permutedX,y2,method='spearman',weights=w2)
+    permutedCorrList=c(permutedCorrList,wCorrSim)
+  }
+  permutedCorrList2=abs(permutedCorrList)
+  realCorr2=abs(realCorr)
+  
+  # Calculate pvalue
+  summ=sum(realCorr2<permutedCorrList2)
+  pValue=summ/nPerms
+  return(list(realCorr,pValue,length(x2)))
+}
+
+calcAllPvals=function(yList,xList,nPerms,weightName,new.mat2){
+  i=0
+  resultTable=data.frame()
+  for(yName in yList){
+    for(xName in xList){
+      i=i+1
+      result=calcPval(xName,yName,weightName,nPerms,new.mat2)
+      resultTable[i,'x']=xName
+      resultTable[i,'y']=yName
+      resultTable[i,'nPerms']=nPerms
+      resultTable[i,'weightedCorr']=result[[1]]
+      resultTable[i,'pValue']=result[[2]]
+      resultTable[i,'n']=result[[3]]
+      #print(resultTable[i,'pValue'])
+    }
+  }
+  print(resultTable)
+  return(resultTable)
+}
+
+
+# Mean squared error
+mse <- function(sm) {
+  mean((sm$residuals)^2*(sm$weights))
+}
+
+# Derive alpha and beta from weighted mean and MSE (estimated variance)
+estBetaParams <- function(mu, var) {
+  alpha <- ((1 - mu) / var - 1 / mu) * mu ^ 2
+  beta <- alpha * (1 / mu - 1)
+  return(params = list(alpha = alpha, beta = beta))
+}
+
+# solve for alpha and beta in Beta distribution
+solab <- function(mean, variance) {
+  alpha <- (mean^2 * (1 - mean) - variance * mean) / variance
+  beta <- alpha * (1 / mean - 1)
+  return(matrix(c(alpha, beta), ncol = 1, byrow = TRUE))
+}
+
+```
+
+# Introduction
+This document describes an estimate of the positive predictive value (PPV) of variant discovery for all variants in the gene *KCNH2* on long QT syndrome type 2 (LQT2). Additional details on the methods used are published Kroncke et al. 2020 PLOS Genetics and at the following website: (variantbrowser.org). We use observed and estimated probability of LQT2 diagnosis for all known KCNH2 variants as a way to assess the per variant PPV for variant discovery. Our objective is to develope a prior estimate of the per variant PPV on LQT2 which incorporates structure, function, and *in silico* predictors. We use these *in silico* and *in vitro* data to generate a Bayesian prior estimate of the per variant PPV since these data can be generated in a lab setting, unlike heterozygotes/carriers of *KCNH2* variants which may or may not exist. The final posterior estimate combines this derived prior and clinically phenotyped heterozygotes/carriers.
+
+# Part 1: Load Data
+
+## All covariates and merge
+
+```{r}
+# Load distance matrix
+h2dist<-read.csv(file = "/Users/KRONCKE/OneDrive - VUMC/Kroncke_Lab/GitHub/Bayes_KCNH2_LQT2_Penetrance/5va1.dists.txt", header = FALSE)
+
+#Load in previous dataset from Variantbrowser as 'd'
+con = dbConnect(SQLite(), dbname="/Users/KRONCKE/OneDrive - VUMC/Kroncke_Lab/kcnh2/VariantDatabase/VariantKCNH2-v4_w_paris_japan_mayo_and_italycohort.db")
+alltables = dbListTables(con)
+my.data <- dbReadTable(con, 'VariantKCNH2')
+my.data[my.data=='NA'] <- NA
+e<-my.data
+dbDisconnect(con)
+#d<-read.csv("/Users/KRONCKE/OneDrive - VUMC/Kroncke_Lab/GitHub/Bayes_KCNH2_LQT2_Penetrance/variant_browser/all_vars_annotated.csv")
+#e<-d
+e<-e[,c("var","lqt2","unaff","gnomAD")]
+
+load("C:/Users/KRONCKE/OneDrive - VUMC/Kroncke_Lab/GitHub/Bayes_KCNH2_LQT2_Penetrance/lit_all_data_checkpoint.RData")
+d<-d[,c("var", "isoform", "mut_type", "pph2_prob", "blast_pssm", "provean_score", "pamscore", "aasimilaritymat", "revel_score", "cardiacboost")]
+d<-merge(d,e,all = T)
+
+#load Clinvar and import new gnomAD
+clinvar<-read.csv('/Users/KRONCKE/Dropbox/sat paper/Modelling/gnomad_v4_simple.csv')
+clinvar<-unique(clinvar)
+clinvar<-clinvar[,c("var","clinvar.description","gnomad.v4")]
+clinvar <- clinvar %>% 
+  mutate(clinvar = ifelse(grepl("Likely pathogenic|Pathogenic|Pathogenic/Likely pathogenic", clinvar.description), 1, NA_integer_))
+clinvar[is.na(clinvar$clinvar),"clinvar"]<-0
+clinvar$var <- sub("^([A-Z][0-9]+)_([A-Z][0-9]+)del$", "\\1Del", clinvar$var)
+
+#Load first_event_data.cohort
+first_event_data.cohort<-read.csv("/Users/KRONCKE/OneDrive - VUMC/Kroncke_Lab/kcnh2/VariantDatabase/Network_KCNH2_variants/first.event.cohort.csv")
+first_serious_event_data.cohort<-read.csv("/Users/KRONCKE/OneDrive - VUMC/Kroncke_Lab/kcnh2/VariantDatabase/Network_KCNH2_variants/first.serious.event.cohort.csv")
+cohort<-read.csv("/Users/KRONCKE/OneDrive - VUMC/Kroncke_Lab/kcnh2/VariantDatabase/Network_KCNH2_variants/KCNH2.recurrent.events.cohort.csv")
+
+# Define the function to modify and possibly split records
+modify_split_records <- function(record) {
+  # Initialize a list to store records
+  records <- list()
+
+  # Modify time_sex based on Age_at_event_end
+  record$time_sex <- ifelse(record$Age_at_event_end < 12, 0, 1)
+
+  # Check if a new record needs to be added
+  if (record$Age_at_event_start < 12 && record$Age_at_event_end > 12) {
+    # Create a new record with adjusted values
+    new_record <- record
+    new_record$Age_at_event_start <- 12
+    new_record$time_sex <- 1
+
+    # Modify the original record
+    record$Age_at_event_end <- 12
+    record$time_sex <- 0
+    record$Event <- 0
+
+    # Add both records to the list
+    records[[1]] <- record
+    records[[2]] <- new_record
+  } else {
+    # Add the single modified record to the list
+    records[[1]] <- record
+  }
+
+  # Combine the records in the list into a single dataframe
+  do.call(rbind, records)
+}
+
+# Apply the function to each row of the dataset
+cohort_modified <- do.call(rbind, lapply(split(cohort, rownames(cohort)), modify_split_records))
+
+# Arrange the data frame by Unique_ID and Age_at_event_start
+cohort_combined <- arrange(cohort_modified, Unique_ID, Age_at_event_start)
+
+cohort <- cohort_combined
+
+# Convert 'Sex' to numeric: Female = 1, Male = 0 (or another value)
+cohort$time.sex <- ifelse(cohort$Sex == "Female", 1, 0) * cohort$time_sex
+
+# load trafficking data
+traff<-read.csv("/Users/KRONCKE/Dropbox/sat paper/Functional Data/trafficking-whole-enchilada.csv")
+
+# Step 1 and 2: Group by 'resnum' and calculate the proportion of missing values in 'traff_score'
+traff_grouped <- traff %>%
+  group_by(resnum) %>%
+  summarise(prop_missing = mean(is.na(score)))
+
+# Step 3: Filter out groups with more than 50% missing values
+resnums_to_keep <- traff_grouped %>%
+  filter(prop_missing < 0.25) %>%
+  pull(resnum)
+
+# Step 4: Filter the original dataframe to keep only the selected 'resnum'
+filtered_traff <- traff %>%
+  filter(resnum %in% resnums_to_keep)
+
+traff<-filtered_traff[,c("score","score_SE","var")]
+colnames(traff)[1] <- "traff_score"
+traff$traff_score <- traff$traff_score/100 #(-1)*(traff$traff_score-100)/100
+traff[!is.na(traff$traff_score) & traff$traff_score<0,"traff_score"] <- 0
+traff[!is.na(traff$traff_score) & traff$traff_score>1,"traff_score"] <- 1
+traff <- traff[traff$score_SE<20,]
+
+
+#load alphamissense
+alpha.miss<-read.csv('/Users/KRONCKE/Dropbox/sat paper/Functional Data/Q12809.alpha.missense.txt', sep = "")
+names(alpha.miss)[2]<-"var"
+alpha.miss<-alpha.miss[,c('var',"am_pathogenicity")]
+
+#Varity variant function prediction (Roth Lab)
+varity<-read.csv("/Users/KRONCKE/Dropbox/sat paper/Modelling/KCNH2[Q12809]_1-1000_VARITY_R_20230207192328620530.csv")
+varity<-varity[!is.na(varity$VARITY_R), c( "aa_pos", "aa_ref", "aa_alt", "VARITY_R", "VARITY_R_LOO", "VARITY_ER", "VARITY_ER_LOO")]
+names(varity)[1:3]<-c("resnum", "wtAA", "mutAA")
+varity$var <- paste(varity$wtAA,varity$resnum,varity$mutAA, sep = "")
+
+#load EVE dataset (in silico predictor)
+eve<-read.csv("/Users/KRONCKE/OneDrive - VUMC/Kroncke_Lab/kcnh2/VariantDatabase/PredictiveFeatureServers/KCNH2_HUMAN_EVE.csv")
+
+#Load peak tail current
+sync<-read.csv('/Users/KRONCKE/Dropbox/sat paper/Functional Data/506variants_CD.csv')
+sync<-sync[,c("var", "peak_tail")]
+sync_2<-read.csv('/Users/KRONCKE/Dropbox/sat paper/AJHG_published_paper/peak_tail_50mV.csv')
+sync_2<-sync_2[,c("var", "peak_tail")]
+sync_3<-read.csv('/Users/KRONCKE/Dropbox/sat paper/gnomAD variants_200123.csv')
+# removing duplicate peak tail current measurements with preference towards sync>sync_2>sync_3>sync_4
+sync_names<-unique(sync$var)
+sync_2 <- sync_2[!sync_2$var %in% sync_names, ]
+sync_2 <- unique(sync_2)
+test2<-merge(sync,sync_2, all = T)
+sync_names<-unique(test2$var)
+sync_3 <- sync_3[!sync_3$var %in% sync_names, ]
+sync_3 <- unique(sync_3)
+test<-merge(test2,sync_3, all = T)
+sync_names<-unique(test$var)# test for comparison with 'test'
+
+# Rescale peak tail
+test$peak_tail <- test$peak_tail/100  #(-1)*(test$peak_tail-100)/100
+test[!is.na(test$peak_tail) & test$peak_tail<0,"peak_tail"] <- 0 
+test[!is.na(test$peak_tail) & test$peak_tail>1,"peak_tail"] <- 1 
+
+#merge Splice AI and Varity then rename back to 'd'
+e<-merge(d,varity, all = T)
+g<-merge(e,alpha.miss, all = T)
+f<-merge(g,clinvar, all = T)
+d<-f
+
+#Merge
+e<-merge(d,test, all = T)
+f<-merge(e,traff, all = T)
+cohort.vars <- as.data.frame(unique(first_event_data.cohort$var))
+names(cohort.vars)<-'var'
+cohort.vars$cohort<-1
+g<-merge(f,cohort.vars,all = T)
+g[is.na(g$cohort),"cohort"]<-0
+f<-g
+
+# Assuming f is your dataframe and f$var contains the strings
+pattern <- "([A-Z])|([0-9]+)|(fsX)|(Del)|(Ins)"
+matches <- regmatches(f$var, gregexpr(pattern, f$var))
+
+# Extract the second part (the numbers)
+f$resnum <- sapply(matches, function(x) x[2])
+
+# Extract the first part (the first match, typically an uppercase letter)
+f$wtAA <- sapply(matches, function(x) ifelse(length(x) > 0, x[1], NA))
+
+# Extract the last part (the last match, either an uppercase letter, 'fsX', 'Del', or 'Ins')
+f$mutAA <- sapply(matches, function(x) {
+    if (length(x) > 0) {
+        last_match <- x[length(x)]
+        if (last_match %in% c("Del", "Ins")) {
+            return(last_match)
+        } else {
+            return(x[length(x)])
+        }
+    } else {
+        return(NA)
+    }
+})
+
+# Logical vectors indicating whether each element contains a number
+wtAA_has_number <- grepl("[0-9]", f$wtAA)
+mutAA_has_number <- grepl("[0-9]", f$mutAA)
+resnum_has_letter <- grepl("[A-Z]", f$resnum)
+
+# Subset the dataframe to exclude rows where either column contains a number
+f_filtered <- f[!(wtAA_has_number | mutAA_has_number | resnum_has_letter), ]
+f_filtered<-f_filtered[f_filtered$wtAA != f_filtered$mutAA,]
+f<-f_filtered
+f<-f[f$mutAA !='fsX' & f$mutAA !='X' & !is.na(f$wtAA),] # & f$total_carriers>0
+f<-f[f$isoform != "B" & f$isoform != "C" & f$mut_type != "nonsense",]
+f<-f[!is.na(f$var),]
+
+# remove duplicates from degenerate SNVs
+variants<-data.frame(var=unique(f$var))
+red_merge<-data.frame()
+for (i in 1:length(variants$var)){
+  red_merge<-rbind(red_merge,f[match(variants[i,"var"],f$var),])
+}
+f<-red_merge
+
+#calculate lqt2 penetrance
+f[is.na(f$gnomad.v4),"gnomad.v4"]<-0
+f[is.na(f$gnomAD),"gnomAD"]<-0
+f$gnomAD<-as.integer(f$gnomAD)
+f[is.na(f$lqt2),"lqt2"]<-0
+f[is.na(f$unaff),"unaff"]<-0
+f[is.na(f$clinvar),"clinvar"]<-0
+f$total_carriers<-f$lqt2 + f$unaff + f$gnomad.v4
+f[is.na(f$total_carriers),"total_carriers"]<-0
+f$penetrance_lqt2<-f$lqt2/f$total_carriers
+f$weight = 1-1/(0.01+f$total_carriers)
+f[f$total_carriers < 1,"weight"] <- 0.000 
+
+```
+
+# Calculate LQT2 penetrance density
+
+```{r}
+
+# True lqt2_dist for evaluation of Bayesian posterior
+f[, "lqt2_dist"]<-NA
+f[, "lqt2_dist_weight"]<-NA
+ld<-0
+for(rec in seq(2,1159,1)){
+  print(rec)
+  ld <- funcdist(rec, "var", f[!is.na(f$total_carriers) & f$total_carriers>0,], h2dist, "penetrance_lqt2", "sigmoid", 7)
+  f[f$resnum == rec,"lqt2_dist"] <- ld[1]
+  f[f$resnum == rec,"lqt2_dist_weight"] <-ld[2] 
+}
+
+```
+
+# Calculate initial Bayesian penetrance estimates
+
+```{r}
+# Weighted mean to determine LQT2 penetrance empirical prior
+newdata = data.frame(wt=1)
+model <- lm(penetrance_lqt2 ~ 1, data=f, weights = f$weight)
+summary(model)
+p<-predict(model, newdata)
+dev<-mse(model)#p*(1-p)
+model <- lm(penetrance_lqt2 ~ 1, data=f, weights = f$total_carriers)
+alt_mean<-model$fitted.values[1]
+
+# Estimated shape parameters for LQT2 empirical prior
+alpha0 = estBetaParams(p,dev)$alpha
+beta0 = estBetaParams(p,dev)$beta
+print(paste("alpha0 = ", alpha0, "  beta0 = ", beta0))
+
+# Bayesian LQT2 penetrance estimates from empirical priors 
+# and observed affected/unaffected counts:
+f$lqt2_penetranceBayesian_initial <- (alpha0 + f[,"lqt2"])/((alpha0 + beta0 + f[,"total_carriers"]))
+f$lqt2_penetranceBayesian<-f$lqt2_penetranceBayesian_initial
+
+# To reduce calculation time, remove all variants without carrier observations
+f$tot.cohort<-f$total_carriers+f$cohort
+#f<-f[f$tot.cohort>0,]
+f<-f[!is.na(f$var),]
+
+# Assign p_mean_w to empirical penetrance. I need to add the reassignment to ensure
+# p_mean_w does not contain "NA"s.
+f[is.nan(f$penetrance_lqt2),"penetrance_lqt2"]<-0.0005
+f[!is.na(f$penetrance_lqt2) & f$penetrance_lqt2==0,"penetrance_lqt2"]<-0.0005
+f[!is.na(f$penetrance_lqt2) & f$penetrance_lqt2==1,"penetrance_lqt2"]<-0.9995
+
+# Initializing Features
+f$p_mean_w <- f$lqt2_penetranceBayesian_initial
+
+```
+
+### Calculate EM priors and posteriors for all variants
+Use an EM algorithm to estimate LQT2 PPV for each variant (or LQT2 diagnosis probability) 
+
+```{r, include=FALSE}
+
+covariates <- c("revel_score", "lqt2_dist", "traff_score")#, "peak_tail"), "traff_score" ,"am_pathogenicity"
+complete_rows_in_f <- complete.cases(f[, covariates])
+
+tmp<-f[complete_rows_in_f,]
+
+# Initialize variables
+delta <- 10
+count <- 0
+
+# EM Loop
+while(delta > 0.01 & count < 20) {
+  count <- count + 1
+
+  # Fit the model using 'f' with complete data for current covariates
+  regression_formula <- as.formula(paste("p_mean_w ~", paste(covariates, collapse = " * ")))
+  model <- glm(regression_formula, data = tmp, weights = tmp$weight)
+
+  # Make predictions and update only those rows in 'tmp'
+  prediction_output <- predict(model, newdata = tmp, se.fit = TRUE, type = "response")
+  predictions <- pmin(pmax(prediction_output$fit, 0.0005), 1)
+  variance_f <- (prediction_output$se.fit)^2
+  
+  # Assuming predictions and variance_f are vectors
+  alpha_beta <- solab(predictions, variance_f)
+  # Length of each segment (assuming alpha_beta is a single column)
+  segment_length <- length(alpha_beta) / 2
+
+  # Extract alpha values (first half of alpha_beta)
+  alpha_f <- alpha_beta[1:segment_length]
+  beta_f <- alpha_beta[(segment_length + 1):(2 * segment_length)]
+  new_mean <- (alpha_f + tmp$lqt2) / (alpha_f + beta_f + tmp$total_carriers)
+  
+  delta <- 100 * sum(abs(new_mean - tmp$p_mean_w)) / length(tmp$var)
+  tmp$p_mean_w <- new_mean 
+  tmp[tmp$p_mean_w<0,"p_mean_w"]<-0.005
+  mean_alpha <- mean(alpha_f)
+  mean_beta <- mean(beta_f)
+  print(paste("Mean alpha:", mean_alpha, "Mean beta:", mean_beta))
+  print(paste("Delta:", delta, "Count:", count))
+}
+
+# when tuning parameter is 11, predictions are equivalent to "nu" variant heterozygote phenotypes 
+nu <- 10
+prior_mean <- tmp$p_mean_w
+tmp$prior_mean <- tmp$p_mean_w
+variance <- prior_mean*(1-prior_mean)
+variance <- variance / (1 + nu)
+ind_a <- seq(1, length(variance),1)
+ind_b <- seq(length(variance)+1, length(variance)*2,1)
+alpha <- solab(prior_mean,variance)[ind_a]
+beta <- solab(prior_mean,variance)[ind_b]
+
+new_mean <- (alpha + tmp$lqt2)/(alpha + beta + tmp$total_carriers)
+tmp$p_mean_w <- new_mean
+tmp$alpha <- alpha
+tmp$beta <- beta
+
+sub.tmp<-tmp # reassign tmp so I can still use it in the next chunk
+
+```
+
+# Pattern Mixture Model, adding Posteriors for variants without trafficking
+
+```{r}
+
+covariates <- c("revel_score", "lqt2_dist") 
+new_complete_rows_in_f <- complete.cases(f[, covariates]) 
+
+tmp<-f[new_complete_rows_in_f,]
+
+delta <- 10
+count <- 0
+
+# EM Loop
+while(delta > 0.01 & count < 20) {
+  count <- count + 1
+
+  # Fit the model using 'f' with complete data for current covariates
+  regression_formula <- as.formula(paste("p_mean_w ~", paste(covariates, collapse = " * ")))
+  model <- glm(regression_formula, data = tmp, weights = tmp$weight)
+
+  # Make predictions and update only those rows in 'tmp'
+  prediction_output <- predict(model, newdata = tmp, se.fit = TRUE, type = "response")
+  predictions <- pmin(pmax(prediction_output$fit, 0.0005), 1)
+  variance_f <- (prediction_output$se.fit)^2
+  
+  # Assuming predictions and variance_f are vectors
+  alpha_beta <- solab(predictions, variance_f)
+  # Length of each segment (assuming alpha_beta is a single column)
+  segment_length <- length(alpha_beta) / 2
+
+  # Extract alpha values (first half of alpha_beta)
+  alpha_f <- alpha_beta[1:segment_length]
+  beta_f <- alpha_beta[(segment_length + 1):(2 * segment_length)]
+  new_mean <- (alpha_f + tmp$lqt2) / (alpha_f + beta_f + tmp$total_carriers)
+  
+  delta <- 100 * sum(abs(new_mean - tmp$p_mean_w)) / length(tmp$var)
+  tmp$p_mean_w <- new_mean 
+  tmp[tmp$p_mean_w<0,"p_mean_w"]<-0.005
+  mean_alpha <- mean(alpha_f)
+  mean_beta <- mean(beta_f)
+  print(paste("Mean alpha:", mean_alpha, "Mean beta:", mean_beta))
+  print(paste("Delta:", delta, "Count:", count))
+}
+
+# when tuning parameter is 11, predictions are equivalent to 10 variant heterozygote phenotypes 
+prior_mean <- tmp$p_mean_w
+tmp$prior_mean <- tmp$p_mean_w
+variance <- prior_mean*(1-prior_mean)
+variance <- variance / (1 + nu)
+ind_a <- seq(1, length(variance),1)
+ind_b <- seq(length(variance)+1, length(variance)*2,1)
+alpha <- solab(prior_mean,variance)[ind_a]
+beta <- solab(prior_mean,variance)[ind_b]
+
+new_mean <- (alpha + tmp$lqt2)/(alpha + beta + tmp$total_carriers)
+tmp$p_mean_w <- new_mean
+tmp$alpha <- alpha
+tmp$beta <- beta
+
+sub.tmp1 <- subset(tmp, !var %in% sub.tmp$var)
+
+```
+
+# Pattern Mixture Model, adding Posteriors for variants without trafficking or REVEL score
+
+```{r}
+
+covariates <- c("lqt2_dist") 
+new_complete_rows_in_f <- complete.cases(f[, covariates]) 
+
+tmp<-f[new_complete_rows_in_f,]
+
+delta <- 10
+count <- 0
+
+# EM Loop
+while(delta > 0.01 & count < 20) {
+  count <- count + 1
+
+  # Fit the model using 'f' with complete data for current covariates
+  regression_formula <- as.formula(paste("p_mean_w ~", paste(covariates, collapse = " * ")))
+  model <- glm(regression_formula, data = tmp, weights = tmp$weight)
+
+  # Make predictions and update only those rows in 'tmp'
+  prediction_output <- predict(model, newdata = tmp, se.fit = TRUE, type = "response")
+  predictions <- pmin(pmax(prediction_output$fit, 0.0005), 1)
+  variance_f <- (prediction_output$se.fit)^2
+  
+  # Assuming predictions and variance_f are vectors
+  alpha_beta <- solab(predictions, variance_f)
+  # Length of each segment (assuming alpha_beta is a single column)
+  segment_length <- length(alpha_beta) / 2
+
+  # Extract alpha values (first half of alpha_beta)
+  alpha_f <- alpha_beta[1:segment_length]
+  beta_f <- alpha_beta[(segment_length + 1):(2 * segment_length)]
+  new_mean <- (alpha_f + tmp$lqt2) / (alpha_f + beta_f + tmp$total_carriers)
+  
+  delta <- 100 * sum(abs(new_mean - tmp$p_mean_w)) / length(tmp$var)
+  tmp$p_mean_w <- new_mean 
+  tmp[tmp$p_mean_w<0,"p_mean_w"]<-0.005
+  mean_alpha <- mean(alpha_f)
+  mean_beta <- mean(beta_f)
+  print(paste("Mean alpha:", mean_alpha, "Mean beta:", mean_beta))
+  print(paste("Delta:", delta, "Count:", count))
+}
+
+# when tuning parameter is 11, predictions are equivalent to 10 variant heterozygote phenotypes 
+prior_mean <- tmp$p_mean_w
+tmp$prior_mean <- tmp$p_mean_w
+variance <- prior_mean*(1-prior_mean)
+variance <- variance / (1 + nu)
+ind_a <- seq(1, length(variance),1)
+ind_b <- seq(length(variance)+1, length(variance)*2,1)
+alpha <- solab(prior_mean,variance)[ind_a]
+beta <- solab(prior_mean,variance)[ind_b]
+
+new_mean <- (alpha + tmp$lqt2)/(alpha + beta + tmp$total_carriers)
+tmp$p_mean_w <- new_mean
+tmp$alpha <- alpha
+tmp$beta <- beta
+
+sub.tmp2 <- subset(tmp, !var %in% c(sub.tmp$var, sub.tmp1$var))
+
+```
+
+#combine subsets
+
+```{r}
+tmp <- rbind(sub.tmp,sub.tmp1,sub.tmp2)
+
+```
+
+## Combine predictions with arrhythmia center observations. Assign affected/unaffected status
+# QTc > 480 or QTc > 450 (males) 460 (females) with events
+
+```{r}
+
+# Selecting specific columns from tmp
+tmp_selected <- tmp[tmp$var!="K897T", c("var", "blast_pssm", "provean_score", "pamscore", "aasimilaritymat", "revel_score", "cardiacboost", "am_pathogenicity", "lqt2", "unaff", "resnum", "wtAA", "mutAA", "clinvar.description", "gnomad.v4", "clinvar", "peak_tail", "traff_score", "score_SE", "cohort", "total_carriers", "penetrance_lqt2", "weight", "lqt2_dist", "lqt2_dist_weight", "lqt2_penetranceBayesian_initial", "lqt2_penetranceBayesian", "p_mean_w", "prior_mean")]
+
+# Merging the selected columns from tmp with cohort
+first.event<-merge(first_event_data.cohort, tmp_selected, by = "var", all.x = TRUE)
+first.event[!is.na(first.event$QTc) & first.event$QTc > 800,"QTc"] <- 800
+first.event$QTc.adj <- first.event$QTc/10
+
+first.serious.event<-merge(first_serious_event_data.cohort, tmp_selected, by = "var", all.x = TRUE)
+first.serious.event[!is.na(first.serious.event$QTc) & first.serious.event$QTc > 800,"QTc"] <- 800
+first.serious.event$QTc.adj <- first.serious.event$QTc/10
+
+cohort.var <- merge(cohort, tmp_selected, by = "var", all.x = TRUE)
+cohort.var[!is.na(cohort.var$QTc) & cohort.var$QTc > 800,"QTc"] <- 800
+cohort.var$QTc.adj <- cohort.var$QTc/10
+
+cohort.var$QTc.adj.s <- scale(cohort.var$QTc.adj)
+first.event$QTc.adj.s <- scale(first.event$QTc.adj)
+first.serious.event$QTc.adj.s <- scale(first.serious.event$QTc.adj)
+
+# Assign (un)affected in 'first.event' dataframe, encoded as 'Status
+first.event <- first.event %>%
+  mutate(Status = ifelse(
+    (Sex == "Male" & QTc > 450 & Event == 1) | 
+    (Sex == "Female" & QTc > 460 & Event == 1) | 
+    QTc > 480, 1, 0),
+    ReverseStatus = ifelse(Status == 1, 0, 1)
+    )
+
+# Assuming your dataframe is named 'first.event'
+first.event <- first.event %>%
+  dplyr::group_by(var) %>%
+  dplyr::mutate(observed.lqt2 = sum(Status == 1) / n()) %>%
+  dplyr::ungroup()
+
+```
+
+# the Variance Inflation Factor (VIF) and rank order correlation matrix heatmap 
+
+```{r}
+t <- cohort.var[ !is.na(cohort.var$lqt2_dist) & !is.na(cohort.var$revel_score) & !is.na(cohort.var$peak_tail) & !is.na(cohort.var$p_mean_w) & !is.na(cohort.var$Sex) & !is.na(cohort.var$Age_at_event_end) & !is.na(cohort.var$traff_score),] 
+# Assuming df is your dataframe and y is your response variable
+# Replace y with a suitable response variable for your context SeriousCardiacEvent
+linear_model <- lm(Event ~ Sex + QTc.adj.s + p_mean_w + clinvar + revel_score + peak_tail + traff_score + prior_mean + lqt2_dist + am_pathogenicity, data = t) # + prior_mean + lqt2_dist
+vif_values <- vif(linear_model)
+print(vif_values)
+# Remove lqt2_dist
+linear_model <- lm(Event ~ Sex + QTc.adj.s + p_mean_w + clinvar + revel_score + peak_tail + traff_score + am_pathogenicity, data = t) # + prior_mean + lqt2_dist
+vif_values <- vif(linear_model)
+print(vif_values)
+# Identifying complete cases for relevant columns
+complete_cases <- complete.cases(first.event[, c("p_mean_w", "QTc.adj", "peak_tail", "Sex", "Patient", "clinvar", "revel_score", "lqt2_dist", "am_pathogenicity","traff_score", "observed.lqt2")]) #"traff_score",
+# Subset first.event with complete cases
+first.event.complete <- first.event[complete_cases & first.event$QTc<900, ]
+# Create dummy variables
+dummy_vars <- model.matrix(~ Sex + Patient - 1, data = first.event.complete)
+# Combine numeric and dummy variables
+combined_data <- cbind(first.event.complete[, c("p_mean_w", "peak_tail","traff_score", "revel_score", "lqt2_dist", "am_pathogenicity", "observed.lqt2", "clinvar", "QTc.adj")], dummy_vars) #"traff_score",
+cor_matrix <- cor(combined_data, use = "pairwise.complete.obs", method = "spearman")
+cor_matrix
+
+abs_cor_matrix <- abs(cor_matrix)
+
+# Reshape the absolute value correlation matrix
+abs_cor_matrix_long <- melt(abs_cor_matrix)
+
+# Create a heatmap with labels
+ggplot(abs_cor_matrix_long, aes(Var1, Var2, fill = value)) +
+    geom_tile() +
+    geom_text(aes(label = sprintf("%.2f", value)), vjust = 1) +  # Adding labels
+    scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0, limit = c(0, 1), space = "Lab", name="Absolute Correlation") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    labs(x = '', y = '', title = 'Absolute Spearman Correlation Matrix Heatmap')
+
+```
+
+# calculate event rate 2D color plots
+
+```{r}
+age_cutoff <- 100
+t <- cohort.var[!is.na(cohort.var$p_mean_w) & !is.na(cohort.var$QTc.adj) & cohort.var$Age_at_event_end<age_cutoff,]
+t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
+t$Event[t$Age_at_event_end == age_cutoff] <- 0
+
+# Define the width of the sliding windows
+p_mean_w_window_width <- 0.1  # e.g., from 0.1 to 0.3
+QTc_adj_window_width <- 1   # e.g., from 40 to 50
+
+# Define the range of thresholds to start the sliding windows
+p_mean_w_thresholds_start <- seq(0.01, max(t$p_mean_w) - p_mean_w_window_width, by = 0.05)
+QTc_adj_thresholds_start <- seq(38, 65 - QTc_adj_window_width, by = 0.5)
+
+# Initialize an empty data frame to store results
+results <- data.frame(p_mean_w_threshold_start = numeric(),
+                      QTc_adj_threshold_start = numeric(),
+                      event_rate = numeric(),
+                      count = numeric(),  # Count of records
+                      alpha = numeric())  # Alpha for transparency
+
+# Loop over each combination of starting points of sliding windows
+for (p_start in p_mean_w_thresholds_start) {
+  for (q_start in QTc_adj_thresholds_start) {
+    p_end <- p_start + p_mean_w_window_width
+    q_end <- q_start + QTc_adj_window_width
+
+    subset_data <- t %>%
+      filter(p_mean_w > p_start, p_mean_w <= p_end, 
+             QTc.adj > q_start, QTc.adj <= q_end)
+
+    if (nrow(subset_data) > 0) {
+      total_time_at_risk <- sum(subset_data$Age_at_event_end - subset_data$Age_at_event_start)
+      total_events <- sum(subset_data$Event)
+      event_rate <- pmax(0.0001, pmin(total_events / total_time_at_risk * 100, 20))  # per 100 person-years
+      count <- nrow(subset_data)  # Count of records
+      alpha_value <- ifelse(count <= 2, count / 2, 1)  # Adjust alpha for counts <= 5
+      
+      results <- rbind(results, data.frame(p_mean_w_threshold_start = p_start,
+                                           QTc_adj_threshold_start = q_start,
+                                           event_rate = event_rate,
+                                           count = count,
+                                           alpha = alpha_value))
+    }
+  }
+}
+
+# Transform event_rate for logarithmic scale
+results$event_rate_log <- log1p(results$event_rate)
+
+# Plotting with logarithmic color scale and transparency
+ggplot(results, aes(x = p_mean_w_threshold_start, y = QTc_adj_threshold_start, fill = event_rate_log, alpha = alpha)) +
+  geom_tile() +
+  scale_fill_gradient(low = "blue", high = "red", guide = guide_colourbar(title = "Log(Event Rate)\n(per 100 Person-Years)")) +
+  scale_alpha(range = c(0.1, 1), guide = "none") +
+  labs(title = "Event Rates for Sliding Windows of penetrance current and QTc.adj",
+       x = "penetrance current Window Start",
+       y = "QTc.adj Window Start") +
+  theme_minimal()
+
+```
+
+Cox proportional Hazards
+
+```{r}
+
+t <- cohort.var[ !is.na(cohort.var$lqt2_dist) & !is.na(cohort.var$revel_score) & !is.na(cohort.var$peak_tail) & !is.na(cohort.var$p_mean_w) & !is.na(cohort.var$Sex) & !is.na(cohort.var$Age_at_event_end) & !is.na(cohort.var$traff_score),] 
+
+#t <- first.serious.event[ !is.na(first.serious.event$lqt2_dist) & !is.na(first.serious.event$revel_score) & !is.na(first.serious.event$peak_tail) & !is.na(first.serious.event$p_mean_w) & !is.na(first.serious.event$Sex) & !is.na(first.serious.event$Age_at_event_end) & !is.na(first.serious.event$traff_score),] 
+
+age_cutoff <- 20
+t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
+t<-t[t$Age_at_event_end > t$Age_at_event_start,]
+t$Event[t$Age_at_event_end == age_cutoff] <- 0
+
+# Assuming 'time' is the time until event or censoring, and 'event' is the event indicator (1 for event, 0 for censoring) SeriousCardiacEvent
+survival_data <- Surv(t$Age_at_event_start, t$Age_at_event_end, t$Event, type = "counting")
+x <- model.matrix(~ Sex + QTc.adj + traff_score + peak_tail + p_mean_w + revel_score + am_pathogenicity + clinvar, data = t) #
+set.seed(123)  # for reproducibility
+cv_fit <- cv.glmnet(x, survival_data, family = "cox", alpha = 0.5)
+best_lambda <- cv_fit$lambda.min
+final_model <- glmnet(x, survival_data, family = "cox", lambda = best_lambda)
+
+# Extract coefficients
+model_coefficients <- coef(final_model, s = best_lambda)
+
+# Print the coefficients
+print(model_coefficients)
+
+lasso_model <- glmnet(x, survival_data, family = "cox")
+plot(lasso_model, xvar = "lambda", label = TRUE)
+abline(v = log(cv_fit$lambda.min), col = "red")
+
+plot(cv_fit)
+
+bootstrap_ci <- function(original_model, data, model_matrix, n_boot = 1000) {
+    original_coefs <- coef(original_model, s = best_lambda)
+    original_coefs <- original_coefs[-1, , drop = FALSE]
+    num_coefs <- length(original_coefs)
+    variable_names <- rownames(original_coefs)
+    boot_hrs <- matrix(NA, ncol = num_coefs, nrow = n_boot)
+
+    for (i in 1:n_boot) {
+        # Resampling with replacement
+        sample_indices <- sample(1:nrow(data), replace = TRUE)
+        boot_data <- data[sample_indices, ]
+        boot_matrix <- model_matrix[sample_indices, ]
+        
+        # Refit the model with the resampled data
+        boot_model <- glmnet(boot_matrix, Surv(boot_data$Age_at_event_end, boot_data$Event), family = "cox", lambda = best_lambda) #SeriousCardiacEvent
+        boot_coefs <- as.matrix(coef(boot_model, s = best_lambda))
+        boot_coefs <- boot_coefs[-1, , drop = FALSE]
+       # Ensure matching by names and use NA for missing coefficients
+        boot_hr <- rep(NA, num_coefs)
+        for (j in 1:num_coefs) {
+            if (variable_names[j] %in% rownames(boot_coefs)) {
+                boot_hr[j] <- exp(boot_coefs[variable_names[j], 1])
+            }
+        }
+        # Match coefficients by name
+        boot_hrs[i, ] <- exp(boot_coefs)
+    }
+
+    # Calculate mean and confidence intervals
+    hr_means <- apply(boot_hrs, 2, mean, na.rm = TRUE)
+    lower_ci <- apply(boot_hrs, 2, quantile, probs = 0.025, na.rm = TRUE)
+    upper_ci <- apply(boot_hrs, 2, quantile, probs = 0.975, na.rm = TRUE)
+
+    return(list(variables = variable_names, mean = hr_means, lower = lower_ci, upper = upper_ci))
+}
+ci_results <- bootstrap_ci(final_model, t, x, n_boot=100)
+
+# Create data frame for plotting
+plot_data <- data.frame(
+    Variable = ci_results$variables,
+    HR = ci_results$mean,
+    LowerCI = ci_results$lower,
+    UpperCI = ci_results$upper
+)
+
+# Convert 'Variable' to a factor and reorder
+plot_data$Variable <- factor(plot_data$Variable, levels = c("Sex", "QTc.adj.s", setdiff(plot_data$Variable, c("Sex", "QTc.adj.s"))))
+
+# Use ggplot2 for plotting
+ggplot(plot_data, aes(x = Variable, y = HR)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = LowerCI, ymax = UpperCI), width = 0.2) +
+  theme_minimal() +
+  labs(title = "Bootstrapped Hazard Ratios with Confidence Intervals", x = "Variable", y = "Hazard Ratio") +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "red") +  # Adding a horizontal line at y = 1
+  coord_flip()
+
+```
+
+# Survival Curves
+
+```{r}
+# The Anderson-Gill (AG) extension of the Cox Proportional Hazards model
+model <- Surv(Age_at_event_start, Age_at_event_end, Event, type = "counting") ~ #
+        Sex + QTc.adj + peak_tail + p_mean_w #+ revel_score + am_pathogenicity + clinvar
+
+age_cutoff <- 40
+t <- cohort.var[!is.na(cohort.var$peak_tail) & !is.na(cohort.var$p_mean_w) & !is.na(cohort.var$traff_score),] 
+t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
+t<-t[t$Age_at_event_end > t$Age_at_event_start,]
+t$Event[t$Age_at_event_end == age_cutoff] <- 0
+
+fit <- coxph(model, data = t, id = Unique_ID)
+summary(fit)
+
+library(survivalROC)
+# Ensure that the subset has the same structure as the original data
+family_member_data <- t[t$Patient == "Family Member", ]
+
+# Generate predictions
+predicted_risks <- predict(fit, newdata = t, type = "risk")
+
+# Time point for AUC calculation, choose a time that makes sense for your study
+time_point <- 20 # for example, 1 year
+
+# Calculate time-dependent AUC
+auc_c_stat <- survivalROC::survivalROC(Stime = t$Age_at_event_end,
+                                       status = t$Event,
+                                       marker = predicted_risks,
+                                       predict.time = time_point,
+                                       method = "KM")
+auc_c_stat$Survival
+auc_c_stat$AUC
+
+# Test Proportional Hazards
+test <- cox.zph(fit)
+print(test)
+
+cox.zph(fit) %>%
+  plot()
+
+bootstrap_cox <- function(data, formula, n_boot = 1000) {
+    original_fit <- coxph(formula, data = data)
+    boot_coefs <- matrix(NA, ncol = length(coef(original_fit)), nrow = n_boot)
+    colnames(boot_coefs) <- names(coef(original_fit))
+    
+    for (i in 1:n_boot) {
+        boot_data <- data[sample(nrow(data), replace = TRUE), ]
+        boot_fit <- try(coxph(formula, data = boot_data), silent = TRUE)
+        
+        if (!inherits(boot_fit, "try-error")) {
+            boot_coefs[i, ] <- coef(boot_fit)
+        }
+    }
+    
+    return(boot_coefs)
+}
+
+set.seed(123)  # For reproducibility
+boot_results <- bootstrap_cox(t, model, n_boot = 100)
+
+boot_se <- apply(boot_results, 2, sd, na.rm = TRUE)
+boot_ci <- apply(boot_results, 2, function(x) quantile(x, c(0.025, 0.975), na.rm = TRUE))
+
+hr_ci <- exp(boot_ci)
+hr_ci_df <- as.data.frame(t(hr_ci))
+names(hr_ci_df) <- c("LowerCI", "UpperCI")
+hr_ci_df$Variable <- rownames(hr_ci_df)
+hr_ci_df <- hr_ci_df[, c("Variable", "LowerCI", "UpperCI")]
+
+# Adding the point estimate (median) of the bootstrapped HRs
+hr_ci_df$HR <- exp(apply(boot_results, 2, median))
+
+# Plotting
+ggplot(hr_ci_df, aes(x = Variable, y = HR)) +
+    geom_point() +
+    geom_errorbar(aes(ymin = LowerCI, ymax = UpperCI), width = 0.2) +
+    theme_minimal() +
+    labs(title = "Bootstrapped Hazard Ratios with Confidence Intervals", x = "Variable", y = "Hazard Ratio") +
+    #scale_x_discrete(limits = c('peak_tail', 'SexMale', 'QTc.adj.s')) +
+    geom_hline(yintercept = 1, linetype = "dashed", color = "red") +
+    coord_flip()
+
+# Calculate risk scores
+risk_scores <- predict(fit, newdata = cohort.var, type = "risk")
+
+# Calculate quartiles of risk scores
+quantiles <- quantile(risk_scores, probs = c(0.33, 0.66), na.rm = T)
+
+# Assign individuals to quartile groups
+cohort.var$QuantileGroup <- cut(risk_scores, breaks = c(-Inf, quantiles, Inf), labels = FALSE, include.lowest = TRUE)
+
+# Assuming your Cox model `fit` is still available
+cohort.var$HR <- exp(risk_scores)
+
+# Calculate average HR for each group
+avg_hr_by_group <- aggregate(HR ~ QuantileGroup, data = cohort.var, median)
+
+
+surv_curve <- survfit(Surv(Age_at_event_end, Event) ~ QuantileGroup, data = cohort.var[cohort.var$Patient=="Family Member",])#[cohort.var$Patient=="Family Member",]
+
+p <- ggsurvplot(
+  surv_curve, 
+  data = cohort.var[cohort.var$Patient=="Family Member",], #[cohort.var$Patient=="Family Member",]
+  risk.table = TRUE,
+  pval = TRUE,
+  conf.int = TRUE,
+  legend.labs = levels(first.event$QuantileGroup),
+  mark.time = TRUE,
+  tables.height = 0.2,
+  tables.y.text = FALSE,
+  xlim = c(0, 40)  # Setting the x-axis limits
+)
+
+p
+
+
+dd <- datadist(first.event)
+options(datadist='dd')
+
+cph_model <- cph(model, data = t, x=TRUE, y=TRUE, surv=TRUE, id = Unique_ID)
+
+nom <- nomogram(cph_model, fun = exp, fun.at=c(0.25,0.5,1,2,3,4,5), funlabel="Hazard Ratio")
+
+plot(nom)
+
+nom <- nomogram(cph_model, fun = plogis, fun.at = c(.25, .5, .75), funlabel = "Survival Probability")
+plot(nom)
+
+
+```
+
+# Royston-Parmar model, non-parametric time-to-event analysis, Serious Events
+
+```{r}
+age_cutoff <- 40
+t <- first.serious.event[!is.na(first.serious.event$peak_tail) & !is.na(first.serious.event$traff_score),]
+t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
+t$SeriousCardiacEvent[t$Age_at_event_end == age_cutoff] <- 0
+
+model <- Surv(Age_at_event_start, Age_at_event_end, SeriousCardiacEvent) ~ 
+                   Sex + QTc.adj + p_mean_w + peak_tail + traff_score + revel_score + am_pathogenicity + clinvar 
+
+fit <- flexsurvspline(model, 
+                   data = t)
+fit 
+
+# Time point for AUC calculation, choose a time that makes sense for your study
+time_point <- 10 # years
+
+# Generate predictions
+predicted_probs <- predict(fit, newdata = t, type = "survival", times = time_point)
+valid_predicted_probs <- predicted_probs$.pred_survival[!is.na(predicted_probs$.pred_survival)]
+
+valid_t <- t[!is.na(predicted_probs$.pred_survival),]
+valid_t$valid_predicted_probs <- valid_predicted_probs
+
+roc_result <- survivalROC::survivalROC(Stime = valid_t$Age_at_event_end, 
+                                       status = valid_t$SeriousCardiacEvent, 
+                                       marker = valid_predicted_probs, 
+                                       predict.time = time_point, 
+                                       method = "KM")
+roc_result$AUC
+roc_result$Survival
+
+boot_function <- function(data, indices) {
+    sample_data <- data[indices, ]  # Resampling with replacement
+    model_boot <- flexsurvspline(model, data = sample_data)
+    return(coef(model_boot))  # Return coefficients
+}
+boot_results <- boot(data = t, statistic = boot_function, R = 100)  # R is the number of bootstrap replicates
+
+# Assuming 'boot_results' contains your bootstrap output
+boot_coefs <- boot_results$t
+
+# Calculate mean and confidence intervals for each coefficient across rows
+mean_coefs <- apply(boot_coefs, 2, mean)
+ci_coefs <- apply(boot_coefs, 2, function(x) quantile(x, c(0.025, 0.975)))
+
+hr_means <- exp(mean_coefs)
+hr_ci_lower <- exp(ci_coefs[1, ])
+hr_ci_upper <- exp(ci_coefs[2, ])
+
+# Assign names based on the model terms
+model_terms <- c("gamma0", "gamma1", "Sex", "QTc.adj", "p_mean_w", "peak_tail", "traff_score", "revel_score", "am_pathogenicity", "clinvar")  # Replace with your actual term names
+names(hr_means) <- model_terms
+names(hr_ci_lower) <- model_terms
+names(hr_ci_upper) <- model_terms
+
+forest_data <- data.frame(
+  Term = names(hr_means),
+  HR = hr_means,
+  Lower = hr_ci_lower,
+  Upper = hr_ci_upper
+)
+
+# Filter out gamma0 and gamma1 from the forest data
+forest_data <- forest_data[!forest_data$Term %in% c("gamma0", "gamma1"), ]
+
+# Now create the forest plot without gamma0 and gamma1
+ggplot(forest_data, aes(x = Term, y = HR, ymin = Lower, ymax = Upper)) +
+  geom_point() +  # Plot the HRs
+  geom_errorbar(aes(ymin = Lower, ymax = Upper), width = 0.2) +  # Error bars for CIs
+  coord_flip() +  # Flip coordinates for horizontal plot
+  geom_hline(yintercept = 1, linetype = "dashed", color = "red") +  # Reference line at HR = 1
+  theme_minimal() +
+  ylab("Hazard Ratio (HR)") +
+  xlab("Model Terms")
+
+```
+
+# Royston-Parmar model, non-parametric time-to-event analysis, all Events
+
+```{r}
+age_cutoff <- 40
+t <- first.event[!is.na(first.event$peak_tail) & !is.na(first.event$traff_score),]
+t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
+t<-t[t$Age_at_event_end > t$Age_at_event_start,]
+t$Event[t$Age_at_event_end == age_cutoff] <- 0
+
+model <- Surv(Age_at_event_start, Age_at_event_end, Event) ~ 
+                   Sex + QTc.adj + peak_tail
+
+fit <- flexsurvspline(model, 
+                   data = t)
+fit 
+
+# Time point for AUC calculation, choose a time that makes sense for your study
+time_point <- 20 # years
+
+boot_function <- function(data, indices) {
+    sample_data <- data[indices, ]  # Resampling with replacement
+    tryCatch({
+        model_boot <- flexsurvspline(model, data = sample_data)
+        coef(model_boot)  # Return coefficients
+    }, error = function(e) {
+        NA  # Return NA in case of an error
+    })
+}
+
+boot_results <- boot(data = t, statistic = boot_function, R = 500)  # R is the number of bootstrap replicates
+
+# Assuming 'boot_results' contains your bootstrap output
+boot_coefs <- boot_results$t
+
+# Calculate mean and confidence intervals for each coefficient across rows
+mean_coefs <- apply(boot_coefs, 2, mean)
+ci_coefs <- apply(boot_coefs, 2, function(x) quantile(x, c(0.025, 0.975)))
+
+hr_means <- exp(mean_coefs)
+hr_ci_lower <- exp(ci_coefs[1, ])
+hr_ci_upper <- exp(ci_coefs[2, ])
+
+# Assign names based on the model terms
+model_terms <- c("gamma0", "gamma1", "Sex", "QTc.adj", "peak_tail")  # Replace with your actual term names
+names(hr_means) <- model_terms
+names(hr_ci_lower) <- model_terms
+names(hr_ci_upper) <- model_terms
+
+forest_data <- data.frame(
+  Term = names(hr_means),
+  HR = hr_means,
+  Lower = hr_ci_lower,
+  Upper = hr_ci_upper
+)
+
+# Filter out gamma0 and gamma1 from the forest data
+forest_data <- forest_data[!forest_data$Term %in% c("gamma0", "gamma1"), ]
+forest_data$Term <- forcats::fct_relevel(forest_data$Term,"QTc.adj",  "Sex", "peak_tail")
+
+# Now create the forest plot without gamma0 and gamma1
+ggplot(forest_data, aes(x = Term, y = HR, ymin = Lower, ymax = Upper)) +
+  geom_point() +  # Plot the HRs
+  geom_errorbar(aes(ymin = Lower, ymax = Upper), width = 0.2) +  # Error bars for CIs
+  coord_flip() +  # Flip coordinates for horizontal plot
+  geom_hline(yintercept = 1, linetype = "dashed", color = "red") +  # Reference line at HR = 1
+  theme_minimal() +
+  ylab("Hazard Ratio (HR)") +
+  xlab("Model Terms")
+
+```
+
+# Plot ROC curves Royston-Parmar model
+
+```{r}
+
+age_cutoff <- 40
+t <- first.event[!is.na(first.event$peak_tail) & !is.na(first.event$traff_score),]
+t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
+t<-t[t$Age_at_event_end > t$Age_at_event_start,]
+t$Event[t$Age_at_event_end == age_cutoff] <- 0
+
+
+# Time point for AUC calculation, choose a time that makes sense for your study
+time_point <- 20 # years
+
+# Fit the model 1
+fit1 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, Event) ~ Sex + QTc.adj, data = t)
+
+# Generate predictions and compute risk
+predicted_probs1 <- 1 - predict(fit1, newdata = t, type = "survival", times = time_point)
+# Fit the model
+fit1 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, Event) ~ Sex + QTc.adj, data = t)
+
+# Generate predictions
+predicted_probs1 <- 1- predict(fit1, newdata = t, type = "survival", times = time_point)
+
+# Convert to risk probabilities
+valid_predicted_probs1 <- predicted_probs1$.pred_survival[!is.na(predicted_probs1$.pred_survival)]
+
+# Filter the original dataset for valid cases
+valid_t1 <- t[!is.na(predicted_probs1$.pred_survival),]
+valid_t1$valid_predicted_probs1 <- valid_predicted_probs1
+
+# Compute ROC curve using valid data
+roc_result1 <- survivalROC::survivalROC(Stime = valid_t1$Age_at_event_end, 
+                                        status = valid_t1$Event, 
+                                        marker = valid_t1$valid_predicted_probs1, 
+                                        predict.time = time_point, 
+                                        method = "KM")
+
+# Extract sensitivity and specificity
+sensitivity1 <- roc_result1$TP
+specificity1 <- roc_result1$FP
+
+# Prepare ROC curve data
+roc_curve1 <- data.frame(Specificity = specificity1, Sensitivity = sensitivity1, Model = "Sex and QTc (Base Model)")
+
+# Fit the model 2 
+fit2 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, Event) ~ Sex + QTc.adj + p_mean_w, data = t)
+
+# Generate predictions and compute risk
+predicted_probs2 <- 1 - predict(fit2, newdata = t, type = "survival", times = time_point)
+# Convert to risk probabilities
+valid_predicted_probs2 <- predicted_probs2$.pred_survival[!is.na(predicted_probs2$.pred_survival)]
+
+# Filter the original dataset for valid cases
+valid_t2 <- t[!is.na(predicted_probs2$.pred_survival),]
+valid_t2$valid_predicted_probs2 <- valid_predicted_probs2
+
+# Compute ROC curve using valid data
+roc_result2 <- survivalROC::survivalROC(Stime = valid_t2$Age_at_event_end, 
+                                        status = valid_t2$Event, 
+                                        marker = valid_t2$valid_predicted_probs2, 
+                                        predict.time = time_point, 
+                                        method = "KM")
+
+# Extract sensitivity and specificity
+sensitivity2 <- roc_result2$TP
+specificity2 <- roc_result2$FP
+
+# Prepare ROC curve data
+roc_curve2 <- data.frame(Specificity = specificity2, Sensitivity = sensitivity2, Model = "Base Model + LQTS Penetrance")
+
+# Fit the model 3
+fit3 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, Event) ~ Sex + QTc.adj + p_mean_w + peak_tail + traff_score, data = t)
+
+# Generate predictions and compute risk
+predicted_probs3 <- 1 - predict(fit3, newdata = t, type = "survival", times = time_point)
+
+# Convert to risk probabilities
+valid_predicted_probs3 <- predicted_probs3$.pred_survival[!is.na(predicted_probs3$.pred_survival)]
+
+# Filter the original dataset for valid cases
+valid_t3 <- t[!is.na(predicted_probs3$.pred_survival),]
+valid_t3$valid_predicted_probs3 <- valid_predicted_probs3
+
+# Compute ROC curve using valid data
+roc_result3 <- survivalROC::survivalROC(Stime = valid_t3$Age_at_event_end, 
+                                        status = valid_t3$Event, 
+                                        marker = valid_t3$valid_predicted_probs3, 
+                                        predict.time = time_point, 
+                                        method = "KM")
+
+# Extract sensitivity and specificity
+sensitivity3 <- roc_result3$TP
+specificity3 <- roc_result3$FP
+
+# Prepare ROC curve data
+roc_curve3 <- data.frame(Specificity = specificity3, Sensitivity = sensitivity3, Model = "Base Model + LQTS Penetrance + Trafficking + Peak Tail Current")
+
+# Combine ROC data from all models
+all_roc_data <- rbind(roc_curve1, roc_curve2, roc_curve3)
+
+ggplot(all_roc_data, aes(x = Specificity, y = Sensitivity, color = Model)) +
+  geom_line(size = 1.5) +
+  labs(title = paste("ROC Curves at Time", time_point),
+       x = "1 - Specificity", y = "Sensitivity") +
+  theme_minimal() +
+  geom_abline(linetype = "dashed") +
+  scale_color_manual(values = c("red", "blue", "green")) +
+  annotate("text", x = 0.6, y = 0.1, label = paste("AUC1:", round(roc_result1$AUC, 2)), size = 4, color = "black") +
+  annotate("text", x = 0.6, y = 0.15, label = paste("AUC2:", round(roc_result2$AUC, 2)), size = 4, color = "black") +
+  annotate("text", x = 0.6, y = 0.2, label = paste("AUC3:", round(roc_result3$AUC, 2)), size = 4, color = "black")
+
+```
+
+# Plot survival curves from Royston-Parmar model
+
+```{r}
+age_cutoff <- 40
+t <- first.event[!is.na(first.event$peak_tail) & !is.na(first.event$p_mean_w) & !is.na(first.event$traff_score),]
+t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
+t$Event[t$Age_at_event_end == age_cutoff] <- 0
+
+model <- Surv(Age_at_event_start, Age_at_event_end, Event) ~ 
+                   Sex + QTc.adj + peak_tail + p_mean_w + traff_score
+
+fit <- flexsurvspline(model, 
+                   data = t)
+
+fit
+
+#t <- t[t$Patient=="Family Member",]
+# Choosing a specific time point for prediction (e.g., 5 years)
+time_point <- 20
+surv_probs <- predict(fit, newdata = t, type = "survival", times = time_point)
+valid_surv_probs <- surv_probs$.pred_survival[!is.na(surv_probs$.pred_survival)]
+valid_risk_category <- cut(valid_surv_probs, 
+                           breaks = c(1, 0.9, 0.7, 0), 
+                           include.lowest = TRUE, 
+                           labels = c("Low", "Medium", "High"))
+
+# Create a new column in 't' for risk categories
+t$valid_risk_category <- NA  # Initialize with NAs
+
+# Assign valid risk categories to corresponding rows
+t$valid_risk_category[!is.na(surv_probs$.pred_survival)] <- valid_risk_category
+
+# Use only the subset of data with valid risk categories
+valid_data <- t[!is.na(t$valid_risk_category), ]
+
+# Fit survival curves for each valid risk group
+surv_fit_groups <- survfit(Surv(Age_at_event_start, Age_at_event_end, Event) ~ valid_risk_category, data = valid_data)
+
+ggsurvplot(surv_fit_groups, 
+           data = valid_data, 
+           risk.table = TRUE,
+           ggtheme = theme_minimal(),
+           palette = c("blue", "orange", "red"),
+           xlab = "Time (Years)", 
+           ylab = "Survival Probability",
+           pval = FALSE)  # Omitting the p-value
+
+# Calculate a concordance statistic
+concordance <- concordance(model, data = t)
+concordance
+
+nom <- nomogram(fit, fun = exp, fun.at=c(0.25,0.5,1,2,3,4,5), funlabel="Hazard Ratio")
+
+plot(nom)
+
+```
+
+
+# Spearman rank order correlation all covariates
+
+```{r}
+
+```
+
+# Spearman rank order correlation variant-specific covariates
+
+```{r}
+# Identifying complete cases for relevant columns
+complete_cases <- complete.cases(tmp[, c("p_mean_w", "peak_tail", "clinvar", "revel_score", "lqt2_dist", "am_pathogenicity","traff_score")]) #"traff_score",
+# Subset tmp with complete cases
+tmp.complete <- tmp[complete_cases, ]
+# Combine numeric and dummy variables
+combined_data <- tmp.complete[, c("p_mean_w", "peak_tail","traff_score", "revel_score", "lqt2_dist", "am_pathogenicity",  "clinvar")] #"traff_score",
+cor_matrix <- cor(combined_data, use = "pairwise.complete.obs", method = "spearman")
+cor_matrix
+
+abs_cor_matrix <- abs(cor_matrix)
+
+# Reshape the absolute value correlation matrix
+abs_cor_matrix_long <- melt(abs_cor_matrix)
+
+# Create a heatmap with labels
+ggplot(abs_cor_matrix_long, aes(Var1, Var2, fill = value)) +
+    geom_tile() +
+    geom_text(aes(label = sprintf("%.2f", value)), vjust = 1) +  # Adding labels
+    scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0, limit = c(0, 1), space = "Lab", name="Absolute Correlation") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    labs(x = '', y = '', title = 'Absolute Spearman Correlation Matrix Heatmap')
+
+```
+
+# Brier Score and Net Benefit
+
+```{r}
+
+preds <- c("p_mean_w", "traff_score", "peak_tail", "revel_score", "lqt2_dist", "treat_all", "clinvar", "observed.lqt2")
+resultTableScore<-data.frame()
+nb <- data.frame(threshold=seq(0, 0.4, 1/250))
+i<-0
+t <- first.event[!is.na(first.event$traff_score) & !is.na(first.event$lqt2_dist) & !is.na(first.event$revel_score) & !is.na(first.event$peak_tail),] 
+for (p in preds){
+  i = i+1
+  resultTableScore[i,"predictor"]<-p
+  resultTableScore[i,"Brier Score"]<-brierScore(t, p,"Status", "ReverseStatus")
+  resultTableScore[i,"Brier Skill Score"]<- 1 - brierScore(t, p,"Status", "ReverseStatus")/brierScore_ref(t,alpha0,beta0,"Status", "ReverseStatus")
+  resultTableScore[i,"Alt Brier Skill Score"]<- 1 - brierScore(t, p,"Status", "ReverseStatus")/brierScore_alt_ref(t,"Status", "ReverseStatus")
+  resultTableScore[i,"Net Benefit"]<-netbenefit(t, 0.05, p,"Status", c("Status", "ReverseStatus"))
+  nb <- merge(nb,netbenefit_fig(t, 0.05, p,"Status", c("Status", "ReverseStatus")))
+  print(p)
+}
+
+print(resultTableScore)
+
+nb_melted<-melt(nb,id.vars = 'threshold')
+p <- ggplot(nb_melted, aes(threshold, value, color=variable), color=factor(variable)) +
+  geom_line(aes(group=factor(variable)),linewidth=2) +
+  coord_cartesian(ylim = c(0, 0.6)) +  # Limiting y-axis range
+    #scale_colour_brewer(type = "div") +
+    theme(strip.text.y = element_text(size = 11, hjust = 0.5,
+          vjust =    0.5, face = 'bold'))
+print(p)
+
+```
+
+
