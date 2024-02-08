@@ -1,0 +1,1417 @@
+var,Transcript Consequence,VEP Annotation,clinvar.description,clinvar,ClinVar Variation ID,Flags,gnomad.v4,Allele Number,Allele Frequency,Homozygote Count,Hemizygote Count,Allele Count Remaining
+S1159R,c.3475A>C,missense_variant,,,,,1,601212,1.66E-06,0,0,0
+P1157L,c.3470C>T,missense_variant,Uncertain significance,,67499,,28,1588528,1.76E-05,0,0,1
+P1157S,c.3469C>T,missense_variant,Uncertain significance,,456933,,15,1588406,9.44E-06,0,0,2
+D1156E,c.3468C>A,missense_variant,,,,,1,1435610,6.97E-07,0,0,0
+D1156V,c.3467A>T,missense_variant,,,,,4,1587936,2.52E-06,0,0,0
+S1155W,c.3464C>G,missense_variant,,,,,1,1438622,6.95E-07,0,0,0
+S1155L,c.3464C>T,missense_variant,Uncertain significance,,580441,,20,1590830,1.26E-05,0,0,2
+G1154V,c.3461G>T,missense_variant,,,,,1,605796,1.65E-06,0,0,0
+G1154C,c.3460G>T,missense_variant,,,,,1,1438524,6.95E-07,0,0,0
+G1154R,c.3460G>C,missense_variant,Uncertain significance,,1731642,,2,1438524,1.39E-06,0,0,0
+G1154S,c.3460G>A,missense_variant,Uncertain significance,,67498,,3,1438526,2.09E-06,0,0,0
+H1153P,c.3458A>C,missense_variant,,,,,1,1438776,6.95E-07,0,0,0
+H1153Y,c.3457C>T,missense_variant,Uncertain significance,,67497,,116,1590340,7.29E-05,0,0,1
+R1152T,c.3455G>C,missense_variant,,,,,1,604814,1.65E-06,0,0,0
+H1151Q,c.3453C>A,missense_variant,Uncertain significance,,629472,,3,1589756,1.89E-06,0,0,0
+H1151R,c.3452A>G,missense_variant,,,,,1,833110,1.20E-06,0,0,1
+L1150R,c.3449T>G,missense_variant,,,,,2,601530,3.32E-06,0,0,0
+L1150P,c.3449T>C,missense_variant,,,,,2,152136,1.31E-05,0,0,0
+L1150M,c.3448C>A,missense_variant,Uncertain significance,,456931,,35,1587108,2.21E-05,0,0,3
+P1149S,c.3445C>T,missense_variant,Uncertain significance,,2567295,,2,1434146,1.39E-06,0,0,0
+Q1148R,c.3443A>G,missense_variant,,,,,1,1434222,6.97E-07,0,0,0
+T1146D,c.3437C>A,missense_variant,,,,,1,598980,1.67E-06,0,0,0
+T1146I,c.3437C>T,missense_variant,,,,,1,152242,6.57E-06,0,0,0
+T1146S,c.3436A>T,missense_variant,Conflicting interpretations of pathogenicity,,359301,,93,1583158,5.87E-05,0,0,10
+A1144T,c.3430G>A,missense_variant,Uncertain significance,,67495,,9,1580600,5.69E-06,0,0,0
+A1144S,c.3430G>T,missense_variant,,,,,1,1428408,7.00E-07,0,0,0
+G1140S,c.3418G>A,missense_variant,,,,,2,590344,3.39E-06,0,0,0
+P1139L,c.3416C>T,missense_variant,Uncertain significance,,359302,,7,1573502,4.45E-06,0,0,0
+L1138I,c.3412C>A,missense_variant,,,,,1,587416,1.70E-06,0,0,0
+S1137C,c.3410C>G,missense_variant,,,,,1,1418850,7.05E-07,0,0,0
+L1136I,c.3406C>A,missense_variant,,,,,2,582998,3.43E-06,0,0,0
+L1136V,c.3406C>G,missense_variant,,,,,1,582998,1.72E-06,0,0,0
+R1135H,c.3404G>A,missense_variant,Uncertain significance,,67493,,5,1568264,3.19E-06,0,0,0
+R1135C,c.3403C>T,missense_variant,Uncertain significance,,920427,,12,1567264,7.66E-06,0,0,0
+R1134G,c.3400C>G,missense_variant,,,,,1,1414712,7.07E-07,0,0,0
+T1133I,c.3398C>T,missense_variant,,,,,1,1413974,7.07E-07,0,0,0
+P1132R,c.3395C>G,missense_variant,,,,,2,1411474,1.42E-06,0,0,0
+P1132A,c.3394C>G,missense_variant,Uncertain significance,,191469,,25,1563778,1.60E-05,0,0,17
+G1131A,c.3392G>C,missense_variant,,,,,1,1411762,7.08E-07,0,0,0
+G1131V,c.3392G>T,missense_variant,Uncertain significance,,918364,,8,1411762,5.67E-06,0,0,0
+G1131S,c.3391G>A,missense_variant,,,,,1,1411720,7.08E-07,0,0,0
+E1130K,c.3388G>A,missense_variant,,,,,2,1410294,1.42E-06,0,0,0
+P1128S,c.3382C>T,missense_variant,,,,,1,576300,1.74E-06,0,0,0
+E1126Q,c.3376G>C,missense_variant,Uncertain significance,,2150497,,1,149570,6.69E-06,0,0,0
+P1125R,c.3374C>G,missense_variant,,,,,1,574576,1.74E-06,0,0,0
+P1125A,c.3373C>G,missense_variant,Uncertain significance,,1425966,,5,1559842,3.21E-06,0,0,1
+A1124V,c.3371C>T,missense_variant,,,,,1,1407950,7.10E-07,0,0,0
+A1124T,c.3370G>A,missense_variant,,,,,3,574810,5.22E-06,0,0,0
+G1123A,c.3368G>C,missense_variant,Uncertain significance,,2505027,,1,1408074,7.10E-07,0,0,0
+G1123R,c.3367G>A,missense_variant,,,,,1,574870,1.74E-06,0,0,0
+G1123R,c.3367G>C,missense_variant,,,,,1,574870,1.74E-06,0,0,0
+P1122L,c.3365C>T,missense_variant,Uncertain significance,,200534,,73,1558702,4.68E-05,1,0,3
+P1122R,c.3365C>G,missense_variant,Uncertain significance,,234998,,1,1407900,7.10E-07,0,0,0
+P1121L,c.3362C>T,missense_variant,,,,,14,1408104,9.94E-06,0,0,0
+P1121S,c.3361C>T,missense_variant,Uncertain significance,,920215,,1,1408064,7.10E-07,0,0,0
+L1120P,c.3359T>C,missense_variant,,,,,2,1407860,1.42E-06,0,0,0
+L1120V,c.3358C>G,missense_variant,Uncertain significance,,661932,,1,1407970,7.10E-07,0,0,0
+E1119V,c.3356A>T,missense_variant,,,,,5,1556034,3.21E-06,0,0,0
+E1119Q,c.3355G>C,missense_variant,Uncertain significance,,67492,,8,726044,1.10E-05,0,0,0
+E1118D,c.3354G>C,missense_variant,,,,,1,1407622,7.10E-07,0,0,0
+A1116V,c.3347C>T,missense_variant,Uncertain significance,,67491,,30,1558350,1.93E-05,0,0,1
+A1116T,c.3346G>A,missense_variant,Uncertain significance,,918904,,1,1407118,7.11E-07,0,0,0
+M1115I,c.3345G>A,missense_variant,,,,,1,574038,1.74E-06,0,0,0
+M1115T,c.3344T>C,missense_variant,Uncertain significance,,1730447,,1,573882,1.74E-06,0,0,0
+M1115V,c.3343A>G,missense_variant,Uncertain significance,,67490,,6,720802,8.32E-06,0,0,0
+F1114L,c.3342C>G,missense_variant,Uncertain significance,,1976495,,1,1407108,7.11E-07,0,0,0
+Q1113H,c.3339G>C,missense_variant,,,,,1,573516,1.74E-06,0,0,0
+V1111F,c.3331G>T,missense_variant,,,,,2,725016,2.76E-06,0,0,0
+Q1110P,c.3329A>C,missense_variant,,,,,1,610830,1.64E-06,0,0,0
+L1108V,c.3322C>G,missense_variant,Conflicting interpretations of pathogenicity,,67488,,48,1598314,3.00E-05,2,0,3
+S1107W,c.3320C>G,missense_variant,,,,,3,1445418,2.08E-06,0,0,0
+S1107L,c.3320C>T,missense_variant,Uncertain significance,,843735,,10,1597516,6.26E-06,0,0,1
+D1106A,c.3317A>C,missense_variant,,,,,4,763500,5.24E-06,0,0,0
+D1106Y,c.3316G>T,missense_variant,,,,,1,612832,1.63E-06,0,0,0
+D1106D,c.3316G>A,missense_variant,,,,,3,612832,4.90E-06,0,0,0
+L1105S,c.3314T>C,missense_variant,Uncertain significance,,1398956,,21,1446228,1.45E-05,0,0,0
+T1104I,c.3311C>T,missense_variant,Uncertain significance,,1730094,,1,613630,1.63E-06,0,0,0
+L1103P,c.3308T>C,missense_variant,,,,,1,1441188,6.94E-07,0,0,0
+T1102I,c.3305C>T,missense_variant,Uncertain significance,,200531,,5,1447048,3.46E-06,0,0,3
+T1102P,c.3304A>C,missense_variant,,,,,16,1580726,1.01E-05,0,0,0
+P1101R,c.3302C>G,missense_variant,,,,,1,152302,6.57E-06,0,0,0
+P1101S,c.3301C>T,missense_variant,Uncertain significance,,456928,,2,1446848,1.38E-06,0,0,0
+P1101A,c.3301C>G,missense_variant,,,,,1,1446848,6.91E-07,0,0,0
+L1100F,c.3298C>T,missense_variant,,,,,1,1445918,6.92E-07,0,0,0
+P1099L,c.3296C>T,missense_variant,Uncertain significance,,526951,,10,1446672,6.91E-06,0,0,1
+P1099T,c.3295C>A,missense_variant,,,,,2,1447020,1.38E-06,0,0,0
+S1098R,c.3294C>G,missense_variant,Uncertain significance,,928123,,2,1598460,1.25E-06,0,0,0
+V1097A,c.3290T>C,missense_variant,,,,,1,608572,1.64E-06,0,0,0
+V1097I,c.3289G>A,missense_variant,Uncertain significance,,67486,,90,1591324,5.66E-05,0,0,2
+P1096S,c.3286C>T,missense_variant,Uncertain significance,,921691,,1,1444950,6.92E-07,0,0,0
+P1093R,c.3278C>G,missense_variant,,,,,1,1449974,6.90E-07,0,0,0
+P1093Q,c.3278C>A,missense_variant,,,,,2,1449972,1.38E-06,0,0,0
+P1093L,c.3278C>T,missense_variant,Uncertain significance,,67485,,27,1602096,1.69E-05,0,0,1
+S1092F,c.3275C>T,missense_variant,Uncertain significance,,1495264,,4,152066,2.63E-05,0,0,0
+T1091R,c.3272C>G,missense_variant,,,,,1,833012,1.20E-06,0,0,0
+S1090F,c.3269C>T,missense_variant,,,,,1,617688,1.62E-06,0,0,0
+P1084_T1089del,c.3249_3266del,inframe_deletion,,,,,3,1448932,2.07E-06,0,0,0
+T1089I,c.3266C>T,missense_variant,Uncertain significance,,1494957,,5,1602566,3.12E-06,0,0,0
+P1088A,c.3262C>G,missense_variant,,,,,1,833052,1.20E-06,0,0,0
+P1088S,c.3262C>T,missense_variant,,,,,1,833052,1.20E-06,0,0,0
+G1087V,c.3260G>T,missense_variant,,,,,1,1451660,6.89E-07,0,0,0
+P1086L,c.3257C>T,missense_variant,,,,,1,620486,1.61E-06,0,0,0
+G1085E,c.3254G>A,missense_variant,,,,,1,621026,1.61E-06,0,0,0
+P1084L,c.3251C>T,missense_variant,Uncertain significance,,456925,,28,1606626,1.74E-05,0,0,0
+P1084R,c.3251C>G,missense_variant,Uncertain significance,,1359556,,5,1454506,3.44E-06,0,0,2
+T1083D,c.3248C>A,missense_variant,,,,,1,622296,1.61E-06,0,0,1
+T1083A,c.3247A>G,missense_variant,Uncertain significance,,200529,,14,1602996,8.73E-06,0,0,0
+A1080V,c.3239C>T,missense_variant,,,,,1,624248,1.60E-06,0,0,0
+S1079D,c.3236G>A,missense_variant,,,,,2,152040,1.32E-05,0,0,1
+S1079G,c.3235A>G,missense_variant,,,,,1,1457606,6.86E-07,0,0,0
+Y1078C,c.3233A>G,missense_variant,Uncertain significance,,67483,,56,1609706,3.48E-05,0,0,9
+A1077V,c.3230C>T,missense_variant,,,,,3,1458060,2.06E-06,0,0,0
+A1077D,c.3230C>A,missense_variant,,,,,2,1458060,1.37E-06,0,0,0
+A1077S,c.3229G>T,missense_variant,,,,,2,1457564,1.37E-06,0,0,0
+A1077T,c.3229G>A,missense_variant,Uncertain significance,,526983,,44,1609748,2.73E-05,1,0,6
+P1076S,c.3226C>T,missense_variant,,,,,1,152144,6.57E-06,0,0,0
+P1075L,c.3224C>T,missense_variant,Uncertain significance,,67481,,68,1610422,4.22E-05,0,0,1
+L1073P,c.3218T>C,missense_variant,,,,,1,1458536,6.86E-07,0,0,0
+L1073R,c.3218T>G,missense_variant,,,,,1,1458538,6.86E-07,0,0,0
+T1072M,c.3215C>T,missense_variant,Uncertain significance,,359303,,20,1610758,1.24E-05,0,0,2
+T1072R,c.3215C>G,missense_variant,,,,,1,1458660,6.86E-07,0,0,0
+T1072S,c.3214A>T,missense_variant,,,,,1,625590,1.60E-06,0,0,0
+R1069_Q1070dup,c.3206_3211dup,inframe_insertion,,,,,13,1610792,8.07E-06,0,0,0
+M1071V,c.3211A>G,missense_variant,Uncertain significance,,629473,,10,1610778,6.21E-06,0,0,0
+Q1070P,c.3209A>C,missense_variant,,,,,2,625734,3.20E-06,0,0,0
+Q1068R,c.3203A>G,missense_variant,Conflicting interpretations of pathogenicity,,67480,,41,1610756,2.55E-05,0,0,3
+V1063L,c.3187G>C,missense_variant,Uncertain significance,,845043,,15,1609350,9.32E-06,0,0,0
+V1063I,c.3187G>A,missense_variant,,,,,1,1457700,6.86E-07,0,0,0
+T1062I,c.3185C>T,missense_variant,Uncertain significance,,586073,,5,1457476,3.43E-06,0,0,1
+T1062P,c.3184A>C,missense_variant,,,,,1,623346,1.60E-06,0,0,1
+M1060I,c.3180G>A,missense_variant,,,,,2,621216,3.22E-06,0,0,1
+M1060V,c.3178A>G,missense_variant,Uncertain significance,,924650,,14,1604054,8.73E-06,0,0,0
+D1059E,c.3177C>A,missense_variant,,,,,1,1454518,6.88E-07,0,0,0
+D1059H,c.3175G>C,missense_variant,,,,,1,833108,1.20E-06,0,0,1
+D1059Y,c.3175G>T,missense_variant,,,,,5,833108,6.00E-06,0,0,0
+A1058S,c.3172G>T,missense_variant,,,,,1,1452940,6.88E-07,0,0,0
+A1058T,c.3172G>A,missense_variant,Uncertain significance,,456924,,6,1604528,3.74E-06,0,0,0
+S1057R,c.3171T>G,missense_variant,Uncertain significance,,1422002,,2,1591820,1.26E-06,0,0,0
+R1055Q,c.3164G>A,missense_variant,Conflicting interpretations of pathogenicity,,67475,,39,1584746,2.46E-05,0,0,0
+R1055L,c.3164G>T,missense_variant,,,,,1,1437532,6.96E-07,0,0,0
+R1055G,c.3163C>G,missense_variant,Uncertain significance,,1728334,,2,1600652,1.25E-06,0,0,2
+R1055W,c.3163C>T,missense_variant,Uncertain significance,,405340,,25,1600770,1.56E-05,0,0,0
+E1053D,c.3159G>T,missense_variant,,,,,11,1447140,7.60E-06,0,0,0
+L1052M,c.3154C>A,missense_variant,,,,,1,1430760,6.99E-07,0,0,1
+R1051M,c.3152G>T,missense_variant,,,,,1,1388846,7.20E-07,0,0,0
+R1051G,c.3151A>G,missense_variant,,,,,1,1388748,7.20E-07,0,0,0
+R1051W,c.3151A>T,missense_variant,,,,,2,1388748,1.44E-06,0,0,0
+Q1048P,c.3143A>C,missense_variant,,,,,1,1390146,7.19E-07,0,0,0
+R1047H,c.3140G>A,missense_variant,Uncertain significance,,628410,,23,1542334,1.49E-05,0,0,0
+R1047L,c.3140G>T,missense_variant,Conflicting interpretations of pathogenicity,,36429,,32481,1542350,0.021059422,511,0,872
+R1047C,c.3139C>T,missense_variant,Uncertain significance,,161255,,16,1542972,1.04E-05,0,0,1
+Q1046H,c.3138G>T,missense_variant,Uncertain significance,,926330,,1,558182,1.79E-06,0,0,0
+Q1046L,c.3137A>T,missense_variant,,,,,1,1391398,7.19E-07,0,0,0
+L1045P,c.3134T>C,missense_variant,,,,,1,1391538,7.19E-07,0,0,0
+L1045F,c.3133C>T,missense_variant,Benign,,67473,,675,1544104,0.000437147,4,0,22
+A1044V,c.3131C>T,missense_variant,,,,,2,1392100,1.44E-06,0,0,0
+D1043A,c.3128A>C,missense_variant,,,,,2,1392758,1.44E-06,0,0,0
+D1043V,c.3128A>T,missense_variant,,,,,8,1392758,5.74E-06,0,0,0
+D1043G,c.3128A>G,missense_variant,,,,,3,1392758,2.15E-06,0,0,0
+D1043Y,c.3127G>T,missense_variant,,,,,1,1392952,7.18E-07,0,0,0
+R1041T,c.3122G>C,missense_variant,,,,,1,560784,1.78E-06,0,0,0
+S1040G,c.3118A>G,missense_variant,Uncertain significance,,67472,,12,1545762,7.76E-06,0,0,0
+E1039Q,c.3115G>C,missense_variant,,,,,1,1394476,7.17E-07,0,0,0
+P1026_V1038delinsL,c.3077_3112del,inframe_deletion,,,,,1,1394648,7.17E-07,0,0,0
+V1038E,c.3113T>A,missense_variant,,,,,2,1394648,1.43E-06,0,0,1
+G1036_D1037dup,c.3107_3112dup,inframe_insertion,Uncertain significance,,1014454,,4,1546010,2.59E-06,0,0,0
+D1037dup,c.3110_3112dup,inframe_insertion,,,,,2,1394648,1.43E-06,0,0,0
+V1038M,c.3112G>A,missense_variant,Conflicting interpretations of pathogenicity,,67471,,58,1546754,3.75E-05,0,0,3
+V1038L,c.3112G>T,missense_variant,Uncertain significance,,405360,,9,1546754,5.82E-06,0,0,0
+D1037E,c.3111C>A,missense_variant,Uncertain significance,,2114739,,13,1547014,8.40E-06,0,0,0
+D1037Y,c.3109G>T,missense_variant,,,,,1,1395146,7.17E-07,0,0,0
+D1037D,c.3109G>A,missense_variant,Uncertain significance,,67470,,50,1547180,3.23E-05,0,0,1
+G1036dup,c.3105_3107dup,inframe_insertion,Uncertain significance,,845975,,7,1547114,4.52E-06,0,0,1
+G1036D,c.3107G>A,missense_variant,Uncertain significance,,67469,,147,1547804,9.50E-05,0,0,8
+G1036S,c.3106G>A,missense_variant,Uncertain significance,,1940570,,1,1395738,7.16E-07,0,0,1
+R1033_R1035dup,c.3097_3105dup,inframe_insertion,,,,,1,1395738,7.16E-07,0,0,0
+R1035P,c.3104G>C,missense_variant,,,,,3,1385836,2.16E-06,0,0,0
+R1035Q,c.3104G>A,missense_variant,Uncertain significance,,456922,,64,1536496,4.17E-05,0,0,0
+R1035W,c.3103C>T,missense_variant,Uncertain significance,,67468,,50,1548114,3.23E-05,0,0,3
+R1035G,c.3103C>G,missense_variant,,,,,1,1396006,7.16E-07,0,0,0
+P1034_R1035insSRP,c.3101_3102insGTCGCGGCC,inframe_insertion,Uncertain significance,,1332333,,1,1396418,7.16E-07,0,0,0
+R1033dup,c.3098_3100dup,inframe_insertion,Uncertain significance,,402997,,26,1548526,1.68E-05,0,0,1
+P1034L,c.3101C>T,missense_variant,,,,,1,1396446,7.16E-07,0,0,0
+P1034R,c.3101C>G,missense_variant,,,,,2,1396446,1.43E-06,0,0,0
+R1033Q,c.3098G>A,missense_variant,Uncertain significance,,456920,,35,1548478,2.26E-05,0,0,2
+R1033W,c.3097C>T,missense_variant,Conflicting interpretations of pathogenicity,,67467,,57,1548498,3.68E-05,0,0,2
+G1031_R1032dup,c.3091_3096dup,inframe_insertion,Uncertain significance,,925579,,13,1548498,8.40E-06,0,0,0
+R1032P,c.3095G>C,missense_variant,Uncertain significance,,1171150,,1,1397076,7.16E-07,0,0,0
+R1032Q,c.3095G>A,missense_variant,Uncertain significance,,67466,,20,1549076,1.29E-05,0,0,0
+R1032G,c.3094C>G,missense_variant,Uncertain significance,,1481723,,1,1397294,7.16E-07,0,0,0
+R1032W,c.3094C>T,missense_variant,Conflicting interpretations of pathogenicity,,200522,,57,1549430,3.68E-05,0,0,8
+G1031C,c.3091G>T,missense_variant,,,,,8,1397848,5.72E-06,0,0,1
+P1030L,c.3089C>T,missense_variant,Uncertain significance,,847541,,220,1550296,0.000141908,0,0,8
+P1030R,c.3089C>G,missense_variant,Uncertain significance,,837323,,3,1398074,2.15E-06,0,0,0
+P1030S,c.3088C>T,missense_variant,,,,,1,1398388,7.15E-07,0,0,0
+P1030T,c.3088C>A,missense_variant,,,,,7,1398388,5.01E-06,0,0,0
+S1029I,c.3086G>T,missense_variant,,,,,1,1397058,7.16E-07,0,0,0
+L1027I,c.3079C>A,missense_variant,Conflicting interpretations of pathogenicity,,200254,,6,1551694,3.87E-06,0,0,0
+P1026L,c.3077C>T,missense_variant,,,,,4,1399766,2.86E-06,0,0,0
+P1026R,c.3077C>G,missense_variant,,,,,4,1551896,2.58E-06,0,0,0
+I1025M,c.3075C>G,missense_variant,,,,,1,1381150,7.24E-07,0,0,0
+I1025V,c.3073A>G,missense_variant,,,,,1,1398438,7.15E-07,0,0,0
+I1025F,c.3073A>T,missense_variant,,,,,1,1398438,7.15E-07,0,0,0
+L1023del,c.3067_3069del,inframe_deletion,Uncertain significance,,923837,,5,1399692,3.57E-06,0,0,0
+L1023P,c.3068T>C,missense_variant,,,,,2,1370218,1.46E-06,0,0,0
+L1022R,c.3065T>G,missense_variant,,,,,3,1352866,2.22E-06,0,0,0
+S1021T,c.3062G>C,missense_variant,,,,,2,1336880,1.50E-06,0,0,0
+P1020S,c.3058C>T,missense_variant,Uncertain significance,,359306,,3,1402460,2.14E-06,0,0,0
+P1020A,c.3058C>G,missense_variant,Uncertain significance,,1918665,,1,1402460,7.13E-07,0,0,0
+P1018L,c.3053C>T,missense_variant,Uncertain significance,,651422,,5,1403848,3.56E-06,0,0,0
+P1018A,c.3052C>G,missense_variant,Uncertain significance,,200520,,60,1556376,3.86E-05,0,0,2
+P1018T,c.3052C>A,missense_variant,,,,,1,1404132,7.12E-07,0,0,1
+A1017D,c.3050C>A,missense_variant,,,,,1,1404194,7.12E-07,0,0,0
+A1017V,c.3050C>T,missense_variant,,,,,2,1404198,1.42E-06,0,0,0
+A1017P,c.3049G>C,missense_variant,,,,,73,1293224,5.64E-05,0,0,5
+A1017T,c.3049G>A,missense_variant,Uncertain significance,,1799223,,9,1294094,6.95E-06,0,0,0
+A1017S,c.3049G>T,missense_variant,Uncertain significance,,565852,,7,1444882,4.84E-06,0,0,0
+C1015Y,c.3044G>A,missense_variant,Uncertain significance,,1381425,,3,1407270,2.13E-06,0,0,0
+C1015R,c.3043T>C,missense_variant,Uncertain significance,,1463426,,5,1408148,3.55E-06,0,0,0
+R1014Q,c.3041G>A,missense_variant,Uncertain significance,,922413,,5,1561000,3.20E-06,0,0,0
+R1014L,c.3041G>T,missense_variant,,,,,1,1408922,7.10E-07,0,0,0
+P1013T,c.3037C>A,missense_variant,,,,,1,1411258,7.09E-07,0,0,0
+P1013A,c.3037C>G,missense_variant,,,,,1,1411258,7.09E-07,0,0,0
+E1011D,c.3033G>T,missense_variant,,,,,1,579806,1.72E-06,0,0,0
+E1011G,c.3032A>G,missense_variant,Uncertain significance,,922211,,10,1413388,7.08E-06,0,0,0
+E1011V,c.3032A>T,missense_variant,,,,,1,1413388,7.08E-07,0,0,0
+Q1010E,c.3028C>G,missense_variant,,,,,2,1414582,1.41E-06,0,0,0
+Y1009D,c.3025T>A,missense_variant,,,,,1,1415624,7.06E-07,0,0,0
+Q1008L,c.3023A>T,missense_variant,,,,,1,1416330,7.06E-07,0,0,0
+Q1008R,c.3023A>G,missense_variant,,,,,2,1416330,1.41E-06,0,0,0
+Q1008K,c.3022C>A,missense_variant,,,,,1,583590,1.71E-06,0,0,0
+R1007H,c.3020G>A,missense_variant,Uncertain significance,,67463,,63,1569204,4.01E-05,0,0,2
+R1007C,c.3019C>T,missense_variant,Uncertain significance,,918739,,17,1570292,1.08E-05,0,0,0
+G1006S,c.3016G>A,missense_variant,,,,,1,1419600,7.04E-07,0,0,0
+R1005Q,c.3014G>A,missense_variant,Uncertain significance,,67461,,34,1572946,2.16E-05,0,0,1
+R1005W,c.3013C>T,missense_variant,Uncertain significance,,1019746,,36,1573662,2.29E-05,0,0,1
+R1005G,c.3013C>G,missense_variant,,,,,1,1421500,7.03E-07,0,0,0
+S1004I,c.3011G>T,missense_variant,,,,,3,589936,5.09E-06,1,0,0
+S1004T,c.3011G>C,missense_variant,,,,,6,589936,1.02E-05,0,0,0
+D1003H,c.3007G>C,missense_variant,,,,,3,1424968,2.11E-06,0,0,0
+D1003Y,c.3007G>T,missense_variant,Likely pathogenic,,200516,,1,1424966,7.02E-07,0,0,0
+D1003D,c.3007G>A,missense_variant,Uncertain significance,,373622,,7,1577120,4.44E-06,0,0,0
+G1002W,c.3004G>T,missense_variant,,,,,1,1426998,7.01E-07,0,0,0
+W1001C,c.3003G>C,missense_variant,Uncertain significance,,857986,,5,1427632,3.50E-06,0,0,0
+W1001C,c.3003G>T,missense_variant,,,,,2,1427632,1.40E-06,0,0,0
+W1001S,c.3002G>C,missense_variant,,,,,7,1580460,4.43E-06,0,0,0
+W1001L,c.3002G>T,missense_variant,,,,,3,1428284,2.10E-06,0,0,0
+S999D,c.2996G>A,missense_variant,Uncertain significance,,919130,,5,1583736,3.16E-06,0,0,0
+S999C,c.2995A>T,missense_variant,,,,,2,1432152,1.40E-06,0,0,0
+F998V,c.2992T>G,missense_variant,,,,,1,600578,1.67E-06,0,0,0
+I997V,c.2989A>G,missense_variant,,,,,3,1434602,2.09E-06,0,0,0
+D996K,c.2988C>A,missense_variant,,,,,1,1435068,6.97E-07,0,0,0
+V994A,c.2981T>C,missense_variant,,,,,1,1436750,6.96E-07,0,0,0
+V994G,c.2981T>G,missense_variant,,,,,1,1436750,6.96E-07,0,0,0
+V994M,c.2980G>A,missense_variant,,,,,1,604354,1.65E-06,0,0,0
+F991L,c.2973C>G,missense_variant,,,,,2,1439906,1.39E-06,0,0,0
+F991S,c.2972T>C,missense_variant,,,,,1,833108,1.20E-06,0,0,0
+F991L,c.2971T>C,missense_variant,,,,,1,1440482,6.94E-07,0,0,0
+F991I,c.2971T>A,missense_variant,,,,,1,1440482,6.94E-07,0,0,0
+A990T,c.2968G>A,missense_variant,Uncertain significance,,968306,,12,1593064,7.53E-06,0,0,0
+G989S,c.2965G>A,missense_variant,,,,,1,627240,1.59E-06,0,0,0
+S988L,c.2963C>T,missense_variant,,,,,1,627300,1.59E-06,0,0,0
+S988P,c.2962T>C,missense_variant,,,,,1,1460420,6.85E-07,0,0,0
+S988A,c.2962T>G,missense_variant,Uncertain significance,,859417,,5,1460420,3.42E-06,0,0,0
+L987P,c.2960T>C,missense_variant,,,,,1,1460482,6.85E-07,0,0,0
+L987Q,c.2960T>A,missense_variant,,,,,1,1460482,6.85E-07,0,0,0
+P986L,c.2957C>T,missense_variant,,,,,1,627392,1.59E-06,0,0,0
+P986S,c.2956C>T,missense_variant,,,,,1,1460498,6.85E-07,0,0,0
+P986T,c.2956C>A,missense_variant,Uncertain significance,,640120,,4,1612672,2.48E-06,0,0,0
+D985S,c.2954A>G,missense_variant,Uncertain significance,,67456,,6,1612336,3.72E-06,0,0,0
+C984Y,c.2951G>A,missense_variant,,,,,1,627340,1.59E-06,0,0,0
+T983I,c.2948C>T,missense_variant,Conflicting interpretations of pathogenicity,,67455,,177,1612814,0.000109746,0,0,4
+T983A,c.2947A>G,missense_variant,,,,,1,833108,1.20E-06,0,0,0
+D982del,c.2944_2946del,inframe_deletion,,,,,2,833108,2.40E-06,0,0,0
+D982V,c.2945A>T,missense_variant,,,,,4,1612490,2.48E-06,0,0,1
+D982H,c.2944G>C,missense_variant,,,,,1,1460356,6.85E-07,0,0,0
+D982D,c.2944G>A,missense_variant,Uncertain significance,,237299,,43,1612664,2.67E-05,0,0,3
+S981dup,c.2941_2943dup,inframe_insertion,,,,,2,1460356,1.37E-06,0,0,0
+S981R,c.2943C>A,missense_variant,,,,,1,1460262,6.85E-07,0,0,0
+S981R,c.2943C>G,missense_variant,,,,,2,1460262,1.37E-06,1,0,0
+S981D,c.2942G>A,missense_variant,,,,,1,627194,1.59E-06,0,0,0
+S981G,c.2941A>G,missense_variant,Conflicting interpretations of pathogenicity,,67454,,466,1612644,0.000288966,0,0,22
+S980R,c.2940C>G,missense_variant,,,,,1,627086,1.59E-06,0,0,0
+K979R,c.2936A>G,missense_variant,,,,,1,627056,1.59E-06,0,0,0
+E978K,c.2932G>A,missense_variant,Likely benign,,67453,,89,1612118,5.52E-05,0,0,6
+E978Q,c.2932G>C,missense_variant,Uncertain significance,,1042802,,1,1459928,6.85E-07,0,0,0
+C977W,c.2931C>G,missense_variant,Uncertain significance,,919282,,6,1459836,4.11E-06,0,0,0
+C977F,c.2930G>T,missense_variant,Uncertain significance,,405354,,36,1612140,2.23E-05,0,0,2
+C977S,c.2930G>C,missense_variant,,,,,17,1612142,1.05E-05,0,0,0
+C977G,c.2929T>G,missense_variant,,,,,1,1459936,6.85E-07,0,0,0
+C977R,c.2929T>C,missense_variant,,,,,1,1459936,6.85E-07,0,0,0
+D976D,c.2926G>A,missense_variant,Uncertain significance,,928384,,4,1459766,2.74E-06,0,0,0
+E975G,c.2924A>G,missense_variant,,,,,2,626482,3.19E-06,0,0,0
+M974T,c.2921T>C,missense_variant,,,,,4,1611522,2.48E-06,0,0,0
+M974L,c.2920A>T,missense_variant,,,,,1,152090,6.58E-06,0,0,0
+L973M,c.2917C>A,missense_variant,,,,,2,625906,3.20E-06,0,0,1
+P972R,c.2915C>G,missense_variant,,,,,1,1458770,6.86E-07,0,0,0
+P972L,c.2915C>T,missense_variant,,,,,4,1458770,2.74E-06,0,0,0
+P972H,c.2915C>A,missense_variant,,,,,1,1458770,6.86E-07,0,0,0
+P972T,c.2914C>A,missense_variant,,,,,2,1458486,1.37E-06,0,0,0
+P972S,c.2914C>T,missense_variant,,,,,2,1610656,1.24E-06,0,0,0
+E971K,c.2911G>A,missense_variant,,,,,5,624490,8.01E-06,0,0,0
+P968_P972del,c.2895_2909del,inframe_deletion,,,,,1,624576,1.60E-06,0,0,0
+G970A,c.2909G>C,missense_variant,,,,,1,152190,6.57E-06,0,0,0
+G970R,c.2908G>A,missense_variant,Uncertain significance,,926177,,1,623810,1.60E-06,0,0,0
+G969D,c.2906G>A,missense_variant,Uncertain significance,,918705,,3,775512,3.87E-06,0,0,0
+P968dup,c.2902_2904dup,inframe_insertion,,,,,1,1456460,6.87E-07,0,0,0
+P968L,c.2903C>T,missense_variant,Uncertain significance,,67452,,34,1608036,2.11E-05,0,0,2
+P968A,c.2902C>G,missense_variant,Uncertain significance,,237298,,77,1607464,4.79E-05,0,0,2
+P968S,c.2902C>T,missense_variant,,,,,6,1455276,4.12E-06,0,0,0
+P967L,c.2900C>T,missense_variant,Benign/Likely benign,,67451,,111,1606312,6.91E-05,1,0,7
+P967S,c.2899C>T,missense_variant,Uncertain significance,,923330,,1,1453834,6.88E-07,0,0,0
+E966A,c.2897A>C,missense_variant,,,,,7,1453478,4.82E-06,0,0,0
+E966V,c.2897A>T,missense_variant,,,,,2,1453478,1.38E-06,0,0,0
+E966K,c.2896G>A,missense_variant,Uncertain significance,,1471523,,22,1452900,1.51E-05,0,0,1
+G965R,c.2893G>A,missense_variant,Uncertain significance,,67450,,26,1603892,1.62E-05,0,0,5
+P964R,c.2891C>G,missense_variant,Uncertain significance,,1021720,,5,1450336,3.45E-06,1,0,0
+P963R,c.2888C>G,missense_variant,,,,,1,1450120,6.90E-07,0,0,0
+P963S,c.2887C>T,missense_variant,,,,,2,1448824,1.38E-06,0,0,0
+P963T,c.2887C>A,missense_variant,Conflicting interpretations of pathogenicity,,67449,,33,1601002,2.06E-05,0,0,0
+P963A,c.2887C>G,missense_variant,,,,,1,1448824,6.90E-07,0,0,0
+R962K,c.2885G>A,missense_variant,,,,,1,1448548,6.90E-07,0,0,0
+R962M,c.2885G>T,missense_variant,,,,,1,1448548,6.90E-07,0,0,0
+P961H,c.2882C>A,missense_variant,,,,,1,614110,1.63E-06,0,0,0
+S960D,c.2879G>A,missense_variant,not provided,,67447,,1,1445672,6.92E-07,0,0,0
+S959F,c.2876C>T,missense_variant,Uncertain significance,,657772,,3,1596306,1.88E-06,0,0,2
+F958L,c.2874C>A,missense_variant,,,,,2,610026,3.28E-06,0,0,0
+F958I,c.2872T>A,missense_variant,,,,,1,607436,1.65E-06,0,0,0
+P957L,c.2870C>T,missense_variant,Uncertain significance,,979134,,1,604832,1.65E-06,0,0,0
+P957S,c.2869C>T,missense_variant,,,,,1,604404,1.65E-06,0,0,0
+L955V,c.2863C>G,missense_variant,Conflicting interpretations of pathogenicity,,67445,,92,1585518,5.80E-05,0,0,9
+R954_L955insS,c.2861_2862insGAG,inframe_insertion,,,,,1,1433310,6.98E-07,0,0,0
+R954L,c.2861G>T,missense_variant,,,,,1,1432902,6.98E-07,0,0,0
+R954H,c.2861G>A,missense_variant,Uncertain significance,,456917,,22,1585020,1.39E-05,0,0,0
+R954C,c.2860C>T,missense_variant,Conflicting interpretations of pathogenicity,,67444,,74,1580214,4.68E-05,0,0,2
+P952R,c.2855C>G,missense_variant,Uncertain significance,,1036276,,2,1427740,1.40E-06,0,0,0
+P952S,c.2854C>T,missense_variant,Uncertain significance,,919402,,28,1577508,1.77E-05,0,0,0
+P952T,c.2854C>A,missense_variant,,,,,1,1425330,7.02E-07,0,0,0
+S951R,c.2853C>A,missense_variant,Uncertain significance,,840645,,2,590620,3.39E-06,0,0,0
+S951D,c.2852G>A,missense_variant,,,,,1,590670,1.69E-06,0,0,0
+S949R,c.2847C>G,missense_variant,,,,,2,583942,3.43E-06,0,0,0
+E942_S949del,c.2823_2846del,inframe_deletion,,,,,2,583942,3.43E-06,0,0,0
+S949R,c.2845A>C,missense_variant,,,,,1,1415734,7.06E-07,0,0,0
+R948H,c.2843G>A,missense_variant,Conflicting interpretations of pathogenicity,,67443,,35,1564888,2.24E-05,0,0,0
+R948L,c.2843G>T,missense_variant,,,,,1,1412738,7.08E-07,0,0,0
+R948C,c.2842C>T,missense_variant,Uncertain significance,,14441,,52,1565084,3.32E-05,0,0,1
+R948S,c.2842C>A,missense_variant,not provided,,67442,,2,1412928,1.42E-06,0,0,1
+G947D,c.2840G>A,missense_variant,Uncertain significance,,1910559,,2,1410174,1.42E-06,0,0,0
+P946Q,c.2837C>A,missense_variant,,,,,1,1408276,7.10E-07,0,0,0
+G945R,c.2833G>C,missense_variant,,,,,1,1404278,7.12E-07,0,0,0
+E944D,c.2832G>T,missense_variant,Uncertain significance,,526953,,3,1554596,1.93E-06,0,0,0
+E944D,c.2832G>C,missense_variant,Uncertain significance,,628923,,16,1402456,1.14E-05,0,0,1
+E944K,c.2830G>A,missense_variant,,,,,1,569258,1.76E-06,0,0,0
+D943D,c.2827G>A,missense_variant,,,,,1,566862,1.76E-06,0,0,0
+E942V,c.2825A>T,missense_variant,,,,,9,1397930,6.44E-06,0,0,0
+E942K,c.2824G>A,missense_variant,,,,,1,1397888,7.15E-07,0,0,0
+S940G,c.2818A>G,missense_variant,,,,,2,561344,3.56E-06,0,0,0
+E939D,c.2817G>C,missense_variant,,,,,1,1393976,7.17E-07,0,0,0
+P938T,c.2812C>A,missense_variant,,,,,1,557482,1.79E-06,0,0,0
+S937I,c.2810G>T,missense_variant,,,,,1,1390016,7.19E-07,0,0,0
+S937D,c.2810G>A,missense_variant,Uncertain significance,,67440,,55,1542190,3.57E-05,0,0,2
+S936C,c.2807C>G,missense_variant,,,,,1,152156,6.57E-06,0,0,0
+P935L,c.2804C>T,missense_variant,Uncertain significance,,1796247,,1,1388286,7.20E-07,0,0,0
+P935H,c.2804C>A,missense_variant,,,,,5,1388286,3.60E-06,0,0,0
+P935S,c.2803C>T,missense_variant,,,,,6,1388056,4.32E-06,0,0,0
+S932P,c.2794T>C,missense_variant,Uncertain significance,,942612,,2,703990,2.84E-06,0,0,0
+P931L,c.2792C>T,missense_variant,Conflicting interpretations of pathogenicity,,654837,,30,1536948,1.95E-05,0,0,2
+P931S,c.2791C>T,missense_variant,,,,,1,152156,6.57E-06,0,0,0
+S930R,c.2788A>C,missense_variant,Uncertain significance,,200503,,5,1535106,3.26E-06,0,0,0
+E929G,c.2786A>G,missense_variant,,,,,1,1382688,7.23E-07,0,0,1
+P926_G928dup,c.2776_2784dup,inframe_insertion,Uncertain significance,,1040565,,2,1381744,1.45E-06,0,0,0
+G928E,c.2783G>A,missense_variant,Uncertain significance,,850359,,22,1382118,1.59E-05,0,0,0
+G928A,c.2783G>C,missense_variant,,,,,1,1382118,7.24E-07,0,0,0
+G928R,c.2782G>C,missense_variant,Uncertain significance,,1795952,,2,1534350,1.30E-06,0,0,0
+G928R,c.2782G>A,missense_variant,,,,,1,1382196,7.23E-07,0,0,0
+W927C,c.2781G>T,missense_variant,Uncertain significance,,1037100,,3,1534312,1.96E-06,0,0,0
+W927C,c.2781G>C,missense_variant,,,,,2,1534312,1.30E-06,0,0,0
+W927L,c.2780G>T,missense_variant,Conflicting interpretations of pathogenicity,,200501,,56,1534306,3.65E-05,0,0,8
+W927S,c.2780G>C,missense_variant,,,,,6,1382164,4.34E-06,0,0,0
+G924_P926dup,c.2770_2778dup,inframe_insertion,,,,,6,1533358,3.91E-06,0,0,0
+P926L,c.2777C>T,missense_variant,Uncertain significance,,848808,,20,1532544,1.31E-05,0,0,1
+P926S,c.2776C>T,missense_variant,Uncertain significance,,2199262,,1,1380098,7.25E-07,0,0,1
+G925V,c.2774G>T,missense_variant,Uncertain significance,,200497,,35,1532872,2.28E-05,1,0,0
+G925A,c.2774G>C,missense_variant,Uncertain significance,,200495,,13,1532754,8.48E-06,0,0,0
+G925E,c.2774G>A,missense_variant,Uncertain significance,,921867,,15,1380610,1.09E-05,0,0,0
+G925W,c.2773G>T,missense_variant,,,,,2,1380358,1.45E-06,0,0,0
+G925R,c.2773G>A,missense_variant,not provided,,67439,,1,1380358,7.24E-07,0,0,0
+G924E,c.2771G>A,missense_variant,Conflicting interpretations of pathogenicity,,67437,,22,1530568,1.44E-05,0,0,0
+G924A,c.2771G>C,missense_variant,Conflicting interpretations of pathogenicity,,67438,,144,1530568,9.41E-05,0,0,8
+G924V,c.2771G>T,missense_variant,Uncertain significance,,2181844,,3,1378290,2.18E-06,0,0,0
+G924R,c.2770G>C,missense_variant,,,,,1,1378468,7.25E-07,0,0,0
+G924W,c.2770G>T,missense_variant,Uncertain significance,,519287,,13,1530634,8.49E-06,0,0,0
+G924R,c.2770G>A,missense_variant,Uncertain significance,,200492,,9,1530634,5.88E-06,0,0,0
+P923Q,c.2768C>A,missense_variant,Uncertain significance,,1008348,,5,1529900,3.27E-06,0,0,0
+P923L,c.2768C>T,missense_variant,Uncertain significance,,572278,,50,1529900,3.27E-05,1,0,2
+R922Q,c.2765G>A,missense_variant,Conflicting interpretations of pathogenicity,,67436,,55,1530688,3.59E-05,0,0,2
+R922P,c.2765G>C,missense_variant,Uncertain significance,,1958545,,2,1378530,1.45E-06,0,0,0
+R922W,c.2764C>T,missense_variant,Uncertain significance,,67435,,18,1530204,1.18E-05,0,0,1
+R922G,c.2764C>G,missense_variant,,,,,2,1378150,1.45E-06,0,0,0
+R920Q,c.2759G>A,missense_variant,Conflicting interpretations of pathogenicity,,67434,,27,1529310,1.77E-05,0,0,1
+R920G,c.2758C>G,missense_variant,Uncertain significance,,200490,,186,1529202,0.000121632,0,0,10
+R920W,c.2758C>T,missense_variant,Uncertain significance,,67433,,22,1529092,1.44E-05,0,0,1
+S919R,c.2757C>A,missense_variant,,,,,1,544256,1.84E-06,0,0,0
+S919G,c.2755A>G,missense_variant,,,,,1,1376380,7.27E-07,0,0,1
+S918D,c.2753G>A,missense_variant,Uncertain significance,,939122,,6,1528444,3.93E-06,0,0,2
+P917Q,c.2750C>A,missense_variant,,,,,2,1374002,1.46E-06,0,0,0
+P917L,c.2750C>T,missense_variant,Conflicting interpretations of pathogenicity,,67432,,48,1526048,3.15E-05,0,0,3
+P917R,c.2750C>G,missense_variant,,,,,1,1374002,7.28E-07,0,0,0
+A915V,c.2744C>T,missense_variant,not provided,,67431,,2,1525490,1.31E-06,0,0,0
+A915T,c.2743G>A,missense_variant,,,,,5,1373460,3.64E-06,0,0,0
+A915P,c.2743G>C,missense_variant,,,,,1,1373460,7.28E-07,0,0,0
+G914E,c.2741G>A,missense_variant,,,,,1,1372980,7.28E-07,0,0,0
+G914A,c.2741G>C,missense_variant,,,,,2,1372980,1.46E-06,0,0,0
+G914V,c.2741G>T,missense_variant,,,,,1,1372980,7.28E-07,0,0,0
+G914R,c.2740G>C,missense_variant,,,,,1,540150,1.85E-06,0,0,0
+A913E,c.2738C>A,missense_variant,Uncertain significance,,2432997,,4,1372088,2.92E-06,0,0,0
+A913V,c.2738C>T,missense_variant,Conflicting interpretations of pathogenicity,,14443,,795,1524188,0.000521589,1,0,29
+A913S,c.2737G>T,missense_variant,,,,,1,539880,1.85E-06,0,0,0
+R912Q,c.2735G>A,missense_variant,Uncertain significance,,527012,,29,1525164,1.90E-05,0,0,0
+R912W,c.2734C>T,missense_variant,Uncertain significance,,180384,,54,1525004,3.54E-05,0,0,5
+G911V,c.2732G>T,missense_variant,,,,,1,540402,1.85E-06,0,0,0
+G911S,c.2731G>A,missense_variant,,,,,1,1373832,7.28E-07,0,0,0
+E904_G911del,c.2706_2729del,inframe_deletion,,,,,1,1373696,7.28E-07,0,0,0
+P910R,c.2729C>G,missense_variant,,,,,1,1373244,7.28E-07,0,0,0
+P910L,c.2729C>T,missense_variant,Conflicting interpretations of pathogenicity,,67430,,144,1525476,9.44E-05,0,0,1
+P910S,c.2728C>T,missense_variant,,,,,1,541298,1.85E-06,0,0,0
+G909W,c.2725G>T,missense_variant,,,,,1,542036,1.84E-06,0,0,1
+L908F,c.2724G>C,missense_variant,,,,,3,1375242,2.18E-06,0,0,1
+L908S,c.2723T>C,missense_variant,,,,,1,541758,1.85E-06,0,0,0
+S906L,c.2717C>T,missense_variant,Uncertain significance,,67429,,121,1527946,7.92E-05,0,0,5
+V905M,c.2713G>A,missense_variant,,,,,8,695802,1.15E-05,0,0,0
+E904G,c.2711A>G,missense_variant,Uncertain significance,,642118,,1,1376680,7.26E-07,0,0,0
+G903E,c.2708G>A,missense_variant,,,,,1,544604,1.84E-06,0,0,0
+G903R,c.2707G>A,missense_variant,Conflicting interpretations of pathogenicity,,67428,,517,1530080,0.000337891,0,0,11
+P902A,c.2704C>G,missense_variant,,,,,1,544980,1.83E-06,0,0,0
+E900D,c.2700G>C,missense_variant,,,,,1,152240,6.57E-06,0,0,1
+E900K,c.2698G>A,missense_variant,Uncertain significance,,2148400,,19,1378178,1.38E-05,0,0,1
+T899K,c.2696C>A,missense_variant,Uncertain significance,,1006883,,4,1530302,2.61E-06,0,0,0
+T899M,c.2696C>T,missense_variant,Uncertain significance,,862133,,28,1530420,1.83E-05,0,0,0
+T899R,c.2696C>G,missense_variant,Uncertain significance,,456916,,2,1530302,1.31E-06,0,0,0
+T899A,c.2695A>G,missense_variant,,,,,2,1378108,1.45E-06,0,0,0
+D898D,c.2692G>A,missense_variant,,,,,2,1449572,1.38E-06,0,0,0
+K897D,c.2691G>C,missense_variant,,,,,7,1450318,4.83E-06,0,0,0
+K897T,c.2690A>C,missense_variant,Benign,,67427,,342931,1097454,0.312478701,40089,0,12748
+T895M,c.2684C>T,missense_variant,Conflicting interpretations of pathogenicity,,67426,,37,1230738,3.01E-05,0,0,2
+R893_R894dup,c.2678_2683dup,inframe_insertion,Uncertain significance,,287038,,1,1099880,9.09E-07,0,0,0
+K888_R894dup,c.2663_2683dup,inframe_insertion,,,,,2,1099880,1.82E-06,0,0,0
+T895A,c.2683A>G,missense_variant,,,,,1,1203778,8.31E-07,0,0,0
+R894dup,c.2679_2681dup,inframe_insertion,,,,,3,1453640,2.06E-06,0,0,0
+R894P,c.2681G>C,missense_variant,,,,,2,1149748,1.74E-06,0,0,0
+R894H,c.2681G>A,missense_variant,Conflicting interpretations of pathogenicity,,448972,,41,1295224,3.17E-05,0,0,2
+R894L,c.2681G>T,missense_variant,Uncertain significance,,67425,,4,1295228,3.09E-06,0,0,0
+R894C,c.2680C>T,missense_variant,Uncertain significance,,67424,,7,1452834,4.82E-06,0,0,0
+R893G,c.2677A>G,missense_variant,,,,,4,1215204,3.29E-06,0,0,0
+R892H,c.2675G>A,missense_variant,Uncertain significance,,1054268,,20,1589780,1.26E-05,0,0,1
+F891_R892insL,c.2672_2674dup,inframe_insertion,,,,,1,1438786,6.95E-07,0,0,0
+R892L,c.2675G>T,missense_variant,Uncertain significance,,1343895,,1,1438786,6.95E-07,0,0,0
+R892C,c.2674C>T,missense_variant,Conflicting interpretations of pathogenicity,,191470,,452,1593958,0.000283571,5,0,31
+R892S,c.2674C>A,missense_variant,Uncertain significance,,1391052,,1,1444108,6.92E-07,0,0,0
+F891L,c.2673C>G,missense_variant,,,,,3,1458080,2.06E-06,0,0,0
+F891C,c.2672T>G,missense_variant,Uncertain significance,,1794569,,8,1367974,5.85E-06,0,0,0
+S890Y,c.2669C>A,missense_variant,,,,,1,1458910,6.85E-07,0,0,0
+S890C,c.2669C>G,missense_variant,Uncertain significance,,1794521,,1,151972,6.58E-06,0,0,0
+L889F,c.2667G>T,missense_variant,,,,,1,625590,1.60E-06,0,0,0
+L889M,c.2665T>A,missense_variant,,,,,1,1459276,6.85E-07,0,0,0
+R887_K888del,c.2659_2664del,inframe_deletion,,,,,1,1459276,6.85E-07,0,0,0
+L889V,c.2665T>G,missense_variant,Conflicting interpretations of pathogenicity,,200475,,65,1611024,4.03E-05,0,0,11
+K888T,c.2663A>C,missense_variant,,,,,1,832892,1.20E-06,0,0,0
+K888Q,c.2662A>C,missense_variant,,,,,1,1396590,7.16E-07,0,0,0
+R887H,c.2660G>A,missense_variant,Conflicting interpretations of pathogenicity,,67423,,14,1538370,9.10E-06,0,0,3
+R887L,c.2660G>T,missense_variant,Uncertain significance,,628973,,1,1389090,7.20E-07,0,0,0
+R887P,c.2660G>C,missense_variant,,,,,1,1389090,7.20E-07,0,0,0
+Q884_K886del,c.2651_2659del,inframe_deletion,,,,,1,1389090,7.20E-07,0,0,0
+R887S,c.2659C>A,missense_variant,,,,,13,1459630,8.91E-06,0,0,0
+R887C,c.2659C>T,missense_variant,Uncertain significance,,193802,,41,1610562,2.55E-05,1,0,2
+R887G,c.2659C>G,missense_variant,Uncertain significance,,924438,,15,1610452,9.31E-06,0,0,1
+R887_K888dup,c.2652_2657dup,inframe_insertion,,,,,1,1459732,6.85E-07,0,0,0
+S882_R885del,c.2645_2656del,inframe_deletion,Uncertain significance,,2022804,,1,572248,1.75E-06,0,0,0
+Q884_R885dup,c.2649_2654dup,inframe_insertion,,,,,7,1374440,5.09E-06,0,0,1
+R885H,c.2654G>A,missense_variant,Uncertain significance,,402995,,49,1508234,3.25E-05,0,0,3
+R885P,c.2654G>C,missense_variant,,,,,1,148210,6.75E-06,0,0,0
+R885S,c.2653C>A,missense_variant,Uncertain significance,,1332377,,7,1612164,4.34E-06,0,0,0
+R885C,c.2653C>T,missense_variant,Conflicting interpretations of pathogenicity,,67422,,162,1612162,0.000100486,0,0,20
+S882del,c.2646_2648del,inframe_deletion,,,,,8,1493952,5.35E-06,0,0,0
+R883P,c.2648G>C,missense_variant,,,,,2,1460808,1.37E-06,0,0,0
+R883Q,c.2648G>A,missense_variant,Uncertain significance,,1171663,,24,1460810,1.64E-05,1,0,3
+F881_S882del,c.2641_2646del,inframe_deletion,,,,,1,1393686,7.18E-07,0,0,0
+R883W,c.2647C>T,missense_variant,Uncertain significance,,925591,,51,1539584,3.31E-05,0,0,2
+R883G,c.2647C>G,missense_variant,,,,,5,1539448,3.25E-06,0,0,0
+S882I,c.2645G>T,missense_variant,,,,,1,627954,1.59E-06,0,0,0
+S882G,c.2644A>G,missense_variant,,,,,1,566668,1.76E-06,0,0,0
+F881L,c.2643C>A,missense_variant,,,,,1,627900,1.59E-06,0,0,0
+F881L,c.2643C>G,missense_variant,,,,,1,627900,1.59E-06,0,0,0
+F881V,c.2641T>G,missense_variant,,,,,1,1461206,6.84E-07,0,0,0
+F881I,c.2641T>A,missense_variant,Uncertain significance,,855339,,6,1613202,3.72E-06,0,0,1
+G880D,c.2639G>A,missense_variant,Uncertain significance,,1715690,,1,627784,1.59E-06,0,0,0
+G880S,c.2638G>A,missense_variant,,,,,1,833108,1.20E-06,0,0,0
+G879S,c.2635G>A,missense_variant,Uncertain significance,,924749,,1,1461364,6.84E-07,0,0,0
+E878D,c.2634G>T,missense_variant,Uncertain significance,,1304037,,2,1461396,1.37E-06,0,0,1
+E876K,c.2626G>A,missense_variant,Uncertain significance,,456914,,5,1442120,3.47E-06,0,0,0
+T875M,c.2624C>T,missense_variant,Conflicting interpretations of pathogenicity,,67420,,35,1565862,2.24E-05,0,0,2
+T875S,c.2623A>T,missense_variant,,,,,1,833104,1.20E-06,0,0,0
+T875P,c.2623A>C,missense_variant,,,,,1,833104,1.20E-06,0,0,0
+G873_S874dup,c.2617_2622dup,inframe_insertion,,,,,1,833104,1.20E-06,0,0,0
+S874I,c.2621G>T,missense_variant,,,,,4,833100,4.80E-06,0,0,0
+G873S,c.2617G>A,missense_variant,Benign/Likely benign,,67419,,287,1613706,0.000177851,1,0,4
+G873R,c.2617G>C,missense_variant,Uncertain significance,,1896117,,1,1461450,6.84E-07,0,0,0
+G873C,c.2617G>T,missense_variant,,,,,1,1461450,6.84E-07,0,0,0
+P872H,c.2615C>A,missense_variant,,,,,1,628368,1.59E-06,0,0,0
+P872A,c.2614C>G,missense_variant,,,,,6,1461442,4.11E-06,0,0,0
+S871C,c.2612C>G,missense_variant,Uncertain significance,,921315,,1,628364,1.59E-06,0,0,0
+S871F,c.2612C>T,missense_variant,Uncertain significance,,954476,,2,780542,2.56E-06,0,0,0
+S871A,c.2611T>G,missense_variant,,,,,1,149284,6.70E-06,0,0,0
+S871T,c.2611T>A,missense_variant,,,,,1,1452248,6.89E-07,0,0,0
+G870V,c.2609G>T,missense_variant,,,,,1,628300,1.59E-06,0,0,0
+P869L,c.2606C>T,missense_variant,Uncertain significance,,200473,,9,1608732,5.59E-06,0,0,2
+M867T,c.2600T>C,missense_variant,Conflicting interpretations of pathogenicity,,641744,,34,1613506,2.11E-05,1,0,0
+D866S,c.2597A>G,missense_variant,,,,,2,985176,2.03E-06,0,0,0
+T865S,c.2594C>G,missense_variant,,,,,2,1461154,1.37E-06,0,0,0
+T865I,c.2594C>T,missense_variant,Uncertain significance,,957208,,1,1461154,6.84E-07,0,0,0
+D864G,c.2591A>G,missense_variant,Uncertain significance,,67417,,14,1461826,9.58E-06,0,0,0
+R863Q,c.2588G>A,missense_variant,Uncertain significance,,1026816,,1,152220,6.57E-06,0,0,0
+D861I,c.2582A>T,missense_variant,Uncertain significance,,14440,,19,833096,2.28E-05,0,0,0
+D861S,c.2582A>G,missense_variant,Pathogenic,,200471,,1,152132,6.57E-06,0,0,0
+S855R,c.2565C>A,missense_variant,,,,,1,1461880,6.84E-07,0,0,1
+S855R,c.2565C>G,missense_variant,Uncertain significance,,1490630,,3,1614110,1.86E-06,0,0,0
+S855D,c.2564G>A,missense_variant,Uncertain significance,,1404204,,1,628778,1.59E-06,0,0,0
+S854A,c.2560T>G,missense_variant,,,,,1,1461888,6.84E-07,0,0,0
+D850D,c.2548G>A,missense_variant,,,,,5,1461874,3.42E-06,0,0,0
+D850Y,c.2548G>T,missense_variant,Uncertain significance,,922966,,8,1461872,5.47E-06,0,0,0
+S849T,c.2545T>A,missense_variant,,,,,1,152196,6.57E-06,0,0,0
+E847D,c.2541G>T,missense_variant,Uncertain significance,,1332607,,3,1461892,2.05E-06,0,0,0
+E847A,c.2540A>C,missense_variant,,,,,1,833106,1.20E-06,0,0,0
+E847Q,c.2539G>C,missense_variant,,,,,1,833104,1.20E-06,0,0,0
+Y845D,c.2533T>G,missense_variant,,,,,1,1461888,6.84E-07,0,0,0
+Y845D,c.2533T>A,missense_variant,,,,,1,1461888,6.84E-07,0,0,0
+Y845H,c.2533T>C,missense_variant,,,,,1,1461888,6.84E-07,0,0,0
+M844T,c.2531T>C,missense_variant,,,,,1,628784,1.59E-06,0,0,0
+M844V,c.2530A>G,missense_variant,Uncertain significance,,658202,,8,1614090,4.96E-06,0,0,0
+M844L,c.2530A>T,missense_variant,,,,,5,1461894,3.42E-06,0,0,0
+D843V,c.2528A>T,missense_variant,,,,,1,152296,6.57E-06,0,0,0
+D843G,c.2528A>G,missense_variant,,,,,1,628782,1.59E-06,0,0,0
+L842V,c.2524C>G,missense_variant,Uncertain significance,,1698213,,1,833106,1.20E-06,0,0,0
+E840V,c.2519A>T,missense_variant,,,,,1,833106,1.20E-06,0,0,0
+E840Q,c.2518G>C,missense_variant,,,,,1,628784,1.59E-06,0,0,0
+L839M,c.2515C>A,missense_variant,Uncertain significance,,920490,,2,628784,3.18E-06,0,0,0
+D837G,c.2510A>G,missense_variant,Pathogenic/Likely pathogenic,,67407,,1,833094,1.20E-06,0,0,0
+R835Q,c.2504G>A,missense_variant,Uncertain significance,,200464,,4,985290,4.06E-06,0,0,0
+R835W,c.2503C>T,missense_variant,not provided,,67404,,1,152190,6.57E-06,0,0,0
+H834R,c.2501A>G,missense_variant,,,,,2,628782,3.18E-06,0,0,0
+H831R,c.2492A>G,missense_variant,,,,,1,1461886,6.84E-07,0,0,0
+L830V,c.2488C>G,missense_variant,Uncertain significance,,1792014,,1,1461882,6.84E-07,0,0,0
+D829E,c.2487C>G,missense_variant,,,,,1,628782,1.59E-06,0,0,0
+D829A,c.2486A>C,missense_variant,Uncertain significance,,851362,,4,780876,5.12E-06,0,0,1
+C828R,c.2482T>C,missense_variant,Uncertain significance,,842229,,1,1461882,6.84E-07,0,0,0
+C828S,c.2482T>A,missense_variant,,,,,1,1461882,6.84E-07,0,0,0
+T826I,c.2477C>T,missense_variant,Pathogenic,,67403,,1,628784,1.59E-06,0,0,0
+T826A,c.2476A>G,missense_variant,,,,,1,833100,1.20E-06,0,0,0
+R823Q,c.2468G>A,missense_variant,Conflicting interpretations of pathogenicity,,418246,,5,1461870,3.42E-06,0,0,0
+R823L,c.2468G>T,missense_variant,Uncertain significance,,2415860,,4,1461870,2.74E-06,0,0,0
+R823W,c.2467C>T,missense_variant,Pathogenic/Likely pathogenic,,67402,,2,780582,2.56E-06,0,0,0
+D821E,c.2463T>A,missense_variant,,,,,1,152172,6.57E-06,0,0,0
+G820E,c.2459G>A,missense_variant,Uncertain significance,,1791593,,1,833110,1.20E-06,0,0,0
+G820R,c.2458G>A,missense_variant,Uncertain significance,,67401,,7,1461890,4.79E-06,0,0,0
+D819K,c.2457C>A,missense_variant,,,,,2,1614046,1.24E-06,0,0,1
+S818L,c.2453C>T,missense_variant,Pathogenic/Likely pathogenic,,14432,,4,1461884,2.74E-06,0,0,0
+S818A,c.2452T>G,missense_variant,,,,,2,780966,2.56E-06,0,0,0
+R814K,c.2441G>A,missense_variant,,,,,3,1461894,2.05E-06,0,0,1
+A813G,c.2438C>G,missense_variant,Uncertain significance,,1720476,,1,833102,1.20E-06,0,0,0
+Y812S,c.2435A>C,missense_variant,,,,,1,628772,1.59E-06,0,0,0
+L809P,c.2426T>C,missense_variant,,,,,1,833100,1.20E-06,0,0,0
+E807K,c.2419G>A,missense_variant,Uncertain significance,,1515629,,1,1461836,6.84E-07,0,0,0
+I804V,c.2410A>G,missense_variant,Uncertain significance,,1790883,,2,628722,3.18E-06,0,0,0
+D802S,c.2405A>G,missense_variant,Uncertain significance,,216326,,18,1461740,1.23E-05,0,0,0
+V796L,c.2386G>C,missense_variant,Conflicting interpretations of pathogenicity,,200438,,3,1320414,2.27E-06,0,0,1
+V796M,c.2386G>A,missense_variant,Uncertain significance,,2183169,,12,1320414,9.09E-06,0,0,1
+V796L,c.2386G>T,missense_variant,Uncertain significance,,940061,,5,1180634,4.24E-06,0,0,0
+V795G,c.2384T>G,missense_variant,,,,,2,1041784,1.92E-06,0,0,0
+V795I,c.2383G>A,missense_variant,Uncertain significance,,1171063,,16,1345296,1.19E-05,0,0,0
+V794D,c.2381T>A,missense_variant,,,,,1,1125640,8.88E-07,0,0,0
+V794I,c.2380G>A,missense_variant,Uncertain significance,,200434,,16,1359860,1.18E-05,0,0,0
+D793E,c.2379C>A,missense_variant,,,,,1,1460770,6.85E-07,0,0,0
+D793D,c.2377G>A,missense_variant,Uncertain significance,,921995,,4,404212,9.90E-06,0,0,0
+G792S,c.2374G>A,missense_variant,,,,,1,832434,1.20E-06,0,0,0
+R791Q,c.2372G>A,missense_variant,Uncertain significance,,925151,,8,1269026,6.30E-06,0,0,1
+R791W,c.2371C>T,missense_variant,Conflicting interpretations of pathogenicity,,67391,,79,1609838,4.91E-05,0,0,5
+L790V,c.2368C>G,missense_variant,,,,,1,833094,1.20E-06,0,0,0
+S786F,c.2357C>T,missense_variant,,,,,1,628460,1.59E-06,0,0,0
+S786C,c.2357C>G,missense_variant,,,,,1,628460,1.59E-06,0,0,0
+R784L,c.2351G>T,missense_variant,,,,,1,1449938,6.90E-07,0,0,0
+R784Q,c.2351G>A,missense_variant,Uncertain significance,,1790021,,54,1600508,3.37E-05,0,0,0
+R784W,c.2350C>T,missense_variant,Conflicting interpretations of pathogenicity,,14433,,37,1612406,2.29E-05,0,0,1
+R784G,c.2350C>G,missense_variant,,,,,1,150982,6.62E-06,0,0,0
+S783F,c.2348C>T,missense_variant,,,,,1,628466,1.59E-06,0,0,0
+I782V,c.2344A>G,missense_variant,,,,,1,598794,1.67E-06,0,0,0
+Y780C,c.2339A>G,missense_variant,,,,,1,606050,1.65E-06,0,0,0
+A778S,c.2332G>T,missense_variant,,,,,2,1460508,1.37E-06,0,0,0
+A778T,c.2332G>A,missense_variant,Uncertain significance,,979128,,9,1612040,5.58E-06,0,0,0
+L776I,c.2326C>A,missense_variant,,,,,1,628312,1.59E-06,0,0,0
+D774Y,c.2320G>T,missense_variant,Pathogenic/Likely pathogenic,,67385,,2,833106,2.40E-06,0,0,0
+G773V,c.2318G>T,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+H771Y,c.2311C>T,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+D767Y,c.2299G>T,missense_variant,not provided,,67383,,1,628440,1.59E-06,0,0,1
+P764L,c.2291C>T,missense_variant,Uncertain significance,,237296,,13,1613710,8.06E-06,0,0,1
+H762R,c.2285A>G,missense_variant,,,,,2,1461534,1.37E-06,0,0,0
+H762Y,c.2284C>T,missense_variant,,,,,27,833106,3.24E-05,0,0,2
+T760S,c.2279C>G,missense_variant,,,,,1,833104,1.20E-06,0,0,0
+K759D,c.2277G>T,missense_variant,,,,,1,628510,1.59E-06,0,0,0
+K759R,c.2276A>G,missense_variant,Uncertain significance,,999182,,3,780652,3.84E-06,0,0,0
+M756I,c.2268G>A,missense_variant,,,,,1,833110,1.20E-06,0,0,1
+M756V,c.2266A>G,missense_variant,Conflicting interpretations of pathogenicity,,67381,,88,1613698,5.45E-05,0,0,1
+A755T,c.2263G>A,missense_variant,Likely pathogenic,,200423,,1,833110,1.20E-06,0,0,0
+A753S,c.2257G>T,missense_variant,Uncertain significance,,67380,,4,780574,5.12E-06,0,0,1
+R752Q,c.2255G>A,missense_variant,Pathogenic/Likely pathogenic,,14435,,2,152158,1.31E-05,0,0,0
+R752W,c.2254C>T,missense_variant,Pathogenic/Likely pathogenic,,67379,,4,1613678,2.48E-06,0,0,0
+L751V,c.2251C>G,missense_variant,,,,,1,628374,1.59E-06,0,0,0
+G749C,c.2245G>T,missense_variant,Uncertain significance,,405350,,4,985252,4.06E-06,0,0,0
+K748R,c.2243A>G,missense_variant,,,,,1,628344,1.59E-06,0,0,0
+A746S,c.2236G>T,missense_variant,Uncertain significance,,222671,,3,628256,4.78E-06,0,0,0
+G745E,c.2234G>A,missense_variant,,,,,2,780390,2.56E-06,0,0,0
+R744Q,c.2231G>A,missense_variant,Uncertain significance,,924279,,17,1613436,1.05E-05,0,0,1
+R744G,c.2230C>G,missense_variant,Uncertain significance,,1515578,,4,1613482,2.48E-06,0,0,0
+P742L,c.2225C>T,missense_variant,,,,,3,833000,3.60E-06,0,0,0
+K741R,c.2222A>G,missense_variant,Uncertain significance,,566154,,7,780272,8.97E-06,0,0,0
+K741Q,c.2221A>C,missense_variant,Uncertain significance,,923298,,3,628104,4.78E-06,0,0,0
+C740W,c.2220C>G,missense_variant,,,,,4,1460970,2.74E-06,0,0,0
+C740G,c.2218T>G,missense_variant,,,,,1,628096,1.59E-06,0,0,1
+H739R,c.2216A>G,missense_variant,Uncertain significance,,222670,,1,628076,1.59E-06,0,0,1
+Q738R,c.2213A>G,missense_variant,,,,,1,628022,1.59E-06,0,0,0
+S735L,c.2204C>T,missense_variant,Uncertain significance,,67374,,1,627868,1.59E-06,0,0,0
+R734C,c.2200C>T,missense_variant,Uncertain significance,,200765,,5,1612780,3.10E-06,0,0,0
+R734S,c.2200C>A,missense_variant,,,,,1,1460648,6.85E-07,0,0,1
+D733Y,c.2197A>T,missense_variant,,,,,1,627794,1.59E-06,0,0,0
+I728T,c.2183T>C,missense_variant,,,,,1,832976,1.20E-06,0,0,0
+I728V,c.2182A>G,missense_variant,,,,,2,832342,2.40E-06,0,0,0
+Q725R,c.2174A>G,missense_variant,,,,,2,627124,3.19E-06,0,0,0
+C723G,c.2167T>G,missense_variant,Uncertain significance,,922895,,4,778716,5.14E-06,0,0,0
+E722Q,c.2164G>C,missense_variant,,,,,1,833096,1.20E-06,0,0,0
+K718T,c.2153A>C,missense_variant,,,,,1,626298,1.60E-06,0,0,0
+L717P,c.2150T>C,missense_variant,,,,,1,626260,1.60E-06,0,0,0
+A715V,c.2144C>T,missense_variant,Uncertain significance,,200413,,15,1461722,1.03E-05,0,0,0
+A715T,c.2143G>A,missense_variant,,,,,7,1613958,4.34E-06,0,0,0
+M713V,c.2137A>G,missense_variant,,,,,1,628714,1.59E-06,0,0,0
+D712H,c.2134G>C,missense_variant,,,,,1,1461804,6.84E-07,0,0,0
+D712D,c.2134G>A,missense_variant,Uncertain significance,,2136625,,3,1614154,1.86E-06,0,0,1
+I711V,c.2131A>G,missense_variant,Uncertain significance,,67367,,32,1614070,1.98E-05,0,0,3
+G710S,c.2128G>A,missense_variant,Uncertain significance,,664978,,1,1461852,6.84E-07,0,0,0
+T708A,c.2122A>G,missense_variant,Uncertain significance,,527003,,1,152212,6.57E-06,0,0,0
+A704V,c.2111C>T,missense_variant,,,,,2,1461880,1.37E-06,0,0,0
+A704T,c.2110G>A,missense_variant,Uncertain significance,,1786111,,5,1461876,3.42E-06,0,0,0
+H703Y,c.2107C>T,missense_variant,,,,,1,833108,1.20E-06,0,0,0
+F701C,c.2102T>G,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+E699D,c.2097G>C,missense_variant,,,,,5,1614240,3.10E-06,0,0,0
+E699D,c.2097G>T,missense_variant,Uncertain significance,,1001725,,3,1614122,1.86E-06,0,0,0
+E698K,c.2092G>A,missense_variant,Uncertain significance,,945957,,29,1614124,1.80E-05,0,0,0
+R696L,c.2087G>T,missense_variant,,,,,2,1461886,1.37E-06,0,0,0
+R696H,c.2087G>A,missense_variant,,,,,2,1461886,1.37E-06,0,0,0
+R696C,c.2086C>T,missense_variant,Uncertain significance,,67360,,2,1461870,1.37E-06,0,0,0
+R694H,c.2081G>A,missense_variant,Conflicting interpretations of pathogenicity,,200410,,7,1614122,4.34E-06,0,0,0
+R694C,c.2080C>T,missense_variant,Uncertain significance,,651990,,5,628774,7.95E-06,0,0,0
+P692A,c.2074C>G,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+P690R,c.2069C>G,missense_variant,,,,,1,833108,1.20E-06,0,0,0
+H687L,c.2060A>T,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+H687Y,c.2059C>T,missense_variant,not provided,,67357,,3,1461868,2.05E-06,0,0,0
+R685H,c.2054G>A,missense_variant,Uncertain significance,,979129,,6,1614096,3.72E-06,0,0,1
+R685G,c.2053C>G,missense_variant,,,,,1,152250,6.57E-06,0,0,0
+R685C,c.2053C>T,missense_variant,Conflicting interpretations of pathogenicity,,448974,,6,1614116,3.72E-06,0,0,1
+I684M,c.2052C>G,missense_variant,Uncertain significance,,2045933,,1,833110,1.20E-06,0,0,0
+I684V,c.2050A>G,missense_variant,Uncertain significance,,1463165,,3,628758,4.77E-06,0,0,0
+E682D,c.2046G>C,missense_variant,Uncertain significance,,487626,,3,1614098,1.86E-06,0,0,0
+R681Q,c.2042G>A,missense_variant,Uncertain significance,,957302,,2,833098,2.40E-06,0,0,0
+R681W,c.2041C>T,missense_variant,,,,,2,1461830,1.37E-06,0,0,0
+R679Q,c.2036G>A,missense_variant,Uncertain significance,,922598,,16,1614228,9.91E-06,0,0,1
+R679W,c.2035C>T,missense_variant,Uncertain significance,,581266,,9,1614058,5.58E-06,0,0,0
+L678R,c.2033T>G,missense_variant,Uncertain significance,,1330843,,1,833098,1.20E-06,0,0,0
+M677T,c.2030T>C,missense_variant,Uncertain significance,,939911,,1,152232,6.57E-06,0,0,0
+T675A,c.2023A>G,missense_variant,,,,,3,1461808,2.05E-06,0,0,0
+H674Y,c.2020C>T,missense_variant,,,,,1,628696,1.59E-06,0,0,0
+R672H,c.2015G>A,missense_variant,Uncertain significance,,1413135,,8,1461752,5.47E-06,0,0,0
+R672C,c.2014C>T,missense_variant,Uncertain significance,,1020103,,8,1614012,4.96E-06,0,0,1
+A671G,c.2012C>G,missense_variant,Uncertain significance,,1024776,,1,628654,1.59E-06,0,0,0
+G669R,c.2005G>C,missense_variant,,,,,1,628472,1.59E-06,0,0,0
+G669C,c.2005G>T,missense_variant,,,,,3,628472,4.77E-06,0,0,0
+S668L,c.2003C>T,missense_variant,Uncertain significance,,1784281,,3,1461578,2.05E-06,0,0,2
+S668A,c.2002T>G,missense_variant,,,,,1,833108,1.20E-06,0,0,1
+R665Q,c.1994G>A,missense_variant,Uncertain significance,,1784031,,4,1461206,2.74E-06,0,0,0
+A661V,c.1982C>T,missense_variant,Uncertain significance,,977179,,1,152238,6.57E-06,0,0,0
+S660L,c.1979C>T,missense_variant,Pathogenic/Likely pathogenic,,67352,,10,1612548,6.20E-06,0,0,0
+V659M,c.1975G>A,missense_variant,,,,,2,779244,2.57E-06,0,0,0
+A653V,c.1958C>T,missense_variant,,,,,1,1456786,6.86E-07,0,0,0
+M651T,c.1952T>C,missense_variant,,,,,2,1453634,1.38E-06,0,0,0
+I647V,c.1939A>G,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+L646P,c.1937T>C,missense_variant,,,,,1,628654,1.59E-06,0,0,0
+V644I,c.1930G>A,missense_variant,Uncertain significance,,1009718,,15,1613992,9.29E-06,0,0,0
+V644L,c.1930G>C,missense_variant,not provided,,67339,,1,1461784,6.84E-07,0,0,0
+K638del,c.1913_1915del,inframe_deletion,Likely pathogenic,,200646,,1,152200,6.57E-06,0,0,0
+I639F,c.1915A>T,missense_variant,,,,,1,1461850,6.84E-07,0,0,0
+K638D,c.1914G>T,missense_variant,not provided,,67333,,1,628734,1.59E-06,0,0,0
+S631F,c.1892C>T,missense_variant,Uncertain significance,,456898,,1,833108,1.20E-06,0,0,0
+V630I,c.1888G>A,missense_variant,Conflicting interpretations of pathogenicity,,222669,,17,1614106,1.05E-05,0,0,1
+G628S,c.1882G>A,missense_variant,Pathogenic,,14427,,1,833108,1.20E-06,0,0,0
+V625G,c.1874T>G,missense_variant,,,,,1,833098,1.20E-06,0,0,0
+S624D,c.1871G>A,missense_variant,Uncertain significance,,1369798,,4,1461878,2.74E-06,0,0,0
+T623I,c.1868C>T,missense_variant,not provided,,67302,,1,628780,1.59E-06,0,0,0
+L622F,c.1864C>T,missense_variant,Uncertain significance,,67301,,1,833102,1.20E-06,0,0,0
+T618P,c.1852A>C,missense_variant,,,,,1,833108,1.20E-06,0,0,0
+F617C,c.1850T>G,missense_variant,,,,,1,833108,1.20E-06,0,0,0
+A614V,c.1841C>T,missense_variant,Pathogenic,,29777,,1,628768,1.59E-06,0,0,0
+T613M,c.1838C>T,missense_variant,Pathogenic/Likely pathogenic,,67292,,1,833108,1.20E-06,0,0,0
+T613A,c.1837A>G,missense_variant,Likely pathogenic,,2049671,,1,628774,1.59E-06,0,0,0
+V612L,c.1834G>T,missense_variant,Uncertain significance,,67291,,1,628772,1.59E-06,0,0,0
+K608D,c.1824G>T,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+K608R,c.1823A>G,missense_variant,Uncertain significance,,1503760,,3,1461892,2.05E-06,0,0,0
+I607V,c.1819A>G,missense_variant,,,,,3,1461886,2.05E-06,0,0,0
+G601C,c.1801G>T,missense_variant,not provided,,67280,,1,1461870,6.84E-07,0,0,0
+S600D,c.1799G>A,missense_variant,,,,,1,628766,1.59E-06,0,0,0
+S600C,c.1798A>T,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+S599I,c.1796G>T,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+D598S,c.1793A>G,missense_variant,Uncertain significance,,1510989,,4,1461878,2.74E-06,0,0,0
+D598D,c.1792A>G,missense_variant,,,,,1,1461880,6.84E-07,0,0,0
+G594D,c.1781G>A,missense_variant,Conflicting interpretations of pathogenicity,,67271,,1,152256,6.57E-06,0,0,0
+I593K,c.1778T>A,missense_variant,Pathogenic,,67269,,1,628764,1.59E-06,0,0,0
+D591H,c.1771G>C,missense_variant,,,,,3,1461862,2.05E-06,0,0,1
+D591D,c.1771G>A,missense_variant,Uncertain significance,,911854,,11,1461862,7.52E-06,0,0,0
+H587Y,c.1759C>T,missense_variant,,,,,2,833110,2.40E-06,0,0,0
+G584S,c.1750G>A,missense_variant,Pathogenic/Likely pathogenic,,67261,,15,1461876,1.03E-05,0,0,0
+I583V,c.1747A>G,missense_variant,not provided,,67259,,3,1461878,2.05E-06,0,0,0
+R582H,c.1745G>A,missense_variant,Uncertain significance,,926210,,19,1461870,1.30E-05,0,0,2
+R582C,c.1744C>T,missense_variant,Pathogenic,,14428,,2,833108,2.40E-06,0,0,0
+S581L,c.1742C>T,missense_variant,Uncertain significance,,577995,,3,152264,1.97E-05,0,0,0
+D580Y,c.1738G>T,missense_variant,,,,,1,628764,1.59E-06,0,0,0
+M579I,c.1737G>A,missense_variant,Uncertain significance,,1484165,,1,628770,1.59E-06,0,0,0
+M579R,c.1736T>G,missense_variant,Uncertain significance,,2572706,,1,1461874,6.84E-07,0,0,0
+M579T,c.1736T>C,missense_variant,Uncertain significance,,67255,,6,1461874,4.10E-06,0,0,0
+M579V,c.1735A>G,missense_variant,,,,,2,1461876,1.37E-06,0,0,0
+H578P,c.1733A>C,missense_variant,Uncertain significance,,200378,,2,628766,3.18E-06,0,0,0
+H578Y,c.1732C>T,missense_variant,Uncertain significance,,1945272,,2,833108,2.40E-06,0,0,0
+E575_P577delinsA,c.1724_1729del,inframe_deletion,Uncertain significance,,1510910,,1,628764,1.59E-06,0,0,0
+Q576R,c.1727A>G,missense_variant,,,,,1,152258,6.57E-06,0,0,0
+M574L,c.1720A>C,missense_variant,,,,,1,1461838,6.84E-07,0,0,1
+M574V,c.1720A>G,missense_variant,not provided,,67252,,2,1461838,1.37E-06,0,0,0
+D573H,c.1717A>C,missense_variant,,,,,1,628752,1.59E-06,0,0,0
+G572S,c.1714G>A,missense_variant,Pathogenic,,67248,,1,152354,6.56E-06,0,0,0
+A570T,c.1708G>A,missense_variant,Uncertain significance,,1043586,,3,1461814,2.05E-06,0,0,0
+I567M,c.1701C>G,missense_variant,Uncertain significance,,2156604,,1,628730,1.59E-06,0,0,0
+I567T,c.1700T>C,missense_variant,Uncertain significance,,67241,,1,833086,1.20E-06,0,0,0
+I567V,c.1699A>G,missense_variant,,,,,1,833086,1.20E-06,0,0,0
+A565S,c.1693G>T,missense_variant,Uncertain significance,,519393,,1,628690,1.59E-06,0,0,0
+A561V,c.1682C>T,missense_variant,Pathogenic/Likely pathogenic,,14420,,1,833110,1.20E-06,0,0,0
+I560M,c.1680C>G,missense_variant,,,,,5,1613978,3.10E-06,0,0,0
+I560V,c.1678A>G,missense_variant,Uncertain significance,,1055024,,1,628628,1.59E-06,0,0,0
+A558V,c.1673C>T,missense_variant,,,,,16,1461192,1.10E-05,0,0,0
+M554T,c.1661T>C,missense_variant,Uncertain significance,,642793,,2,1460706,1.37E-06,0,0,1
+L552F,c.1656G>C,missense_variant,,,,,1,833108,1.20E-06,0,0,0
+L552S,c.1655T>C,missense_variant,Pathogenic,,67225,,46,779288,5.90E-05,0,0,0
+F551L,c.1653C>G,missense_variant,,,,,1,152264,6.57E-06,0,0,0
+F551S,c.1652T>C,missense_variant,Uncertain significance,,392546,,1,626508,1.60E-06,0,0,0
+V549M,c.1645G>A,missense_variant,Uncertain significance,,919780,,3,1458014,2.06E-06,0,0,0
+A547V,c.1640C>T,missense_variant,Uncertain significance,,852580,,11,1609128,6.84E-06,0,0,1
+A547T,c.1639G>A,missense_variant,Uncertain significance,,663436,,16,1607922,9.95E-06,0,0,0
+G546S,c.1636G>A,missense_variant,,,,,1,622514,1.61E-06,0,0,0
+Y545C,c.1634A>G,missense_variant,,,,,1,621494,1.61E-06,0,0,0
+Y542C,c.1625A>G,missense_variant,,,,,1,1451784,6.89E-07,0,0,0
+R541L,c.1622G>T,missense_variant,,,,,1,617596,1.62E-06,0,0,0
+R541H,c.1622G>A,missense_variant,Uncertain significance,,960653,,5,617596,8.10E-06,0,0,1
+R541C,c.1621C>T,missense_variant,Uncertain significance,,937094,,6,1450570,4.14E-06,0,0,0
+R541S,c.1621C>A,missense_variant,,,,,1,1450570,6.89E-07,0,0,0
+K538D,c.1614G>T,missense_variant,,,,,1,1448070,6.91E-07,0,0,0
+R537W,c.1609C>T,missense_variant,Uncertain significance,,67222,,2,1444274,1.38E-06,0,0,0
+A536V,c.1607C>T,missense_variant,,,,,1,1443542,6.93E-07,0,0,0
+A536S,c.1606G>T,missense_variant,,,,,1,1442058,6.93E-07,0,0,0
+V535M,c.1603G>A,missense_variant,Uncertain significance,,161256,,1,607788,1.65E-06,0,0,0
+V535L,c.1603G>T,missense_variant,Uncertain significance,,570842,,1,607788,1.65E-06,0,0,0
+R534C,c.1600C>T,missense_variant,Pathogenic,,67220,,4,1437552,2.78E-06,0,0,0
+R534S,c.1600C>A,missense_variant,Conflicting interpretations of pathogenicity,,200728,,1,1437552,6.96E-07,0,0,0
+V533G,c.1598T>G,missense_variant,Benign,,191574,,37,599016,6.18E-05,0,0,1
+R531Q,c.1592G>A,missense_variant,not provided,,67219,,2,606054,3.30E-06,0,0,0
+R531W,c.1591C>T,missense_variant,Conflicting interpretations of pathogenicity,,67218,,1,606246,1.65E-06,0,0,0
+R528Q,c.1583G>A,missense_variant,Uncertain significance,,2096656,,2,1436236,1.39E-06,0,0,0
+L523M,c.1567C>A,missense_variant,Uncertain significance,,405357,,1,590116,1.69E-06,0,0,0
+G522E,c.1565G>A,missense_variant,,,,,1,589264,1.70E-06,0,0,0
+G522R,c.1564G>C,missense_variant,,,,,2,1420318,1.41E-06,0,0,0
+I521T,c.1562T>C,missense_variant,,,,,1,587032,1.70E-06,0,0,0
+E519V,c.1556A>T,missense_variant,,,,,1,833042,1.20E-06,0,0,0
+S517del,c.1549_1551del,inframe_deletion,,,,,1,628648,1.59E-06,0,0,0
+G516_S517insPHPD,c.1547_1548insGCCACACCCCAA,inframe_insertion,,,,,1,1461744,6.84E-07,0,0,0
+G514V,c.1541G>T,missense_variant,,,,,1,628698,1.59E-06,0,0,0
+G514S,c.1540G>A,missense_variant,,,,,1,152290,6.57E-06,0,0,0
+I506V,c.1516A>G,missense_variant,Uncertain significance,,645833,,2,780916,2.56E-06,0,0,0
+A505T,c.1513G>A,missense_variant,,,,,2,1461814,1.37E-06,0,0,0
+M502I,c.1506G>T,missense_variant,,,,,5,628716,7.95E-06,0,0,1
+M502T,c.1505T>C,missense_variant,,,,,5,1461816,3.42E-06,0,0,0
+M502V,c.1504A>G,missense_variant,,,,,1,833098,1.20E-06,0,0,1
+F498L,c.1494C>G,missense_variant,,,,,1,1461822,6.84E-07,0,0,0
+W497C,c.1491G>T,missense_variant,,,,,2,1461828,1.37E-06,0,0,0
+G496C,c.1486G>T,missense_variant,,,,,1,833094,1.20E-06,0,0,0
+H492R,c.1475A>G,missense_variant,,,,,1,628728,1.59E-06,0,0,0
+H492Y,c.1474C>T,missense_variant,Pathogenic/Likely pathogenic,,67204,,16,628730,2.54E-05,0,0,0
+V491F,c.1471G>T,missense_variant,,,,,2,1461814,1.37E-06,0,0,0
+V491I,c.1471G>A,missense_variant,Likely benign,,200344,,66,1614008,4.09E-05,2,0,7
+A490T,c.1468G>A,missense_variant,Pathogenic/Likely pathogenic,,14430,,1,833094,1.20E-06,0,0,0
+R488L,c.1463G>T,missense_variant,,,,,4,1461830,2.74E-06,0,0,0
+R488H,c.1463G>A,missense_variant,Uncertain significance,,1412315,,6,1614150,3.72E-06,0,0,0
+R488C,c.1462C>T,missense_variant,Uncertain significance,,1018981,,19,1461824,1.30E-05,0,0,1
+G487A,c.1460G>C,missense_variant,Uncertain significance,,921335,,1,628742,1.59E-06,0,0,0
+G487S,c.1459G>A,missense_variant,Uncertain significance,,200342,,81,1614120,5.02E-05,0,0,5
+H485R,c.1454A>G,missense_variant,,,,,1,833092,1.20E-06,0,0,0
+H485Y,c.1453C>T,missense_variant,,,,,1,628750,1.59E-06,0,0,0
+S484G,c.1450A>G,missense_variant,,,,,1,628740,1.59E-06,0,0,0
+V483I,c.1447G>A,missense_variant,Uncertain significance,,858924,,78,1614072,4.83E-05,0,0,0
+E481V,c.1442A>T,missense_variant,,,,,2,833108,2.40E-06,0,0,0
+E480Q,c.1438G>C,missense_variant,,,,,4,1461880,2.74E-06,0,0,0
+E480K,c.1438G>A,missense_variant,,,,,1,1461880,6.84E-07,0,0,0
+D479S,c.1436A>G,missense_variant,,,,,1,833108,1.20E-06,0,0,0
+V476I,c.1426G>A,missense_variant,Uncertain significance,,67200,,22,1614052,1.36E-05,0,0,0
+R472C,c.1414C>T,missense_variant,Uncertain significance,,2154967,,6,780970,7.68E-06,0,0,0
+F471L,c.1413C>A,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+I469M,c.1407C>G,missense_variant,,,,,1,1461892,6.84E-07,0,0,0
+L468F,c.1402C>T,missense_variant,Uncertain significance,,1450155,,4,780982,5.12E-06,0,0,0
+I464D,c.1391T>A,missense_variant,,,,,1,152178,6.57E-06,0,0,0
+I461L,c.1381A>C,missense_variant,,,,,1,152146,6.57E-06,0,0,0
+I461V,c.1381A>G,missense_variant,,,,,1,152146,6.57E-06,0,0,0
+V459M,c.1375G>A,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+V455A,c.1364T>C,missense_variant,,,,,1,833110,1.20E-06,0,0,1
+V455M,c.1363G>A,missense_variant,,,,,1,628778,1.59E-06,0,0,0
+A453T,c.1357G>A,missense_variant,Uncertain significance,,919895,,1,833110,1.20E-06,0,0,0
+P451L,c.1352C>T,missense_variant,Conflicting interpretations of pathogenicity,,67190,,21,1614050,1.30E-05,0,0,0
+A448S,c.1342G>T,missense_variant,Conflicting interpretations of pathogenicity,,448973,,112,1614000,6.94E-05,1,0,4
+G446C,c.1336G>T,missense_variant,,,,,1,152214,6.57E-06,0,0,0
+E444Q,c.1330G>C,missense_variant,,,,,1,1461882,6.84E-07,0,0,0
+E444K,c.1330G>A,missense_variant,Uncertain significance,,191472,,16,1614082,9.91E-06,0,0,0
+T443D,c.1328C>A,missense_variant,,,,,3,781018,3.84E-06,0,0,0
+A442T,c.1324G>A,missense_variant,,,,,1,833104,1.20E-06,0,0,0
+P441R,c.1322C>G,missense_variant,,,,,3,1461888,2.05E-06,0,0,0
+P441L,c.1322C>T,missense_variant,,,,,2,1461888,1.37E-06,0,0,0
+P441S,c.1321C>T,missense_variant,,,,,1,833108,1.20E-06,0,0,0
+P440L,c.1319C>T,missense_variant,Uncertain significance,,67185,,29,1614034,1.80E-05,0,0,2
+G439S,c.1315G>A,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+E438G,c.1313A>G,missense_variant,,,,,2,780940,2.56E-06,0,0,0
+E438K,c.1312G>A,missense_variant,,,,,2,780998,2.56E-06,0,0,1
+T436M,c.1307C>T,missense_variant,Uncertain significance,,67184,,41,1614072,2.54E-05,0,0,4
+E435G,c.1304A>G,missense_variant,,,,,2,1461888,1.37E-06,0,0,0
+K434R,c.1301A>G,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+A430V,c.1289C>T,missense_variant,,,,,1,628778,1.59E-06,0,0,0
+A429V,c.1286C>T,missense_variant,,,,,2,628776,3.18E-06,0,0,0
+S428L,c.1283C>T,missense_variant,Uncertain significance,,67180,,10,1614070,6.20E-06,0,0,0
+V423I,c.1267G>A,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+T421M,c.1262C>T,missense_variant,Conflicting interpretations of pathogenicity,,67173,,4,1461886,2.74E-06,0,0,0
+V418G,c.1253T>G,missense_variant,,,,,1,628778,1.59E-06,0,0,0
+V418D,c.1253T>A,missense_variant,,,,,1,151804,6.59E-06,0,0,0
+L417V,c.1249C>G,missense_variant,,,,,2,833110,2.40E-06,0,0,0
+I414V,c.1240A>G,missense_variant,Uncertain significance,,924916,,1,833108,1.20E-06,0,0,0
+V409L,c.1225G>T,missense_variant,,,,,2,1614026,1.24E-06,0,0,0
+V409M,c.1225G>A,missense_variant,Uncertain significance,,456884,,42,1614144,2.60E-05,0,0,4
+P405L,c.1214C>T,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+P405T,c.1213C>A,missense_variant,,,,,1,833106,1.20E-06,0,0,0
+S404G,c.1210A>G,missense_variant,,,,,1,833108,1.20E-06,0,0,0
+Y403C,c.1208A>G,missense_variant,,,,,2,833110,2.40E-06,0,0,0
+H402Q,c.1206T>A,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+H402Y,c.1204C>T,missense_variant,,,,,1,628766,1.59E-06,0,0,0
+L401V,c.1201C>G,missense_variant,,,,,1,628766,1.59E-06,0,0,0
+T399S,c.1196C>G,missense_variant,,,,,1,628762,1.59E-06,0,0,0
+T399I,c.1196C>T,missense_variant,,,,,1,628762,1.59E-06,0,0,0
+W398L,c.1193G>T,missense_variant,,,,,1,628766,1.59E-06,0,0,0
+W398R,c.1192T>C,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+R397H,c.1190G>A,missense_variant,Uncertain significance,,851410,,78,1613956,4.83E-05,0,0,0
+R397C,c.1189C>T,missense_variant,Conflicting interpretations of pathogenicity,,405343,,22,1613996,1.36E-05,0,0,1
+R397S,c.1189C>A,missense_variant,,,,,1,1461862,6.84E-07,0,0,0
+H396Q,c.1188C>G,missense_variant,,,,,2,1461864,1.37E-06,0,0,0
+I395T,c.1184T>C,missense_variant,,,,,2,833110,2.40E-06,0,0,0
+R394H,c.1181G>A,missense_variant,Uncertain significance,,565408,,12,1613928,7.44E-06,0,0,0
+R394C,c.1180C>T,missense_variant,Uncertain significance,,855813,,10,1461840,6.84E-06,0,0,1
+R394G,c.1180C>G,missense_variant,,,,,1,1461840,6.84E-07,0,0,0
+P393L,c.1178C>T,missense_variant,Uncertain significance,,933401,,9,1461822,6.16E-06,0,0,0
+P393R,c.1178C>G,missense_variant,,,,,2,1613912,1.24E-06,0,0,0
+P393A,c.1177C>G,missense_variant,,,,,1,833108,1.20E-06,0,0,0
+P393S,c.1177C>T,missense_variant,,,,,3,833108,3.60E-06,0,0,0
+A392V,c.1175C>T,missense_variant,,,,,2,1461814,1.37E-06,0,0,0
+A392E,c.1175C>A,missense_variant,,,,,1,1461814,6.84E-07,0,0,0
+A392S,c.1174G>T,missense_variant,,,,,1,152082,6.58E-06,0,0,0
+Q391R,c.1172A>G,missense_variant,,,,,1,628710,1.59E-06,0,0,0
+L385P,c.1154T>C,missense_variant,,,,,1,628568,1.59E-06,0,0,0
+L385M,c.1153C>A,missense_variant,,,,,2,833108,2.40E-06,0,0,0
+V384M,c.1150G>A,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+D383E,c.1149C>G,missense_variant,,,,,1,1461592,6.84E-07,0,0,0
+D383D,c.1147G>A,missense_variant,Uncertain significance,,1484745,,2,1461516,1.37E-06,0,0,0
+A382V,c.1145C>T,missense_variant,,,,,3,833110,3.60E-06,0,0,0
+A382T,c.1144G>A,missense_variant,,,,,1,628296,1.59E-06,0,0,0
+G381S,c.1141G>A,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+S379Y,c.1136C>A,missense_variant,,,,,1,628034,1.59E-06,0,0,0
+V377I,c.1129G>A,missense_variant,,,,,1,627780,1.59E-06,0,0,0
+V374F,c.1120G>T,missense_variant,,,,,1,833018,1.20E-06,0,0,0
+E372D,c.1116G>T,missense_variant,,,,,1,1426988,7.01E-07,0,0,0
+V370I,c.1108G>A,missense_variant,,,,,1,1435032,6.97E-07,0,0,0
+D369K,c.1107T>G,missense_variant,,,,,1,603324,1.66E-06,0,0,0
+H368P,c.1103A>C,missense_variant,,,,,1,606842,1.65E-06,0,0,0
+H368D,c.1102C>A,missense_variant,,,,,1,607710,1.65E-06,0,0,0
+H368Y,c.1102C>T,missense_variant,,,,,2,759958,2.63E-06,0,0,0
+T367S,c.1099A>T,missense_variant,Uncertain significance,,67164,,18,1595274,1.13E-05,0,0,0
+R366Q,c.1097G>A,missense_variant,Uncertain significance,,918732,,8,1444790,5.54E-06,0,0,0
+R366L,c.1097G>T,missense_variant,,,,,1,1444790,6.92E-07,0,0,0
+R366G,c.1096C>G,missense_variant,,,,,1,1446656,6.91E-07,0,0,0
+E365V,c.1094A>T,missense_variant,,,,,1,1449678,6.90E-07,0,0,0
+K362D,c.1086G>C,missense_variant,Uncertain significance,,1361234,,5,1454954,3.44E-06,0,0,0
+K362Q,c.1084A>C,missense_variant,,,,,1,622882,1.61E-06,0,0,0
+A360E,c.1079C>A,missense_variant,,,,,1,624480,1.60E-06,0,0,0
+I359T,c.1076T>C,missense_variant,,,,,1,833106,1.20E-06,0,0,0
+I359V,c.1075A>G,missense_variant,,,,,2,625800,3.20E-06,0,0,0
+E357D,c.1071G>T,missense_variant,Uncertain significance,,628850,,7,626390,1.12E-05,0,0,0
+R356H,c.1067G>A,missense_variant,Uncertain significance,,180382,,118,1612202,7.32E-05,0,0,3
+R356C,c.1066C>T,missense_variant,Uncertain significance,,925269,,23,1612516,1.43E-05,0,0,0
+D355G,c.1064A>G,missense_variant,,,,,1,152244,6.57E-06,0,0,0
+S354G,c.1060A>G,missense_variant,,,,,4,1613242,2.48E-06,0,0,1
+T353A,c.1057A>G,missense_variant,,,,,1,1461114,6.84E-07,0,0,0
+T353S,c.1057A>T,missense_variant,Uncertain significance,,2145897,,4,1461114,2.74E-06,0,0,0
+P352S,c.1054C>T,missense_variant,Uncertain significance,,918184,,1,152262,6.57E-06,0,0,0
+S351L,c.1052C>T,missense_variant,Conflicting interpretations of pathogenicity,,864050,,18,1613516,1.12E-05,0,0,1
+F348Y,c.1043T>A,missense_variant,Uncertain significance,,200319,,1,628570,1.59E-06,0,0,0
+P347S,c.1039C>T,missense_variant,Conflicting interpretations of pathogenicity,,67163,,1756,1614000,0.00108798,8,0,68
+D346E,c.1038C>G,missense_variant,,,,,3,1461682,2.05E-06,1,0,0
+D346A,c.1037A>C,missense_variant,,,,,1,628512,1.59E-06,0,0,0
+D346D,c.1036G>A,missense_variant,Uncertain significance,,841013,,4,1461670,2.74E-06,0,0,1
+D346H,c.1036G>C,missense_variant,,,,,2,1461670,1.37E-06,0,0,0
+D346Y,c.1036G>T,missense_variant,,,,,2,1461668,1.37E-06,0,0,0
+G345D,c.1034G>A,missense_variant,,,,,1,628712,1.59E-06,0,0,0
+G345S,c.1033G>A,missense_variant,,,,,2,628716,3.18E-06,0,0,0
+K344E,c.1030A>G,missense_variant,,,,,1,1461714,6.84E-07,0,0,1
+K344Q,c.1030A>C,missense_variant,,,,,2,1461710,1.37E-06,0,0,1
+L343F,c.1027C>T,missense_variant,,,,,1,152282,6.57E-06,0,0,0
+D342Y,c.1024G>T,missense_variant,,,,,1,628746,1.59E-06,0,0,0
+V341M,c.1021G>A,missense_variant,,,,,1,628762,1.59E-06,0,0,0
+F340L,c.1020T>G,missense_variant,,,,,1,1461850,6.84E-07,0,0,0
+F340I,c.1018T>A,missense_variant,,,,,1,833094,1.20E-06,0,0,0
+D339I,c.1016A>T,missense_variant,,,,,1,833028,1.20E-06,0,0,0
+L338V,c.1012C>G,missense_variant,,,,,1,833006,1.20E-06,0,0,0
+T337S,c.1010C>G,missense_variant,Uncertain significance,,1043131,,7,781054,8.96E-06,0,0,0
+T337A,c.1009A>G,missense_variant,Uncertain significance,,927557,,1,628758,1.59E-06,0,0,0
+Q335R,c.1004A>G,missense_variant,,,,,1,833102,1.20E-06,0,0,0
+I330M,c.990T>G,missense_variant,,,,,9,1461840,6.16E-06,0,0,0
+I330V,c.988A>G,missense_variant,Uncertain significance,,1492369,,9,1461840,6.16E-06,0,0,0
+T329A,c.985A>G,missense_variant,Uncertain significance,,640482,,1,628752,1.59E-06,0,0,1
+R328H,c.983G>A,missense_variant,Uncertain significance,,200315,,11,1614058,6.82E-06,0,0,0
+R328C,c.982C>T,missense_variant,Conflicting interpretations of pathogenicity,,67552,,702,1614188,0.000434894,3,0,23
+Y327C,c.980A>G,missense_variant,Uncertain significance,,264025,,1,628754,1.59E-06,0,0,0
+Y327H,c.979T>C,missense_variant,Uncertain significance,,629260,,10,1461840,6.84E-06,0,0,1
+R326H,c.977G>A,missense_variant,Uncertain significance,,649300,,2,1614086,1.24E-06,0,0,0
+R326C,c.976C>T,missense_variant,Uncertain significance,,1040723,,9,1461816,6.16E-06,0,0,0
+V325M,c.973G>A,missense_variant,Uncertain significance,,526931,,2,1461812,1.37E-06,0,0,0
+D323Y,c.967G>T,missense_variant,,,,,1,1461756,6.84E-07,0,0,0
+D323D,c.967G>A,missense_variant,Uncertain significance,,67551,,12,1614004,7.43E-06,0,0,0
+D323H,c.967G>C,missense_variant,,,,,1,1461762,6.84E-07,0,0,1
+D321G,c.962A>G,missense_variant,,,,,1,628662,1.59E-06,0,0,0
+D321Y,c.961G>T,missense_variant,Uncertain significance,,359312,,2,1461764,1.37E-06,0,0,0
+D321H,c.961G>C,missense_variant,Uncertain significance,,1386490,,7,1461766,4.79E-06,0,0,2
+S320L,c.959C>T,missense_variant,Uncertain significance,,67550,,7,1461722,4.79E-06,0,0,0
+S320W,c.959C>G,missense_variant,Uncertain significance,,200312,,12,1461722,8.21E-06,0,0,1
+D317S,c.950A>G,missense_variant,Uncertain significance,,405346,,10,1461674,6.84E-06,0,0,0
+D317H,c.949A>C,missense_variant,,,,,2,780708,2.56E-06,0,0,0
+L315F,c.945G>T,missense_variant,,,,,2,627990,3.18E-06,0,0,0
+L315S,c.944T>C,missense_variant,,,,,1,628528,1.59E-06,0,0,0
+G314S,c.940G>A,missense_variant,not provided,,67548,,8,1613720,4.96E-06,0,0,0
+S313D,c.938G>A,missense_variant,,,,,1,833062,1.20E-06,0,0,0
+R312P,c.935G>C,missense_variant,,,,,1,152250,6.57E-06,0,0,0
+R312H,c.935G>A,missense_variant,Uncertain significance,,456942,,40,1613634,2.48E-05,0,0,1
+R312L,c.935G>T,missense_variant,Uncertain significance,,2164527,,1,1461384,6.84E-07,0,0,0
+R312C,c.934C>T,missense_variant,Conflicting interpretations of pathogenicity,,67547,,73,1613538,4.52E-05,0,0,4
+L311R,c.932T>G,missense_variant,,,,,1,1461348,6.84E-07,0,0,0
+L311P,c.932T>C,missense_variant,,,,,2,1461348,1.37E-06,0,0,0
+L311V,c.931C>G,missense_variant,,,,,1,152142,6.57E-06,0,0,0
+P310Q,c.929C>A,missense_variant,,,,,5,832940,6.00E-06,0,0,0
+H309Q,c.927C>A,missense_variant,,,,,1,1461114,6.84E-07,0,0,0
+H309Q,c.927C>G,missense_variant,,,,,1,151866,6.58E-06,0,0,0
+H309Y,c.925C>T,missense_variant,Uncertain significance,,526915,,5,1612584,3.10E-06,0,0,0
+M308T,c.923T>C,missense_variant,,,,,20,1612184,1.24E-05,0,0,1
+M308R,c.923T>G,missense_variant,Uncertain significance,,923222,,22,1612184,1.36E-05,0,0,1
+M308V,c.922A>G,missense_variant,,,,,8,1460894,5.48E-06,0,0,0
+A307D,c.920C>A,missense_variant,,,,,1,1460490,6.85E-07,0,0,0
+A307T,c.919G>A,missense_variant,,,,,1,1460606,6.85E-07,0,0,0
+A307P,c.919G>C,missense_variant,,,,,6,1460606,4.11E-06,0,0,0
+G306W,c.916G>T,missense_variant,Likely pathogenic,,67544,,7,1108190,6.32E-06,0,0,0
+G306R,c.916G>A,missense_variant,Uncertain significance,,2051989,,1,1108190,9.02E-07,0,0,0
+S304_T305del,c.910_915del,inframe_deletion,,,,,1,1108190,9.02E-07,0,0,0
+S304R,c.912C>A,missense_variant,Uncertain significance,,1492744,,2,290682,6.88E-06,0,0,0
+S304T,c.911G>C,missense_variant,,,,,1,1123492,8.90E-07,0,0,0
+S304I,c.911G>T,missense_variant,Uncertain significance,,1677406,,1,1123492,8.90E-07,0,0,0
+S304R,c.910A>C,missense_variant,,,,,3,287748,1.04E-05,0,0,0
+A303V,c.908C>T,missense_variant,,,,,1,1123866,8.90E-07,0,0,0
+A303G,c.908C>G,missense_variant,Uncertain significance,,957218,,1,1123866,8.90E-07,0,0,0
+A303T,c.907G>A,missense_variant,,,,,3,1274594,2.35E-06,0,0,1
+A303S,c.907G>T,missense_variant,,,,,2,1122474,1.78E-06,0,0,0
+H302R,c.905A>G,missense_variant,,,,,1,151864,6.58E-06,0,0,0
+R301L,c.902G>T,missense_variant,Uncertain significance,,67542,,3,287708,1.04E-05,0,0,1
+P300L,c.899C>T,missense_variant,Uncertain significance,,1449884,,1,1122340,8.91E-07,0,0,0
+P298L,c.893C>T,missense_variant,Uncertain significance,,1765186,,4,1123198,3.56E-06,0,0,0
+P298R,c.893C>G,missense_variant,,,,,1,1123198,8.90E-07,0,0,1
+P297S,c.889C>T,missense_variant,Uncertain significance,,67540,,67,1280618,5.23E-05,0,0,0
+V295L,c.883G>T,missense_variant,Uncertain significance,,2447224,,2,1134826,1.76E-06,0,0,0
+V295M,c.883G>A,missense_variant,,,,,2,1134826,1.76E-06,0,0,0
+G294V,c.881G>T,missense_variant,Uncertain significance,,67539,,2,1135536,1.76E-06,0,0,0
+G294A,c.881G>C,missense_variant,,,,,1,1135536,8.81E-07,0,0,0
+G294R,c.880G>A,missense_variant,Uncertain significance,,838034,,9,1134638,7.93E-06,0,0,0
+A293V,c.878C>T,missense_variant,,,,,20,1136458,1.76E-05,0,0,1
+A293S,c.877G>T,missense_variant,Uncertain significance,,200308,,21,1134910,1.85E-05,0,0,1
+A293T,c.877G>A,missense_variant,Uncertain significance,,864669,,15,1286962,1.17E-05,0,0,0
+R292H,c.875G>A,missense_variant,Uncertain significance,,1017664,,50,1288606,3.88E-05,0,0,1
+R292C,c.874C>T,missense_variant,,,,,3,304448,9.85E-06,0,0,0
+I288_A290del,c.864_872del,inframe_deletion,,,,,1,1137942,8.79E-07,0,0,0
+M291T,c.872T>C,missense_variant,Uncertain significance,,67537,,65,1288204,5.05E-05,0,0,1
+M291R,c.872T>G,missense_variant,Uncertain significance,,374955,,3,1288204,2.33E-06,0,0,0
+A290V,c.869C>T,missense_variant,,,,,1,1144496,8.74E-07,0,0,0
+A290S,c.868G>T,missense_variant,Uncertain significance,,359314,,1,1145280,8.73E-07,0,0,0
+A290T,c.868G>A,missense_variant,,,,,2,1297374,1.54E-06,0,0,0
+A290P,c.868G>C,missense_variant,Uncertain significance,,200306,,3,1145280,2.62E-06,0,0,0
+E289D,c.867G>C,missense_variant,,,,,1,1145416,8.73E-07,0,0,0
+D286_I288del,c.858_866del,inframe_deletion,,,,,1,1145416,8.73E-07,0,0,1
+E289Q,c.865G>C,missense_variant,Uncertain significance,,1764220,,3,1144896,2.62E-06,0,0,0
+E289K,c.865G>A,missense_variant,Uncertain significance,,67535,,238,1296770,0.000183533,0,0,7
+I288T,c.863T>C,missense_variant,Uncertain significance,,598780,,1,313298,3.19E-06,0,0,0
+D287dup,c.859_861dup,inframe_insertion,Uncertain significance,,1501033,,1,313302,3.19E-06,0,0,0
+D287D,c.859G>A,missense_variant,Uncertain significance,,1763981,,8,1298368,6.16E-06,0,0,0
+D287Y,c.859G>T,missense_variant,,,,,1,1146470,8.72E-07,0,0,0
+A285del,c.852_854del,inframe_deletion,,,,,2,1148092,1.74E-06,0,0,0
+A285V,c.854C>T,missense_variant,Uncertain significance,,1374457,,31,1149186,2.70E-05,0,0,0
+A285T,c.853G>A,missense_variant,Uncertain significance,,220070,,6,1301170,4.61E-06,0,0,1
+S283L,c.848C>T,missense_variant,Uncertain significance,,1993585,,3,1301896,2.30E-06,0,0,0
+A282S,c.844G>T,missense_variant,,,,,1,1150874,8.69E-07,0,0,0
+A282P,c.844G>C,missense_variant,Uncertain significance,,1492770,,1,1150874,8.69E-07,0,0,0
+R281L,c.842G>T,missense_variant,,,,,1,1152324,8.68E-07,0,0,0
+R281H,c.842G>A,missense_variant,Uncertain significance,,2117712,,1,1152324,8.68E-07,0,0,0
+R280C,c.838C>T,missense_variant,Uncertain significance,,943502,,13,1158770,1.12E-05,0,0,0
+V279M,c.835G>A,missense_variant,not provided,,67534,,1,1167106,8.57E-07,0,0,0
+S278R,c.834C>A,missense_variant,,,,,1,335236,2.98E-06,0,0,0
+S278D,c.833G>A,missense_variant,,,,,1,337658,2.96E-06,0,0,0
+A277S,c.829G>T,missense_variant,Uncertain significance,,834430,,1,340322,2.94E-06,0,0,0
+A277T,c.829G>A,missense_variant,,,,,1,340322,2.94E-06,0,0,0
+C276S,c.826T>A,missense_variant,,,,,1,342270,2.92E-06,0,0,0
+S275G,c.823A>G,missense_variant,,,,,1,1179860,8.48E-07,0,0,0
+S275R,c.823A>C,missense_variant,Uncertain significance,,577151,,36,1331678,2.70E-05,0,0,3
+S272P,c.814T>C,missense_variant,,,,,1,350028,2.86E-06,0,0,0
+R271H,c.812G>A,missense_variant,Uncertain significance,,200304,,3,1183006,2.54E-06,0,0,0
+R271C,c.811C>T,missense_variant,,,,,1,352542,2.84E-06,0,0,0
+T270M,c.809C>T,missense_variant,Uncertain significance,,2076773,,21,1343762,1.56E-05,0,0,0
+T270R,c.809C>G,missense_variant,,,,,1,1191880,8.39E-07,0,0,0
+R269Q,c.806G>A,missense_variant,,,,,1,1193044,8.38E-07,0,0,0
+R269W,c.805C>T,missense_variant,not provided,,67529,,4,1348660,2.97E-06,0,0,0
+A268D,c.803C>A,missense_variant,Uncertain significance,,941477,,3,1353098,2.22E-06,0,0,0
+A268V,c.803C>T,missense_variant,Uncertain significance,,1423311,,2,1201184,1.67E-06,0,0,0
+A268S,c.802G>T,missense_variant,,,,,1,1201036,8.33E-07,0,0,0
+S266R,c.798C>A,missense_variant,,,,,1,370562,2.70E-06,0,0,0
+S266I,c.797G>T,missense_variant,Uncertain significance,,1060485,,13,1356636,9.58E-06,1,0,1
+S266G,c.796A>G,missense_variant,,,,,3,523394,5.73E-06,0,0,0
+C265Y,c.794G>A,missense_variant,,,,,6,1204476,4.98E-06,0,0,0
+C265F,c.794G>T,missense_variant,,,,,1,1204476,8.30E-07,0,0,0
+C265G,c.793T>G,missense_variant,,,,,1,371850,2.69E-06,0,0,1
+S263P,c.787T>C,missense_variant,,,,,1,374846,2.67E-06,0,0,0
+G262V,c.785G>T,missense_variant,,,,,1,375094,2.67E-06,0,0,0
+G262S,c.784G>A,missense_variant,,,,,11,1208612,9.10E-06,0,0,0
+S261W,c.782C>G,missense_variant,,,,,1,1208838,8.27E-07,0,0,0
+A260D,c.779C>A,missense_variant,,,,,1,377998,2.65E-06,0,0,0
+A260P,c.778G>C,missense_variant,Uncertain significance,,427970,,5,1363138,3.67E-06,0,0,2
+D259D,c.775G>A,missense_variant,Uncertain significance,,67527,,14,1364026,1.03E-05,0,0,2
+P258L,c.773C>T,missense_variant,Uncertain significance,,495747,,25,1369152,1.83E-05,0,0,1
+P258H,c.773C>A,missense_variant,,,,,1,1217268,8.22E-07,0,0,1
+P258A,c.772C>G,missense_variant,,,,,1,1221314,8.19E-07,0,0,0
+P258S,c.772C>T,missense_variant,Uncertain significance,,1060097,,1,1221314,8.19E-07,0,0,0
+D257H,c.769A>C,missense_variant,Uncertain significance,,67526,,2,151772,1.32E-05,0,0,0
+L256F,c.766C>T,missense_variant,,,,,3,1372230,2.19E-06,0,0,0
+S255R,c.765C>A,missense_variant,Uncertain significance,,1962874,,2,1220190,1.64E-06,0,0,0
+S255D,c.764G>A,missense_variant,,,,,1,1219826,8.20E-07,0,0,0
+H254Q,c.762C>G,missense_variant,not provided,,67525,,21,1219398,1.72E-05,0,0,0
+L248_A253dup,c.743_760dup,inframe_insertion,,,,,1,1219472,8.20E-07,0,0,0
+R252Q,c.755G>A,missense_variant,Uncertain significance,,180380,,24,1371402,1.75E-05,0,0,0
+R252L,c.755G>T,missense_variant,,,,,1,1219558,8.20E-07,0,0,0
+R252W,c.754C>T,missense_variant,Uncertain significance,,1407934,,15,1371584,1.09E-05,0,0,1
+R252G,c.754C>G,missense_variant,not provided,,67524,,6,1371584,4.37E-06,0,0,0
+P251L,c.752C>T,missense_variant,Uncertain significance,,1442675,,2,541984,3.69E-06,0,0,0
+P251S,c.751C>T,missense_variant,Uncertain significance,,67523,,3,1223106,2.45E-06,0,0,0
+L248P,c.743T>C,missense_variant,,,,,1,1240738,8.06E-07,0,0,0
+L248F,c.742C>T,missense_variant,,,,,1,1240602,8.06E-07,0,0,0
+L248V,c.742C>G,missense_variant,,,,,9,1392458,6.46E-06,0,0,0
+Q247R,c.740A>G,missense_variant,Uncertain significance,,1057001,,3,1392614,2.15E-06,0,0,0
+G246A,c.737G>C,missense_variant,,,,,1,1248688,8.01E-07,0,0,0
+G246D,c.737G>A,missense_variant,,,,,2,1248690,1.60E-06,0,0,0
+G246R,c.736G>C,missense_variant,,,,,1,416488,2.40E-06,0,0,0
+G246C,c.736G>T,missense_variant,Conflicting interpretations of pathogenicity,,379687,,2,568308,3.52E-06,0,0,0
+P245R,c.734C>G,missense_variant,,,,,1,151842,6.59E-06,0,0,0
+P245H,c.734C>A,missense_variant,Uncertain significance,,2178378,,12,1251112,9.59E-06,0,0,0
+A244E,c.731C>A,missense_variant,Uncertain significance,,969507,,12,1405146,8.54E-06,0,0,0
+A244V,c.731C>T,missense_variant,Uncertain significance,,405349,,2,1405146,1.42E-06,0,0,0
+A244G,c.731C>G,missense_variant,Uncertain significance,,1511646,,45,1405146,3.20E-05,0,0,0
+A244T,c.730G>A,missense_variant,Uncertain significance,,1758253,,1,420862,2.38E-06,0,0,0
+S243R,c.729C>A,missense_variant,Uncertain significance,,1758143,,1,1254900,7.97E-07,0,0,1
+S243R,c.729C>G,missense_variant,Uncertain significance,,648410,,5,1254900,3.98E-06,0,0,0
+S243D,c.728G>A,missense_variant,,,,,2,577178,3.47E-06,0,0,0
+S243G,c.727A>G,missense_variant,,,,,1,1259186,7.94E-07,0,0,0
+R242H,c.725G>A,missense_variant,,,,,1,427692,2.34E-06,0,0,0
+R242C,c.724C>T,missense_variant,Uncertain significance,,652662,,14,1415168,9.89E-06,1,0,0
+R242G,c.724C>G,missense_variant,Uncertain significance,,67521,,1,1263348,7.92E-07,0,0,0
+R242S,c.724C>A,missense_variant,,,,,2,1263348,1.58E-06,0,0,0
+P241L,c.722C>T,missense_variant,Uncertain significance,,67520,,4,1266136,3.16E-06,0,0,0
+P241R,c.722C>G,missense_variant,,,,,1,1266136,7.90E-07,0,0,0
+P241S,c.721C>T,missense_variant,Uncertain significance,,2048093,,16,1267086,1.26E-05,0,0,0
+P240L,c.719C>T,missense_variant,Uncertain significance,,200299,,18,1421172,1.27E-05,0,0,0
+P240S,c.718C>T,missense_variant,,,,,1,437340,2.29E-06,0,0,0
+P240A,c.718C>G,missense_variant,,,,,2,589164,3.39E-06,0,0,0
+S239Y,c.716C>A,missense_variant,,,,,1,1282430,7.80E-07,0,0,0
+S239F,c.716C>T,missense_variant,,,,,2,1282432,1.56E-06,0,0,0
+S239C,c.716C>G,missense_variant,,,,,1,1282432,7.80E-07,0,0,0
+S239P,c.715T>C,missense_variant,,,,,1,451904,2.21E-06,0,0,0
+G238V,c.713G>T,missense_variant,,,,,2,457112,4.38E-06,0,0,0
+G238S,c.712G>A,missense_variant,not provided,,67519,,4,1442752,2.77E-06,0,0,0
+G238C,c.712G>T,missense_variant,Uncertain significance,,1514209,,1,1290940,7.75E-07,0,0,0
+P237L,c.710C>T,missense_variant,,,,,1,461168,2.17E-06,0,0,0
+P237H,c.710C>A,missense_variant,Uncertain significance,,526973,,1,461168,2.17E-06,0,0,0
+P237A,c.709C>G,missense_variant,,,,,2,1295016,1.54E-06,0,0,0
+G236D,c.707G>A,missense_variant,Uncertain significance,,952259,,1,1295516,7.72E-07,0,0,1
+G236V,c.707G>T,missense_variant,Uncertain significance,,67518,,49,1447338,3.39E-05,0,0,4
+G236C,c.706G>T,missense_variant,,,,,1,1296428,7.71E-07,0,0,0
+A233V,c.698C>T,missense_variant,,,,,2,471292,4.24E-06,0,0,0
+A233P,c.697G>C,missense_variant,,,,,1,1305432,7.66E-07,0,0,0
+A233T,c.697G>A,missense_variant,Uncertain significance,,848897,,13,1457292,8.92E-06,1,0,11
+A233S,c.697G>T,missense_variant,Benign/Likely benign,,527096,,89,1457400,6.11E-05,2,0,7
+R232P,c.695G>C,missense_variant,Uncertain significance,,1407667,,5,1457728,3.43E-06,0,0,3
+R232L,c.695G>T,missense_variant,Uncertain significance,,264446,,47,1457728,3.22E-05,0,0,0
+R232H,c.695G>A,missense_variant,,,,,1,1305882,7.66E-07,0,0,0
+R232C,c.694C>T,missense_variant,Uncertain significance,,855032,,8,1458130,5.49E-06,0,0,0
+R231L,c.692G>T,missense_variant,Uncertain significance,,2501446,,4,1308368,3.06E-06,0,0,0
+R231Q,c.692G>A,missense_variant,Uncertain significance,,952892,,2,1460228,1.37E-06,0,0,0
+R231W,c.691C>T,missense_variant,,,,,3,475474,6.31E-06,0,0,0
+E230D,c.690G>T,missense_variant,,,,,3,1309682,2.29E-06,0,0,0
+E230V,c.689A>T,missense_variant,,,,,1,1309720,7.64E-07,0,0,0
+A228V,c.683C>T,missense_variant,Uncertain significance,,659941,,3,1466416,2.05E-06,0,0,0
+A228P,c.682G>C,missense_variant,Uncertain significance,,526974,,8,1466674,5.45E-06,0,0,1
+A228T,c.682G>A,missense_variant,,,,,5,1466674,3.41E-06,0,0,0
+P227H,c.680C>A,missense_variant,Uncertain significance,,2141918,,1,1320612,7.57E-07,0,0,1
+G226A,c.677G>C,missense_variant,,,,,1,1322368,7.56E-07,0,0,0
+G226R,c.676G>A,missense_variant,,,,,1,489228,2.04E-06,0,0,1
+G226W,c.676G>T,missense_variant,,,,,1,489228,2.04E-06,0,0,0
+L225V,c.673C>G,missense_variant,,,,,1,1325888,7.54E-07,0,0,0
+L225F,c.673C>T,missense_variant,,,,,1,1325888,7.54E-07,0,0,0
+G224R,c.670G>A,missense_variant,Uncertain significance,,200297,,1,1328334,7.53E-07,0,0,0
+A223E,c.668C>A,missense_variant,,,,,2,496222,4.03E-06,0,0,0
+A223S,c.667G>T,missense_variant,,,,,2,1329648,1.50E-06,0,0,0
+V222A,c.665T>C,missense_variant,Uncertain significance,,1416946,,1,1330516,7.52E-07,0,0,0
+V222L,c.664G>C,missense_variant,,,,,2,1330340,1.50E-06,0,0,0
+V222M,c.664G>A,missense_variant,Uncertain significance,,835460,,2,1330340,1.50E-06,0,0,0
+H221D,c.661C>G,missense_variant,,,,,1,151894,6.58E-06,0,0,0
+D220K,c.660C>G,missense_variant,,,,,1,1331796,7.51E-07,0,0,0
+D219V,c.656A>T,missense_variant,Conflicting interpretations of pathogenicity,,157662,,11,1335844,8.23E-06,0,0,0
+M218V,c.652A>G,missense_variant,Uncertain significance,,67516,,10,655450,1.53E-05,0,0,0
+A217V,c.650C>T,missense_variant,,,,,2,504230,3.97E-06,0,0,0
+T216I,c.647C>T,missense_variant,Uncertain significance,,582107,,1,504528,1.98E-06,0,0,0
+V215A,c.644T>C,missense_variant,,,,,1,1337734,7.48E-07,0,0,0
+E214K,c.640G>A,missense_variant,Uncertain significance,,1524417,,7,1488898,4.70E-06,0,0,0
+D213G,c.638A>G,missense_variant,Uncertain significance,,971664,,51,1490860,3.42E-05,1,0,2
+L212M,c.634C>A,missense_variant,,,,,1,505640,1.98E-06,0,0,0
+A211V,c.632C>T,missense_variant,Uncertain significance,,2137075,,1,504284,1.98E-06,0,0,0
+A211T,c.631G>A,missense_variant,,,,,2,1337254,1.50E-06,0,0,0
+S209L,c.626C>T,missense_variant,,,,,2,1336472,1.50E-06,0,0,0
+E208K,c.622G>A,missense_variant,Uncertain significance,,1348701,,2,502122,3.98E-06,0,0,0
+S207D,c.620G>A,missense_variant,,,,,1,1334210,7.50E-07,0,0,0
+S206R,c.618C>A,missense_variant,,,,,1,1333372,7.50E-07,0,0,0
+S206I,c.617G>T,missense_variant,,,,,22,1485332,1.48E-05,0,0,1
+P205L,c.614C>T,missense_variant,Uncertain significance,,829864,,31,1483990,2.09E-05,0,0,2
+P205T,c.613C>A,missense_variant,Uncertain significance,,1422007,,17,1332276,1.28E-05,0,0,4
+P205S,c.613C>T,missense_variant,Uncertain significance,,662184,,2,1484192,1.35E-06,0,0,0
+A204S,c.610G>T,missense_variant,,,,,19,1330656,1.43E-05,0,0,0
+A203V,c.608C>T,missense_variant,,,,,5,1329534,3.76E-06,0,0,0
+A203T,c.607G>A,missense_variant,Uncertain significance,,67514,,14,1481234,9.45E-06,0,0,0
+A203S,c.607G>T,missense_variant,,,,,2,1329724,1.50E-06,0,0,0
+P202S,c.604C>T,missense_variant,,,,,3,1328164,2.26E-06,0,0,0
+T201M,c.602C>T,missense_variant,Uncertain significance,,200295,,1,493954,2.02E-06,0,0,0
+L200Q,c.599T>A,missense_variant,,,,,3,491940,6.10E-06,0,0,0
+L200P,c.599T>C,missense_variant,,,,,1,491940,2.03E-06,0,0,0
+L200V,c.598C>G,missense_variant,Uncertain significance,,1389796,,1,490720,2.04E-06,0,0,0
+D199A,c.596A>C,missense_variant,,,,,1,489306,2.04E-06,0,0,0
+V198E,c.593T>A,missense_variant,,,,,1,486938,2.05E-06,0,0,0
+V198L,c.592G>C,missense_variant,,,,,2,638108,3.13E-06,0,0,0
+D197E,c.591C>G,missense_variant,,,,,1,1319532,7.58E-07,0,0,0
+D197D,c.589G>A,missense_variant,Uncertain significance,,952715,,10,1470228,6.80E-06,0,0,6
+V196M,c.586G>A,missense_variant,,,,,1,480530,2.08E-06,0,0,0
+V195L,c.583G>T,missense_variant,,,,,1,1312994,7.62E-07,0,0,0
+V195L,c.583G>C,missense_variant,,,,,1,1312994,7.62E-07,0,0,0
+V194A,c.581T>C,missense_variant,,,,,1,1312488,7.62E-07,0,0,0
+V194M,c.580G>A,missense_variant,Uncertain significance,,640808,,27,1463784,1.84E-05,0,0,0
+A193V,c.578C>T,missense_variant,Uncertain significance,,1304544,,7,1454456,4.81E-06,0,0,0
+A193G,c.578C>G,missense_variant,,,,,2,1302562,1.54E-06,0,0,0
+P191_A193dup,c.567_575dup,inframe_insertion,Uncertain significance,,1308547,,8,1451116,5.51E-06,0,0,0
+G192A,c.575G>C,missense_variant,,,,,1,466016,2.15E-06,0,0,0
+P191R,c.572C>G,missense_variant,,,,,1,1298860,7.70E-07,0,0,1
+A188_A190dup,c.562_570dup,inframe_insertion,Uncertain significance,,1424899,,15,1298228,1.16E-05,0,0,1
+A188_A190del,c.562_570del,inframe_deletion,Uncertain significance,,2197341,,1,1298226,7.70E-07,0,0,0
+A190V,c.569C>T,missense_variant,,,,,23,1447468,1.59E-05,0,0,0
+G187_G189del,c.560_568del,inframe_deletion,Conflicting interpretations of pathogenicity,,200600,,1079,1447500,0.000745423,12,0,46
+G184_G189dup,c.551_568dup,inframe_insertion,Uncertain significance,,862817,,2,1295566,1.54E-06,0,0,0
+G187_G189dup,c.560_568dup,inframe_insertion,Uncertain significance,,200604,,216,1447572,0.000149215,0,0,4
+A190T,c.568G>A,missense_variant,Conflicting interpretations of pathogenicity,,67512,,187,1428080,0.000130945,0,0,6
+G189D,c.566G>A,missense_variant,,,,,1,446356,2.24E-06,0,0,0
+G189V,c.566G>T,missense_variant,Uncertain significance,,637978,,2,446356,4.48E-06,0,0,1
+A188V,c.563C>T,missense_variant,Uncertain significance,,200293,,22,1432004,1.54E-05,0,0,0
+A188P,c.562G>C,missense_variant,,,,,1,1281692,7.80E-07,0,0,0
+A188S,c.562G>T,missense_variant,,,,,2,1281690,1.56E-06,0,0,1
+A188T,c.562G>A,missense_variant,Uncertain significance,,1035380,,4,1281690,3.12E-06,0,0,0
+G187A,c.560G>C,missense_variant,,,,,2,1283582,1.56E-06,0,0,0
+G187C,c.559G>T,missense_variant,Uncertain significance,,1988055,,1,1286284,7.77E-07,0,0,1
+G187S,c.559G>A,missense_variant,not provided,,67511,,2,1286284,1.55E-06,0,0,0
+G186V,c.557G>T,missense_variant,,,,,1,455396,2.20E-06,0,0,0
+A185E,c.554C>A,missense_variant,,,,,1,1292312,7.74E-07,0,0,0
+A185V,c.554C>T,missense_variant,,,,,3,1444240,2.08E-06,0,0,0
+A185T,c.553G>A,missense_variant,Uncertain significance,,1516873,,1,1291056,7.75E-07,0,0,0
+G183V,c.548G>T,missense_variant,,,,,1,463234,2.16E-06,0,0,0
+G183S,c.547G>A,missense_variant,,,,,1,463546,2.16E-06,0,0,0
+S182L,c.545C>T,missense_variant,,,,,9,1305082,6.90E-06,0,0,0
+S182W,c.545C>G,missense_variant,Uncertain significance,,405351,,1,1305084,7.66E-07,0,0,0
+R181Q,c.542G>A,missense_variant,Benign/Likely benign,,67510,,772,1458078,0.000529464,2,0,39
+R181P,c.542G>C,missense_variant,,,,,4,1306028,3.06E-06,0,0,0
+R181W,c.541C>T,missense_variant,,,,,6,1308786,4.58E-06,0,0,3
+S179W,c.536C>G,missense_variant,,,,,1,1311276,7.63E-07,0,0,0
+S179L,c.536C>T,missense_variant,Uncertain significance,,1381911,,5,1311276,3.81E-06,0,0,0
+E177A,c.530A>C,missense_variant,Uncertain significance,,1045316,,1,1313668,7.61E-07,0,0,0
+R176Q,c.527G>A,missense_variant,Uncertain significance,,1010337,,9,1466460,6.14E-06,0,0,0
+L173_A175dup,c.518_526dup,inframe_insertion,,,,,1,1314450,7.61E-07,0,0,0
+R176W,c.526C>T,missense_variant,Conflicting interpretations of pathogenicity; risk factor,,67509,,479,1466372,0.000326657,1,0,11
+R176G,c.526C>G,missense_variant,,,,,1,152020,6.58E-06,0,0,0
+A175V,c.524C>T,missense_variant,,,,,1,1314196,7.61E-07,0,0,0
+A175D,c.524C>A,missense_variant,Likely benign,,200211,,37,1466246,2.52E-05,0,0,0
+A175S,c.523G>T,missense_variant,Uncertain significance,,937283,,13,1466192,8.87E-06,0,0,1
+T174K,c.521C>A,missense_variant,,,,,2,1313738,1.52E-06,0,0,0
+T174M,c.521C>T,missense_variant,Uncertain significance,,1746153,,3,1313736,2.28E-06,0,0,0
+L170_L171dup,c.508_513dup,inframe_insertion,Uncertain significance,,862653,,6,1314124,4.57E-06,0,0,1
+L171R,c.512T>G,missense_variant,,,,,1,152052,6.58E-06,0,0,0
+A169T,c.505G>A,missense_variant,,,,,1,482364,2.07E-06,0,0,0
+P168S,c.502C>T,missense_variant,,,,,1,482848,2.07E-06,0,0,0
+K166D,c.498G>T,missense_variant,,,,,1,485252,2.06E-06,0,0,0
+R164H,c.491G>A,missense_variant,Uncertain significance,,67508,,120,1472416,8.15E-05,0,0,1
+R164P,c.491G>C,missense_variant,,,,,1,1320276,7.57E-07,0,0,1
+F163del,c.487_489del,inframe_deletion,,,,,1,1320214,7.57E-07,0,0,0
+R164C,c.490C>T,missense_variant,,,,,1,1320212,7.57E-07,0,0,0
+R164G,c.490C>G,missense_variant,,,,,2,1320214,1.51E-06,0,0,0
+F163L,c.489C>G,missense_variant,,,,,14,1473044,9.50E-06,0,0,0
+F163Y,c.488T>A,missense_variant,,,,,4,639254,6.26E-06,0,0,0
+K161R,c.482A>G,missense_variant,,,,,1,1324218,7.55E-07,0,0,0
+K161E,c.481A>G,missense_variant,,,,,2,1323660,1.51E-06,0,0,0
+A160V,c.479C>T,missense_variant,,,,,1,1324126,7.55E-07,0,0,0
+A160P,c.478G>C,missense_variant,,,,,1,1323274,7.56E-07,0,0,0
+A160S,c.478G>T,missense_variant,Uncertain significance,,955775,,7,1475400,4.74E-06,0,0,0
+A160T,c.478G>A,missense_variant,,,,,1,1323274,7.56E-07,0,0,0
+R159H,c.476G>A,missense_variant,Uncertain significance,,1425969,,5,1475744,3.39E-06,0,0,0
+R159G,c.475C>G,missense_variant,,,,,1,1323378,7.56E-07,0,0,0
+R159C,c.475C>T,missense_variant,,,,,3,1323378,2.27E-06,0,0,0
+R159S,c.475C>A,missense_variant,,,,,1,1323378,7.56E-07,0,0,0
+P157L,c.470C>T,missense_variant,Uncertain significance,,1982556,,7,1461732,4.79E-06,0,0,0
+H147_S153del,c.439_459del,inframe_deletion,,,,,1,1461770,6.84E-07,0,0,0
+W154R,c.460T>C,missense_variant,Uncertain significance,,628868,,3,1461770,2.05E-06,0,0,0
+W154G,c.460T>G,missense_variant,,,,,1,1461770,6.84E-07,0,0,0
+S153R,c.459C>G,missense_variant,,,,,1,152188,6.57E-06,0,0,0
+T152S,c.455C>G,missense_variant,Uncertain significance,,200288,,10,1613986,6.20E-06,0,0,0
+T152I,c.455C>T,missense_variant,Uncertain significance,,940899,,2,1461792,1.37E-06,0,0,0
+P151L,c.452C>T,missense_variant,,,,,5,1461792,3.42E-06,0,0,0
+P151A,c.451C>G,missense_variant,Uncertain significance,,405361,,8,1461794,5.47E-06,0,0,0
+P151S,c.451C>T,missense_variant,Uncertain significance,,1026596,,2,1461794,1.37E-06,0,0,0
+P150L,c.449C>T,missense_variant,Uncertain significance,,1171810,,18,1613958,1.12E-05,0,0,0
+P150S,c.448C>T,missense_variant,Uncertain significance,,222667,,1,1461806,6.84E-07,0,0,0
+P150T,c.448C>A,missense_variant,,,,,2,1461806,1.37E-06,0,0,0
+G149V,c.446G>T,missense_variant,,,,,6,1613922,3.72E-06,0,0,0
+G149A,c.446G>C,missense_variant,Uncertain significance,,67506,,29,1613922,1.80E-05,0,0,0
+G149S,c.445G>A,missense_variant,,,,,2,1461812,1.37E-06,0,0,0
+R148Q,c.443G>A,missense_variant,Conflicting interpretations of pathogenicity,,567306,,25,1614004,1.55E-05,0,0,2
+R148W,c.442C>T,missense_variant,Conflicting interpretations of pathogenicity,,67505,,1293,1614080,0.000801076,7,0,97
+H147R,c.440A>G,missense_variant,Uncertain significance,,200285,,57,780822,7.30E-05,0,0,2
+D146I,c.437A>T,missense_variant,,,,,2,628726,3.18E-06,0,0,0
+D146D,c.436A>G,missense_variant,,,,,1,152090,6.58E-06,0,0,0
+D146Y,c.436A>T,missense_variant,,,,,2,628734,3.18E-06,0,0,0
+T145I,c.434C>T,missense_variant,Uncertain significance,,1047559,,1,628744,1.59E-06,0,0,0
+T145A,c.433A>G,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+D144G,c.431A>G,missense_variant,,,,,4,1613988,2.48E-06,0,0,0
+D144V,c.431A>T,missense_variant,Conflicting interpretations of pathogenicity,,526910,,26,1613988,1.61E-05,0,0,1
+D144D,c.430G>A,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+H143R,c.428A>G,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+H143Y,c.427C>T,missense_variant,,,,,1,628744,1.59E-06,0,0,0
+A142T,c.424G>A,missense_variant,Uncertain significance,,1025220,,3,780900,3.84E-06,0,0,0
+P141L,c.422C>T,missense_variant,Conflicting interpretations of pathogenicity,,67504,,167,1614050,0.000103466,0,0,5
+P141S,c.421C>T,missense_variant,Uncertain significance,,1045443,,5,1613990,3.10E-06,0,0,0
+S140F,c.419C>T,missense_variant,Uncertain significance,,1879703,,3,1461870,2.05E-06,0,0,1
+S140Y,c.419C>A,missense_variant,Uncertain significance,,1945738,,1,1461870,6.84E-07,0,0,0
+G139A,c.416G>C,missense_variant,Uncertain significance,,1018296,,3,628760,4.77E-06,0,0,0
+G139R,c.415G>C,missense_variant,,,,,6,628762,9.54E-06,0,0,0
+M137K,c.410T>A,missense_variant,,,,,1,152182,6.57E-06,0,0,0
+K135del,c.403_405del,inframe_deletion,Uncertain significance,,1986484,,1,833110,1.20E-06,0,0,0
+M133T,c.398T>C,missense_variant,Uncertain significance,,200282,,30,1614034,1.86E-05,0,0,0
+V132del,c.394_396del,inframe_deletion,,,,,1,628778,1.59E-06,0,0,0
+V132A,c.395T>C,missense_variant,,,,,1,628774,1.59E-06,0,0,0
+V131A,c.392T>C,missense_variant,,,,,5,1461886,3.42E-06,0,0,0
+V131L,c.391G>T,missense_variant,Uncertain significance,,927974,,53,1614094,3.28E-05,0,0,4
+V131L,c.391G>C,missense_variant,,,,,1,1461882,6.84E-07,0,0,1
+E130K,c.388G>A,missense_variant,Uncertain significance,,67503,,6,1461886,4.10E-06,0,0,0
+D128S,c.383A>G,missense_variant,Uncertain significance,,191473,,27,1613958,1.67E-05,0,0,2
+I126V,c.376A>G,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+M124L,c.370A>C,missense_variant,,,,,7,1461888,4.79E-06,0,0,0
+M124V,c.370A>G,missense_variant,,,,,2,1461888,1.37E-06,0,0,0
+D119G,c.356A>G,missense_variant,,,,,1,628780,1.59E-06,0,0,0
+D119H,c.355G>C,missense_variant,Conflicting interpretations of pathogenicity,,405352,,38,1614086,2.35E-05,0,0,0
+E118D,c.354G>C,missense_variant,Uncertain significance,,2058854,,3,1461888,2.05E-06,0,0,1
+E118K,c.352G>A,missense_variant,Uncertain significance,,1991588,,10,1613920,6.20E-06,0,0,1
+K116Q,c.346A>C,missense_variant,Uncertain significance,,2039445,,4,1461888,2.74E-06,0,0,0
+V115M,c.343G>A,missense_variant,Uncertain significance,,67496,,8,1614182,4.96E-06,0,0,1
+P114R,c.341C>G,missense_variant,,,,,1,628780,1.59E-06,0,0,0
+V112M,c.334G>A,missense_variant,,,,,1,628782,1.59E-06,0,0,0
+L109Q,c.326T>A,missense_variant,Uncertain significance,,1729611,,1,152174,6.57E-06,0,0,0
+L107P,c.320T>C,missense_variant,,,,,3,780968,3.84E-06,0,0,0
+C105F,c.314G>T,missense_variant,,,,,1,628766,1.59E-06,0,0,0
+S104R,c.312C>G,missense_variant,Uncertain significance,,527024,,1,1461876,6.84E-07,0,0,0
+G103A,c.308G>C,missense_variant,,,,,1,833110,1.20E-06,0,0,0
+G103R,c.307G>A,missense_variant,,,,,1,608496,1.64E-06,0,0,1
+D102D,c.304G>A,missense_variant,,,,,1,1304242,7.67E-07,0,0,0
+D102Y,c.304G>T,missense_variant,,,,,1,1304242,7.67E-07,0,0,0
+F98L,c.294C>A,missense_variant,,,,,1,1448252,6.90E-07,0,0,0
+A97V,c.290C>T,missense_variant,,,,,2,1450086,1.38E-06,0,0,0
+A97T,c.289G>A,missense_variant,,,,,2,1448376,1.38E-06,0,0,0
+E95K,c.283G>A,missense_variant,,,,,4,728566,5.49E-06,0,0,0
+V94A,c.281T>C,missense_variant,,,,,1,833088,1.20E-06,0,0,0
+K93R,c.278A>G,missense_variant,Likely benign,,413325,,155,1604352,9.66E-05,3,0,5
+K93Q,c.277A>C,missense_variant,,,,,1,152168,6.57E-06,0,0,0
+R92L,c.275G>T,missense_variant,Uncertain significance,,200575,,1,617894,1.62E-06,0,0,0
+R92C,c.274C>T,missense_variant,Uncertain significance,,200573,,12,1605096,7.48E-06,0,0,2
+E91D,c.273G>T,missense_variant,Uncertain significance,,1305882,,1,1453174,6.88E-07,0,0,1
+E91D,c.273G>C,missense_variant,,,,,1,1453174,6.88E-07,0,0,1
+E91G,c.272A>G,missense_variant,,,,,1,620178,1.61E-06,0,0,0
+E91K,c.271G>A,missense_variant,,,,,1,1453470,6.88E-07,0,0,0
+E90D,c.270G>T,missense_variant,,,,,1,620530,1.61E-06,0,0,0
+E90K,c.268G>A,missense_variant,,,,,3,620534,4.83E-06,0,0,1
+E90Q,c.268G>C,missense_variant,Uncertain significance,,2056550,,1,620534,1.61E-06,0,0,0
+A89V,c.266C>T,missense_variant,,,,,5,1453854,3.44E-06,0,0,0
+A89G,c.266C>G,missense_variant,,,,,1,1453854,6.88E-07,0,0,0
+A89T,c.265G>A,missense_variant,,,,,1,620838,1.61E-06,0,0,0
+G88V,c.263G>T,missense_variant,,,,,1,620992,1.61E-06,0,0,0
+A83V,c.248C>T,missense_variant,,,,,4,1453972,2.75E-06,0,0,0
+Q81H,c.243G>C,missense_variant,Uncertain significance,,67399,,3,1454142,2.06E-06,0,0,0
+A80V,c.239C>T,missense_variant,not provided,,67395,,1,619874,1.61E-06,0,0,0
+A80S,c.238G>T,missense_variant,,,,,1,619954,1.61E-06,0,0,1
+A79T,c.235G>A,missense_variant,Uncertain significance,,987798,,11,1452944,7.57E-06,0,0,1
+R77H,c.230G>A,missense_variant,,,,,1,619674,1.61E-06,0,0,0
+R77G,c.229C>G,missense_variant,,,,,1,619578,1.61E-06,0,0,0
+R77C,c.229C>T,missense_variant,,,,,1,619578,1.61E-06,0,0,0
+R76H,c.227G>A,missense_variant,,,,,2,1452050,1.38E-06,0,0,0
+R76L,c.227G>T,missense_variant,Uncertain significance,,629614,,4,1452048,2.75E-06,0,0,0
+R73H,c.218G>A,missense_variant,,,,,2,1604524,1.25E-06,0,0,0
+R73P,c.218G>C,missense_variant,,,,,1,1452294,6.89E-07,0,0,0
+H70Y,c.208C>T,missense_variant,,,,,4,1453084,2.75E-06,0,0,1
+T65S,c.194C>G,missense_variant,Uncertain significance,,237295,,1,1455702,6.87E-07,0,0,0
+P63H,c.188C>A,missense_variant,Conflicting interpretations of pathogenicity,,200559,,1,152246,6.57E-06,0,0,0
+R62Q,c.185G>A,missense_variant,Uncertain significance,,67298,,4,775278,5.16E-06,0,0,0
+Q61E,c.181C>G,missense_variant,,,,,3,1456410,2.06E-06,0,0,0
+A57S,c.169G>T,missense_variant,,,,,13,1457854,8.92E-06,0,0,0
+A57T,c.169G>A,missense_variant,Uncertain significance,,654924,,1,152242,6.57E-06,0,0,0
+R56L,c.167G>T,missense_variant,Conflicting interpretations of pathogenicity,,200557,,1,1457910,6.86E-07,0,0,0
+R56P,c.167G>C,missense_variant,Uncertain significance,,1777880,,1,1457910,6.86E-07,0,0,0
+S55L,c.164C>T,missense_variant,Conflicting interpretations of pathogenicity,,67224,,2,1458400,1.37E-06,0,0,0
+Y54C,c.161A>G,missense_variant,,,,,1,625608,1.60E-06,0,0,0
+C52W,c.156C>G,missense_variant,Uncertain significance,,972150,,37,1458606,2.54E-05,1,0,0
+E50D,c.150G>T,missense_variant,Uncertain significance,,67211,,2,1611780,1.24E-06,0,0,0
+G47D,c.140G>A,missense_variant,,,,,1,1459744,6.85E-07,0,0,0
+G47S,c.139G>A,missense_variant,,,,,1,626700,1.60E-06,0,0,0
+D46E,c.138C>G,missense_variant,Uncertain significance,,921751,,8,1611982,4.96E-06,0,0,1
+D46D,c.136G>A,missense_variant,Uncertain significance,,200551,,1,152230,6.57E-06,0,0,0
+C44R,c.130T>C,missense_variant,,,,,1,1459670,6.85E-07,0,0,0
+I42_Y43delinsD,c.125_127del,inframe_deletion,,,,,1,833108,1.20E-06,0,0,0
+V41I,c.121G>A,missense_variant,,,,,2,1458776,1.37E-06,0,0,0
+C39R,c.115T>C,missense_variant,Uncertain significance,,456883,,27,777916,3.47E-05,0,0,0
+V36G,c.107T>G,missense_variant,,,,,1,152076,6.58E-06,0,0,0
+R35P,c.104G>C,missense_variant,Uncertain significance,,1776700,,2,1456434,1.37E-06,0,0,0
+R35Q,c.104G>A,missense_variant,,,,,2,1456434,1.37E-06,0,0,0
+R35L,c.104G>T,missense_variant,,,,,1,1456432,6.87E-07,0,0,0
+A34T,c.100G>A,missense_variant,,,,,5,1608542,3.11E-06,0,0,0
+A32P,c.94G>C,missense_variant,,,,,1,1454394,6.88E-07,0,0,0
+I31V,c.91A>G,missense_variant,,,,,1,1454272,6.88E-07,0,0,0
+I30L,c.88A>C,missense_variant,,,,,2,1453036,1.38E-06,0,0,0
+I30V,c.88A>G,missense_variant,,,,,1,1453036,6.88E-07,0,0,0
+F29L,c.87C>A,missense_variant,Pathogenic,,67538,,1,1452354,6.89E-07,0,0,0
+R27H,c.80G>A,missense_variant,Conflicting interpretations of pathogenicity,,200540,,2,1447324,1.38E-06,0,0,0
+S26D,c.77G>A,missense_variant,,,,,1,1440718,6.94E-07,0,0,0
+S26C,c.76A>T,missense_variant,,,,,2,802510,2.49E-06,0,0,0
+Q25P,c.74A>C,missense_variant,,,,,1,982882,1.02E-06,0,0,0
+E23D,c.69G>T,missense_variant,,,,,1,1453522,6.88E-07,0,0,0
+F22L,c.66T>G,missense_variant,,,,,1,1309592,7.64E-07,0,0,0
+K21T,c.62A>C,missense_variant,,,,,3,1232248,2.43E-06,0,0,0
+I18M,c.54C>G,missense_variant,,,,,5,1453482,3.44E-06,0,0,0
+I18V,c.52A>G,missense_variant,,,,,1,594464,1.68E-06,0,0,0
+D16E,c.48C>A,missense_variant,Uncertain significance,,1904539,,4,1455958,2.75E-06,0,0,0
+D16A,c.47A>C,missense_variant,not provided,,67507,,3,1392070,2.16E-06,0,0,0
+L15V,c.43C>G,missense_variant,Uncertain significance,,1983923,,3,614134,4.88E-06,0,0,0
+F14L,c.40T>C,missense_variant,,,,,1,609652,1.64E-06,0,0,0
+T13D,c.38C>A,missense_variant,Uncertain significance,,923223,,44,1606274,2.74E-05,0,0,2
+T13I,c.38C>T,missense_variant,,,,,2,1456378,1.37E-06,0,0,0
+D12K,c.36C>A,missense_variant,,,,,1,1456262,6.87E-07,0,0,0
+D12S,c.35A>G,missense_variant,,,,,1,1399178,7.15E-07,0,0,0
+D12H,c.34A>C,missense_variant,Uncertain significance,,1393237,,1,615654,1.62E-06,0,0,0
+D12D,c.34A>G,missense_variant,Uncertain significance,,1525692,,2,763452,2.62E-06,0,0,0
+Q11R,c.32A>G,missense_variant,Uncertain significance,,1063296,,2,609174,3.28E-06,0,0,0
+Q11L,c.32A>T,missense_variant,,,,,2,755984,2.65E-06,0,0,0
+Q11E,c.31C>G,missense_variant,,,,,1,833086,1.20E-06,0,0,0
+P10L,c.29C>T,missense_variant,Uncertain significance,,946979,,3,1456066,2.06E-06,0,0,1
+P10S,c.28C>T,missense_variant,,,,,6,623030,9.63E-06,0,0,1
+A9G,c.26C>G,missense_variant,,,,,1,1455856,6.87E-07,0,0,0
+A9V,c.26C>T,missense_variant,Uncertain significance,,200592,,20,1605404,1.25E-05,0,0,3
+A9E,c.26C>A,missense_variant,,,,,1,1455856,6.87E-07,0,0,1
+A9T,c.25G>A,missense_variant,,,,,1,618804,1.62E-06,0,0,0
+H7Q,c.21C>G,missense_variant,,,,,1,1449088,6.90E-07,0,0,0
+H7P,c.20A>C,missense_variant,,,,,1,602578,1.66E-06,0,0,0
+H7Y,c.19C>T,missense_variant,,,,,3,1455330,2.06E-06,0,0,0
+G6D,c.17G>A,missense_variant,,,,,1,594394,1.68E-06,0,0,0
+G6S,c.16G>A,missense_variant,,,,,1,1454614,6.87E-07,0,0,0
+R5M,c.14G>T,missense_variant,,,,,1,1455228,6.87E-07,0,0,0
+V3L,c.7G>T,missense_variant,,,,,1,1454220,6.88E-07,0,0,0
+P2R,c.5C>G,missense_variant,,,,,1,604472,1.65E-06,0,0,0
+M1?,c.2T>C,start_lost,,,,,1,1442148,6.93E-07,0,0,0
