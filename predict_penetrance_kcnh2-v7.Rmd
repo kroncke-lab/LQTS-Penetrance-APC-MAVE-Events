@@ -176,7 +176,7 @@ solab <- function(mean, variance) {
 ```
 
 # Introduction
-This document describes an estimate of the positive predictive value (PPV) of variant discovery for all variants in the gene *KCNH2* on long QT syndrome type 2 (LQT2). Additional details on the methods used are published Kroncke et al. 2020 PLOS Genetics and at the following website: (variantbrowser.org). We use observed and estimated probability of LQT2 diagnosis for all known KCNH2 variants as a way to assess the per variant PPV for variant discovery. Our objective is to develope a prior estimate of the per variant PPV on LQT2 which incorporates structure, function, and *in silico* predictors. We use these *in silico* and *in vitro* data to generate a Bayesian prior estimate of the per variant PPV since these data can be generated in a lab setting, unlike heterozygotes/carriers of *KCNH2* variants which may or may not exist. The final posterior estimate combines this derived prior and clinically phenotyped heterozygotes/carriers.
+This document describes an processing and estimating risk of LQTS diagnosis and risk of cardiac events for heterozygotes of variants in the gene *KCNH2*, associated with long QT syndrome type 2 (LQT2). Additional details on the methods used are published Kroncke et al. 2020 PLOS Genetics and at the following website: (variantbrowser.org). We use observed and estimated probability of LQT2 diagnosis for all known KCNH2 variants as a way to assess the per variant PPV for variant discovery. Our objective is to develope a prior estimate of the per variant PPV on LQT2 which incorporates structure, function, and *in silico* predictors. We use these *in silico* and *in vitro* data to generate a Bayesian prior estimate of the per variant PPV since these data can be generated in a lab setting, unlike heterozygotes/carriers of *KCNH2* variants which may or may not exist. The final posterior estimate combines this derived prior and clinically phenotyped heterozygotes/carriers.
 
 # Part 1: Load Data
 
@@ -201,14 +201,15 @@ load("C:/Users/KRONCKE/OneDrive - VUMC/Kroncke_Lab/GitHub/Bayes_KCNH2_LQT2_Penet
 d<-d[,c("var", "isoform", "mut_type", "pph2_prob", "blast_pssm", "provean_score", "pamscore", "aasimilaritymat", "revel_score", "cardiacboost")]
 d<-merge(d,e,all = T)
 
-#load Clinvar and import new gnomAD
-clinvar<-read.csv('/Users/KRONCKE/Dropbox/sat paper/Modelling/gnomad_v4_simple.csv')
+#Import new gnomAD
+gnomad.v4<-read.csv('/Users/KRONCKE/Dropbox/sat paper/Modelling/gnomad_v4_simple.csv')
+gnomad.v4<-unique(gnomad.v4)
+gnomad.v4<-gnomad.v4[,c("var","gnomad.v4")]
+
+#load clinvar
+clinvar <- read.csv('/Users/KRONCKE/Dropbox/sat paper/Modelling/clinvar_result_kcnh2_20240222.csv')
 clinvar<-unique(clinvar)
-clinvar<-clinvar[,c("var","clinvar.description","gnomad.v4")]
-clinvar <- clinvar %>% 
-  mutate(clinvar = ifelse(grepl("Likely pathogenic|Pathogenic|Pathogenic/Likely pathogenic", clinvar.description), 1, NA_integer_))
-clinvar[is.na(clinvar$clinvar),"clinvar"]<-0
-clinvar$var <- sub("^([A-Z][0-9]+)_([A-Z][0-9]+)del$", "\\1Del", clinvar$var)
+clinvar<-clinvar[,c("var","clinvar","clinvar.description")]
 
 #Load first_event_data.cohort
 first_event_data.cohort<-read.csv("/Users/KRONCKE/OneDrive - VUMC/Kroncke_Lab/kcnh2/VariantDatabase/Network_KCNH2_variants/first.event.cohort.csv")
@@ -282,7 +283,7 @@ traff$traff_score <- traff$traff_score/100 #(-1)*(traff$traff_score-100)/100
 traff[!is.na(traff$traff_score) & traff$traff_score<0,"traff_score"] <- 0
 traff[!is.na(traff$traff_score) & traff$traff_score>1,"traff_score"] <- 1
 traff <- traff[traff$score_SE<20,]
-
+traff$traff_score <- (traff$traff_score*(-1) + 1)*4
 
 #load alphamissense
 alpha.miss<-read.csv('/Users/KRONCKE/Dropbox/sat paper/Functional Data/Q12809.alpha.missense.txt', sep = "")
@@ -299,7 +300,7 @@ varity$var <- paste(varity$wtAA,varity$resnum,varity$mutAA, sep = "")
 eve<-read.csv("/Users/KRONCKE/OneDrive - VUMC/Kroncke_Lab/kcnh2/VariantDatabase/PredictiveFeatureServers/KCNH2_HUMAN_EVE.csv")
 
 #Load peak tail current
-sync<-read.csv('/Users/KRONCKE/Dropbox/sat paper/Functional Data/506variants_CD.csv')
+sync<-read.csv('/Users/KRONCKE/Dropbox/sat paper/Functional Data/533variants_CD.csv')
 sync<-sync[,c("var", "peak_tail")]
 sync_2<-read.csv('/Users/KRONCKE/Dropbox/sat paper/AJHG_published_paper/peak_tail_50mV.csv')
 sync_2<-sync_2[,c("var", "peak_tail")]
@@ -321,12 +322,14 @@ sync_names<-unique(test$var)# test for comparison with 'test'
 test$peak_tail <- test$peak_tail/100  #(-1)*(test$peak_tail-100)/100
 test[!is.na(test$peak_tail) & test$peak_tail<0,"peak_tail"] <- 0 
 test[!is.na(test$peak_tail) & test$peak_tail>1,"peak_tail"] <- 1 
+test[!is.na(test$peak_tail),"peak_tail"] <- (test[!is.na(test$peak_tail),"peak_tail"]*(-1) + 1)*4
 
 #merge Splice AI and Varity then rename back to 'd'
 e<-merge(d,varity, all = T)
 g<-merge(e,alpha.miss, all = T)
 f<-merge(g,clinvar, all = T)
-d<-f
+h<-merge(f,gnomad.v4, all = T)
+d<-h
 
 #Merge
 e<-merge(d,test, all = T)
@@ -389,7 +392,7 @@ f[is.na(f$gnomAD),"gnomAD"]<-0
 f$gnomAD<-as.integer(f$gnomAD)
 f[is.na(f$lqt2),"lqt2"]<-0
 f[is.na(f$unaff),"unaff"]<-0
-f[is.na(f$clinvar),"clinvar"]<-0
+#f[is.na(f$clinvar),"clinvar"]<-0
 f$total_carriers<-f$lqt2 + f$unaff + f$gnomad.v4
 f[is.na(f$total_carriers),"total_carriers"]<-0
 f$penetrance_lqt2<-f$lqt2/f$total_carriers
@@ -423,14 +426,21 @@ for(rec in seq(2,1159,1)){
 # Calculate initial Bayesian penetrance estimates
 
 ```{r}
+
+# remove NAs from f$penetrance_lqt2, and remove extreme high/low penetrance
+f[is.nan(f$penetrance_lqt2),"penetrance_lqt2"]<-0.0005
+f[is.nan(f$penetrance_lqt2),"weight"]<-0
+f[f$penetrance_lqt2==0,"penetrance_lqt2"]<-0.0005
+f[f$penetrance_lqt2==1,"penetrance_lqt2"]<-0.9995
+
 # Weighted mean to determine LQT2 penetrance empirical prior
 newdata = data.frame(wt=1)
 model <- lm(penetrance_lqt2 ~ 1, data=f, weights = f$weight)
 summary(model)
 p<-predict(model, newdata)
 dev<-mse(model)#p*(1-p)
-model <- lm(penetrance_lqt2 ~ 1, data=f, weights = f$total_carriers)
-alt_mean<-model$fitted.values[1]
+#model <- lm(penetrance_lqt2 ~ 1, data=f, weights = f$total_carriers)
+#alt_mean<-model$fitted.values[1]
 
 # Estimated shape parameters for LQT2 empirical prior
 alpha0 = estBetaParams(p,dev)$alpha
@@ -447,12 +457,6 @@ f$tot.cohort<-f$total_carriers+f$cohort
 #f<-f[f$tot.cohort>0,]
 f<-f[!is.na(f$var),]
 
-# Assign p_mean_w to empirical penetrance. I need to add the reassignment to ensure
-# p_mean_w does not contain "NA"s.
-f[is.nan(f$penetrance_lqt2),"penetrance_lqt2"]<-0.0005
-f[!is.na(f$penetrance_lqt2) & f$penetrance_lqt2==0,"penetrance_lqt2"]<-0.0005
-f[!is.na(f$penetrance_lqt2) & f$penetrance_lqt2==1,"penetrance_lqt2"]<-0.9995
-
 # Initializing Features
 f$p_mean_w <- f$lqt2_penetranceBayesian_initial
 
@@ -463,7 +467,7 @@ Use an EM algorithm to estimate LQT2 PPV for each variant (or LQT2 diagnosis pro
 
 ```{r, include=FALSE}
 
-covariates <- c("traff_score", "revel_score", "lqt2_dist", "am_pathogenicity", "pore") # 
+covariates <- c("traff_score", "lqt2_dist", "am_pathogenicity", "pore") # 
 complete_rows_in_f <- complete.cases(f[, covariates])
 
 tmp<-f[complete_rows_in_f,]
@@ -528,7 +532,7 @@ sub.tmp<-tmp # reassign tmp so I can still use it in the next chunk
 
 ```{r}
 
-covariates <- c("revel_score", "lqt2_dist", "am_pathogenicity", "pore") 
+covariates <- c("lqt2_dist", "am_pathogenicity", "pore") 
 new_complete_rows_in_f <- complete.cases(f[, covariates]) 
 
 tmp<-f[new_complete_rows_in_f,]
@@ -587,7 +591,7 @@ sub.tmp1 <- subset(tmp, !var %in% sub.tmp$var)
 
 ```
 
-# Pattern Mixture Model, adding Posteriors for variants without trafficking or REVEL score
+# Pattern Mixture Model, adding Posteriors for variants without trafficking or AlphaMissense score
 
 ```{r}
 
@@ -655,10 +659,60 @@ sub.tmp2 <- subset(tmp, !var %in% c(sub.tmp$var, sub.tmp1$var))
 ```{r}
 tmp <- rbind(sub.tmp,sub.tmp1,sub.tmp2)
 
+#adjust penetrance estimates to same scale with trafficking and peak tail
+tmp$p_mean_w <- tmp$p_mean_w*4
+
+```
+
+# Plot ROC of peak tail, penetrance and trafficking score against clinvar annotations
+
+```{r}
+t <- tmp[!is.na(tmp$traff_score) & !is.na(tmp$p_mean_w) & !is.na(tmp$clinvar),] #!is.na(tmp$peak_tail) & 
+
+# Calculate ROC and AUC for t$peak_tail
+roc_result_peak_tail <- roc(response = t$clinvar, predictor = t$peak_tail)
+auc_peak_tail <- auc(roc_result_peak_tail)
+ci_peak_tail <- ci(roc_result_peak_tail)
+
+# Calculate ROC and AUC for t$p_mean_w
+roc_result_p_mean_w <- roc(response = t$clinvar, predictor = t$p_mean_w)
+auc_p_mean_w <- auc(roc_result_p_mean_w)
+ci_p_mean_w <- ci(roc_result_p_mean_w)
+
+# Calculate ROC and AUC for t$traff_score
+roc_result_traff_score <- roc(response = t$clinvar, predictor = t$traff_score)
+auc_traff_score <- auc(roc_result_traff_score)
+ci_traff_score <- ci(roc_result_traff_score)
+
+# Plotting
+plot(roc_result_peak_tail, col="#000000", print.auc=FALSE, main="ROC Curves")
+plot(roc_result_p_mean_w, col="#FF0000", print.auc=FALSE, add=TRUE)
+plot(roc_result_traff_score, col="#0000FF", print.auc=FALSE, add=TRUE)
+legend("bottomright", legend=c("Peak Tail", "P Mean W", "Traff Score"), 
+       col=c("#000000", "#FF0000", "#0000FF"), lwd=2)
+
+# Annotations for AUC and CI
+text_x <- max(par("usr")[1], par("usr")[2]) * 0.6
+text_y <- max(par("usr")[3], par("usr")[4]) * 0.2
+offset <- max(par("usr")[3], par("usr")[4]) * 0.08
+
+# Adjust these text positions if necessary
+text(text_x, text_y, sprintf("Peak Tail AUC: %.3f, 95%% CI: [%.3f, %.3f]", auc_peak_tail, ci_peak_tail[1], ci_peak_tail[3]), col="#000000", cex=0.7)
+text(text_x, text_y - offset, sprintf("P Mean W AUC: %.3f, 95%% CI: [%.3f, %.3f]", auc_p_mean_w, ci_p_mean_w[1], ci_p_mean_w[3]), col="#FF0000", cex=0.7)
+text(text_x, text_y - offset * 2, sprintf("Traff Score AUC: %.3f, 95%% CI: [%.3f, %.3f]", auc_traff_score, ci_traff_score[1], ci_traff_score[3]), col="#0000FF", cex=0.7)
+
+```
+
+# Set all VUS/conflicting/unannoated to benign
+
+```{r}
+
+tmp[is.na(tmp$clinvar),"clinvar"]<-0
+
 ```
 
 ## Combine predictions with arrhythmia center observations. Assign affected/unaffected status
-# QTc > 480 or QTc > 450 (males) 460 (females) with events
+# QTc > 480 or QTc > 450 (males) 460 (females) with events    
 
 ```{r}
 # Selecting specific columns from tmp
@@ -667,15 +721,15 @@ tmp_selected <- tmp[tmp$var!="K897T", c("var", "blast_pssm", "provean_score", "p
 # Merging the selected columns from tmp with cohort
 first.event<-merge(first_event_data.cohort, tmp_selected, by = "var", all.x = TRUE)
 first.event[!is.na(first.event$QTc) & first.event$QTc > 700,"QTc"] <- 700
-first.event$QTc.adj <- first.event$QTc/100
+first.event$QTc.adj <- first.event$QTc/50
 
 first.serious.event<-merge(first_serious_event_data.cohort, tmp_selected, by = "var", all.x = TRUE)
 first.serious.event[!is.na(first.serious.event$QTc) & first.serious.event$QTc > 700,"QTc"] <- 700
-first.serious.event$QTc.adj <- first.serious.event$QTc/100
+first.serious.event$QTc.adj <- first.serious.event$QTc/50
 
 cohort.var <- merge(cohort, tmp_selected, by = "var", all.x = TRUE)
 cohort.var[!is.na(cohort.var$QTc) & cohort.var$QTc > 700,"QTc"] <- 700
-cohort.var$QTc.adj <- cohort.var$QTc/100
+cohort.var$QTc.adj <- cohort.var$QTc/50
 
 cohort.var$QTc.adj.s <- scale(cohort.var$QTc.adj)
 first.event$QTc.adj.s <- scale(first.event$QTc.adj)
@@ -701,7 +755,7 @@ first.event <- first.event %>%
 # the Variance Inflation Factor (VIF) and rank order correlation matrix heatmap
 
 ```{r}
-t <- cohort.var[ !is.na(cohort.var$lqt2_dist) & !is.na(cohort.var$revel_score) & !is.na(cohort.var$peak_tail) & !is.na(cohort.var$p_mean_w) & !is.na(cohort.var$Sex) & !is.na(cohort.var$Age_at_event_end) & !is.na(cohort.var$traff_score),] 
+t <- cohort.var[ !is.na(cohort.var$lqt2_dist) & !is.na(cohort.var$revel_score) & !is.na(cohort.var$peak_tail) & !is.na(cohort.var$p_mean_w) & !is.na(cohort.var$Sex) & !is.na(cohort.var$Age_at_event_end) & !is.na(cohort.var$traff_score) & cohort.var$Country != "France" & cohort.var$Country != "UK",] 
 # Assuming df is your dataframe and y is your response variable
 # Replace y with a suitable response variable for your context SeriousCardiacEvent
 linear_model <- lm(Event ~ Sex + QTc.adj.s + p_mean_w + clinvar + revel_score + peak_tail + traff_score + prior_mean + lqt2_dist + am_pathogenicity + pore, data = t) # + prior_mean + lqt2_dist
@@ -742,13 +796,13 @@ ggplot(abs_cor_matrix_long, aes(Var1, Var2, fill = value)) +
 
 ```{r}
 age_cutoff <- 40
-t <- cohort.var[!is.na(cohort.var$am_pathogenicity) & !is.na(cohort.var$QTc.adj) & cohort.var$Age_at_event_end<age_cutoff,]
+t <- cohort.var[!is.na(cohort.var$am_pathogenicity) & !is.na(cohort.var$QTc.adj) & cohort.var$Age_at_event_end<age_cutoff & cohort.var$Country != "France",]
 t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
 t$SeriousCardiacEvent[t$Age_at_event_end == age_cutoff] <- 0
 
 # Define the width of the sliding windows
-p_mean_w_window_width <- 0.15  # e.g., from 0.1 to 0.3
-QTc_adj_window_width <- 0.3   # e.g., from 40 to 50
+p_mean_w_window_width <- 0.1  # e.g., from 0.1 to 0.3
+QTc_adj_window_width <- 0.2   # e.g., from 40 to 50
 
 # Define the range of thresholds to start the sliding windows
 p_mean_w_thresholds_start <- seq(0.01, max(t$am_pathogenicity) - p_mean_w_window_width, by = 0.1)
@@ -802,285 +856,384 @@ ggplot(results, aes(x = p_mean_w_threshold_start, y = QTc_adj_threshold_start, f
 
 ```
 
-# Royston-Parmar model, non-parametric time-to-event analysis, Serious Events
+# Plot correlations between QTc and trafficking score, peak tail current, and penetrance; calculate correlations.
 
 ```{r}
-age_cutoff <- 40
-t <- first.serious.event[!is.na(first.event$Sex) & !is.na(first.event$QTc.adj) & !is.na(first.event$p_mean_w) & !is.na(first.event$peak_tail) & !is.na(first.event$traff_score),]
-t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
-t$SeriousCardiacEvent[t$Age_at_event_end == age_cutoff] <- 0
+t <- first.event[!is.na(first.event$peak_tail) & !is.na(first.event$traff_score) & first.event$Country != "France",]# & first.event$Country != "UK",]
 
-model <- Surv(Age_at_event_start, Age_at_event_end, SeriousCardiacEvent) ~ 
-                   Sex + QTc.adj + peak_tail + p_mean_w + traff_score + revel_score + clinvar + am_pathogenicity
-
-fit <- flexsurvspline(model, 
-                   data = t)
-fit 
-
-boot_function <- function(data, indices) {
-    sample_data <- data[indices, ]  # Resampling with replacement
-    model_boot <- flexsurvspline(model, data = sample_data)
-    return(coef(model_boot))  # Return coefficients
-}
-boot_results <- boot(data = t, statistic = boot_function, R = 200)  # R is the number of bootstrap replicates
-
-# Assuming 'boot_results' contains your bootstrap output
-boot_coefs <- boot_results$t
-
-# Calculate mean and confidence intervals for each coefficient across rows
-mean_coefs <- apply(boot_coefs, 2, mean)
-ci_coefs <- apply(boot_coefs, 2, function(x) quantile(x, c(0.025, 0.975)))
-
-hr_means <- exp(mean_coefs)
-hr_ci_lower <- exp(ci_coefs[1, ])
-hr_ci_upper <- exp(ci_coefs[2, ])
-
-# Assign names based on the model terms
-model_terms <- c("gamma0", "gamma1", "Sex", "QTc.adj", "p_mean_w", "traff_score", "revel_score", "clinvar", "am_pathogenicity")
-names(hr_means) <- model_terms
-names(hr_ci_lower) <- model_terms
-names(hr_ci_upper) <- model_terms
-
-forest_data <- data.frame(
-  Term = names(hr_means),
-  HR = hr_means,
-  Lower = hr_ci_lower,
-  Upper = hr_ci_upper
-)
-
-# Filter out gamma0 and gamma1 from the forest data
-forest_data <- forest_data[!forest_data$Term %in% c("gamma0", "gamma1"), ]
-
-# Now create the forest plot without gamma0 and gamma1
-ggplot(forest_data, aes(x = Term, y = HR, ymin = Lower, ymax = Upper)) +
-  geom_point() +  # Plot the HRs
-  geom_errorbar(aes(ymin = Lower, ymax = Upper), width = 0.2) +  # Error bars for CIs
-  coord_flip() +  # Flip coordinates for horizontal plot
-  geom_hline(yintercept = 1, linetype = "dashed", color = "red") +  # Reference line at HR = 1
-  theme_minimal() +
-  ylab("Hazard Ratio (HR)") +
-  xlab("Model Terms")
-
-```
-
-# Plot ROC curves Royston-Parmar model Serious Events
-
-```{r}
-
-age_cutoff <- 40
-t <- first.serious.event[!is.na(first.serious.event$peak_tail) & !is.na(first.serious.event$traff_score) & !is.na(first.serious.event$Sex) & !is.na(first.serious.event$QTc.adj),]
-t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
-t<-t[t$Age_at_event_end > t$Age_at_event_start,]
-t$SeriousCardiacEvent[t$Age_at_event_end == age_cutoff] <- 0
-
-boot_auc <- function(data, indices) {
-    boot_data <- data[indices, ]  # Resample the data
-    roc_result <- survivalROC::survivalROC(
-        Stime = boot_data$Age_at_event_end, 
-        status = boot_data$Event, 
-        marker = boot_data$valid_predicted_probs, 
-        predict.time = time_point, 
-        method = "KM"
-    )
-    return(roc_result$AUC)  # Return the AUC
+# Define a function to calculate Spearman's correlation
+spearman_cor <- function(data, indices) {
+  d <- data[indices,] # Bootstrap sample
+  cor(d[,1], d[,2], method = "spearman")
 }
 
-# Time point for AUC calculation, choose a time that makes sense for your study
-time_point <- 20 # years
-boot_number <- 500 # bootstrap repetitions, production 500-1000
+# Calculate Spearman correlation and its 95% CI for each pair
+result_peak_tail_QTc <- cor.test(t$peak_tail, t$QTc, method = "spearman")
+boot_data <- t[, c("peak_tail", "QTc")]
+boot_results <- boot(data=boot_data, statistic=spearman_cor, R=1000) # R is the number of bootstrap replications
 
-# Fit the model 1
-fit1 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, SeriousCardiacEvent) ~ Sex + QTc.adj + pore, data = t)
+# Calculate 95% CI from the bootstrap results
+ci_peak_tail_QTc <- boot.ci(boot_results, type="perc")
 
-# Generate predictions and compute risk
-predicted_probs1 <- 1 - predict(fit1, newdata = t, type = "survival", times = time_point)
+# Print results using the percentile method
+print(paste("Spearman correlation (peak_tail vs QTc):", result_peak_tail_QTc$estimate))
+print(paste("95% CI for Spearman correlation (peak_tail vs QTc) using percentile method:", ci_peak_tail_QTc$percent[4], "-", ci_peak_tail_QTc$percent[5]))
 
-# Convert to risk probabilities
-valid_predicted_probs1 <- predicted_probs1$.pred_survival[!is.na(predicted_probs1$.pred_survival)]
+# Example calculation (replace this with your actual calculation results)
+spearman_cor_value <- result_peak_tail_QTc$estimate
+ci_lower <- sprintf("%.2f",ci_peak_tail_QTc$percent[4])
+ci_upper <- sprintf("%.2f",ci_peak_tail_QTc$percent[5])
 
-# Filter the original dataset for valid cases
-valid_t1 <- t[!is.na(predicted_probs1$.pred_survival),]
-valid_t1$valid_predicted_probs1 <- valid_predicted_probs1
-#valid_t1 <- valid_t1[valid_t1$Patient=="Family Member",]
-
-# Compute ROC curve using valid data
-roc_result1 <- survivalROC::survivalROC(Stime = valid_t1$Age_at_event_end, 
-                                        status = valid_t1$SeriousCardiacEvent, 
-                                        marker = valid_t1$valid_predicted_probs1, 
-                                        predict.time = time_point, 
-                                        method = "KM")
-
-# Extract sensitivity and specificity
-sensitivity1 <- roc_result1$TP
-specificity1 <- roc_result1$FP
-
-set.seed(123)  # For reproducibility
-boot_results1 <- boot(data = valid_t1, statistic = boot_auc, R = boot_number)
-boot_coefs1 <- boot_results1$t
-
-# Calculate mean and confidence intervals for each coefficient across rows
-auc1 <- apply(boot_coefs1, 2, mean)
-ci1 <- apply(boot_coefs1, 2, function(x) quantile(x, c(0.025, 0.975)))
-
-# Prepare ROC curve data
-roc_curve1 <- data.frame(Specificity = specificity1, Sensitivity = sensitivity1, Model = "Sex and QTc (Base Model)")
-
-# Fit the model 2 
-fit2 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, SeriousCardiacEvent) ~ Sex + QTc.adj + p_mean_w + pore, data = t)
-
-# Generate predictions and compute risk
-predicted_probs2 <- 1 - predict(fit2, newdata = t, type = "survival", times = time_point)
-
-# Convert to risk probabilities
-valid_predicted_probs2 <- predicted_probs2$.pred_survival[!is.na(predicted_probs2$.pred_survival)]
-
-# Filter the original dataset for valid cases
-valid_t2 <- t[!is.na(predicted_probs2$.pred_survival),]
-valid_t2$valid_predicted_probs <- valid_predicted_probs2
-#valid_t2 <- valid_t2[valid_t2$Patient=="Family Member",]
-
-# Compute ROC curve using valid data
-roc_result2 <- survivalROC::survivalROC(Stime = valid_t2$Age_at_event_end, 
-                                        status = valid_t2$SeriousCardiacEvent, 
-                                        marker = valid_t2$valid_predicted_probs, 
-                                        predict.time = time_point, 
-                                        method = "KM")
-
-# Extract sensitivity and specificity
-sensitivity2 <- roc_result2$TP
-specificity2 <- roc_result2$FP
-
-set.seed(123)  # For reproducibility
-boot_results2 <- boot(data = valid_t2, statistic = boot_auc, R = boot_number)
-boot_coefs2 <- boot_results2$t
-
-# Calculate mean and confidence intervals for each coefficient across rows
-auc2 <- apply(boot_coefs2, 2, mean)
-ci2 <- apply(boot_coefs2, 2, function(x) quantile(x, c(0.025, 0.975)))
-
-
-# Prepare ROC curve data
-roc_curve2 <- data.frame(Specificity = specificity2, Sensitivity = sensitivity2, Model = "Base Model + LQTS Penetrance")
-
-# Fit the model 3
-fit3 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, SeriousCardiacEvent) ~ Sex + QTc.adj + p_mean_w + peak_tail + traff_score + pore, data = t)
-
-# Generate predictions and compute risk
-predicted_probs3 <- 1 - predict(fit3, newdata = t, type = "survival", times = time_point)
-
-# Convert to risk probabilities
-valid_predicted_probs3 <- predicted_probs3$.pred_survival[!is.na(predicted_probs3$.pred_survival)]
-
-# Filter the original dataset for valid cases
-valid_t3 <- t[!is.na(predicted_probs3$.pred_survival),]
-valid_t3$valid_predicted_probs <- valid_predicted_probs3
-#valid_t3 <- valid_t3[valid_t3$Patient=="Family Member",]
-
-# Compute ROC curve using valid data
-roc_result3 <- survivalROC::survivalROC(Stime = valid_t3$Age_at_event_end, 
-                                        status = valid_t3$SeriousCardiacEvent, 
-                                        marker = valid_t3$valid_predicted_probs, 
-                                        predict.time = time_point, 
-                                        method = "KM")
-
-# Extract sensitivity and specificity
-sensitivity3 <- roc_result3$TP
-specificity3 <- roc_result3$FP
-
-set.seed(123)  # For reproducibility
-boot_results3 <- boot(data = valid_t3, statistic = boot_auc, R = boot_number)
-boot_coefs3 <- boot_results3$t
-
-# Calculate mean and confidence intervals for each coefficient across rows
-auc3 <- apply(boot_coefs3, 2, mean)
-ci3 <- apply(boot_coefs3, 2, function(x) quantile(x, c(0.025, 0.975)))
-
-
-# Prepare ROC curve data
-roc_curve3 <- data.frame(Specificity = specificity3, Sensitivity = sensitivity3, Model = "Base Model + LQTS Penetrance + Trafficking + Peak Tail Current")
-
-# Combine ROC data from all models
-all_roc_data <- rbind(roc_curve1, roc_curve2, roc_curve3)
-
-ggplot(all_roc_data, aes(x = Specificity, y = Sensitivity, color = Model)) +
-  geom_line(size = 1.5) +
-  labs(title = paste("ROC Curves for life-threatening event before age ", time_point),
-       x = "1 - Specificity", y = "Sensitivity") +
+# Create the scatter plot
+p <- ggplot(t, aes(x = peak_tail, y = QTc)) +
+  geom_point() + # Add points
+  geom_smooth(method = "loess") +#, se = FALSE) + # Add a linear regression line without standard error
+  labs(title = "Relationship between Peak Tail and QTc",
+       x = "Peak Tail",
+       y = "QTc") +
   theme_minimal() +
-  geom_abline(linetype = "dashed") +
-  scale_color_manual(values = c("red", "blue", "green")) +
-  annotate("text", x = 0.6, y = 0.1, label = paste("AUC1:", round(auc1, 2), "[", round(ci1[1],2), "-", round(ci1[2],2),"]"), size = 4, color = "black") +
-  annotate("text", x = 0.6, y = 0.15, label = paste("AUC2:", round(auc2, 2), "[", round(ci2[1],2), "-", round(ci2[2],2),"]"), size = 4, color = "black") +
-  annotate("text", x = 0.6, y = 0.2, label = paste("AUC3:", round(auc3, 2), "[",round(ci3[1],2), "-", round(ci3[2],2), "]"), size = 4, color = "black")
+  # Annotate with Spearman correlation and CI
+  annotate("text", x = Inf, y = Inf, hjust = 1.1, vjust = 2,
+           label = paste("Spearman's rho =", round(spearman_cor_value, 2), 
+                         "\n95% CI: [", ci_lower, ",", ci_upper, "]"),
+           size = 4)
+
+# Print the plot
+print(p)
+
+# Calculate Spearman correlation and its 95% CI for each pair
+result_p_mean_w_QTc <- cor.test(t$p_mean_w, t$QTc, method = "spearman")
+boot_data <- t[, c("p_mean_w", "QTc")]
+boot_results <- boot(data=boot_data, statistic=spearman_cor, R=1000) # R is the number of bootstrap replications
+
+# Calculate 95% CI from the bootstrap results
+ci_p_mean_w_QTc <- boot.ci(boot_results, type="perc")
+
+# Print results using the percentile method
+print(paste("Spearman correlation (Penetrance vs QTc):", result_p_mean_w_QTc$estimate))
+print(paste("95% CI for Spearman correlation (Penetrance vs QTc) using percentile method:", ci_p_mean_w_QTc$percent[4], "-", ci_p_mean_w_QTc$percent[5]))
+
+# Example calculation (replace this with your actual calculation results)
+spearman_cor_value <- result_p_mean_w_QTc$estimate
+ci_lower <- sprintf("%.2f",ci_p_mean_w_QTc$percent[4])
+ci_upper <- sprintf("%.2f",ci_p_mean_w_QTc$percent[5])
+
+# Create the scatter plot
+p <- ggplot(t, aes(x = p_mean_w, y = QTc)) +
+  geom_point() + # Add points
+  geom_smooth(method = "loess") +#, se = FALSE) + # Add a linear regression line without standard error
+  labs(title = "Relationship between Penetrance and QTc",
+       x = "Penetrance",
+       y = "QTc") +
+  theme_minimal() +
+  # Annotate with Spearman correlation and CI
+  annotate("text", x = Inf, y = Inf, hjust = 1.1, vjust = 2,
+           label = paste("Spearman's rho =", round(spearman_cor_value, 2), 
+                         "\n95% CI: [", ci_lower, ",", ci_upper, "]"),
+           size = 4)
+
+# Print the plot
+print(p)
+
+# Calculate Spearman correlation and its 95% CI for each pair
+result_traff_score_QTc <- cor.test(t$traff_score, t$QTc, method = "spearman")
+boot_data <- t[, c("traff_score", "QTc")]
+boot_results <- boot(data=boot_data, statistic=spearman_cor, R=1000) # R is the number of bootstrap replications
+
+# Calculate 95% CI from the bootstrap results
+ci_traff_score_QTc <- boot.ci(boot_results, type="perc")
+
+# Print results using the percentile method
+print(paste("Spearman correlation (Trafficking Score vs QTc):", result_traff_score_QTc$estimate))
+print(paste("95% CI for Spearman correlation (Trafficking Score vs QTc) using percentile method:", ci_traff_score_QTc$percent[4], "-", ci_traff_score_QTc$percent[5]))
+
+# Example calculation (replace this with your actual calculation results)
+spearman_cor_value <- result_traff_score_QTc$estimate
+ci_lower <- sprintf("%.2f",ci_traff_score_QTc$percent[4])
+ci_upper <- sprintf("%.2f",ci_traff_score_QTc$percent[5])
+
+# Create the scatter plot
+p <- ggplot(t, aes(x = traff_score, y = QTc)) +
+  geom_point() + # Add points
+  geom_smooth(method = "loess") +#, se = FALSE) + # Add a linear regression line without standard error
+  labs(title = "Relationship between Trafficking Score and QTc",
+       x = "Trafficking Score",
+       y = "QTc") +
+  theme_minimal() +
+  # Annotate with Spearman correlation and CI
+  annotate("text", x = Inf, y = Inf, hjust = 1.1, vjust = 2,
+           label = paste("Spearman's rho =", round(spearman_cor_value, 2), 
+                         "\n95% CI: [", ci_lower, ",", ci_upper, "]"),
+           size = 4)
+
+# Print the plot
+print(p)
 
 
 ```
 
-# Royston-Parmar model, non-parametric time-to-event analysis, all Events
+# Royston-Parmar model, non-parametric time-to-event analysis, all Events, traff, peak tail, and penetrance
 
 ```{r}
 age_cutoff <- 40
-t <- first.event[!is.na(first.event$peak_tail) & !is.na(first.event$traff_score),]
+t <- first.event[!is.na(first.event$peak_tail) & first.event$Country != "France",]# & !is.na(first.event$peak_tail) ,]# & first.event$Country != "UK",]!is.na(first.event$traff_score) & 
 t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
 t<-t[t$Age_at_event_end > t$Age_at_event_start,]
 t$Event[t$Age_at_event_end == age_cutoff] <- 0
 
-model <- Surv(Age_at_event_start, Age_at_event_end, Event) ~ 
-                   Sex + QTc.adj + p_mean_w*pore + traff_score + clinvar + revel_score + am_pathogenicity + peak_tail 
+# QT and Sex
+model <- Surv(Age_at_event_end, Event) ~ 
+                   Sex + QTc.adj #+ p_mean_w#+ p_mean_w# + traff_score  + + peak_tail clinvar + pore + am_pathogenicity
 
 fit <- flexsurvspline(model, 
                    data = t)
 fit 
 
-boot_function <- function(data, indices) {
-    sample_data <- data[indices, ]  # Resampling with replacement
-    tryCatch({
-        model_boot <- flexsurvspline(model, data = sample_data)
-        coef(model_boot)  # Return coefficients
-    }, error = function(e) {
-        NA  # Return NA in case of an error
-    })
+# Using the rms package
+predicted_values <- predict(fit, type="lp")
+# Extract the linear predictor as the risk score
+risk_scores <- predicted_values$.pred_link
+
+c_index <- rcorr.cens(risk_scores, Surv(t$Age_at_event_end, t$Event))
+print(paste(round(1-c_index[1],3), " +/- ", round(c_index[3],3)))
+
+# Trafficking score
+model <- Surv(Age_at_event_end, Event) ~ 
+                   Sex + QTc.adj + traff_score
+
+fit <- flexsurvspline(model, 
+                   data = t)
+fit
+
+# Using fit$res.t to create a data frame for the forest plot, excluding gamma parameters
+coef_df <- data.frame(
+  Term = rownames(fit$res.t)[-c(1,2)],  # Exclude gamma0 and gamma1 if they're not of interest
+  HR = exp(fit$res.t[-c(1,2), "est"]),  # Calculate Hazard Ratios by exponentiating estimates
+  Lower95CI = exp(fit$res.t[-c(1,2), "L95%"]),  # Lower bound of CI for HR
+  Upper95CI = exp(fit$res.t[-c(1,2), "U95%"])   # Upper bound of CI for HR
+)
+# Adjusting the dataframe for 'SexFemale'
+# Assume coef_df is already created as before, without adjusting for 'SexFemale' yet
+
+# Find the row for 'SexMale', invert the sign of its estimate, and its CIs
+# You might not need to recalculate HR since we're changing interpretation, but let's ensure everything is consistent
+sex_male_row <- which(coef_df$Term == "SexMale")
+if(length(sex_male_row) == 1) {  # Ensure that there is exactly one match
+  # Invert signs for interpretation as 'SexFemale'
+  coef_df$HR[sex_male_row] <- 1 / coef_df$HR[sex_male_row]  # Inverting HR
+  # Swap lower and upper CI bounds before inverting for correct order
+  old_lower <- coef_df$Lower95CI[sex_male_row]
+  coef_df$Lower95CI[sex_male_row] <- 1 / coef_df$Upper95CI[sex_male_row]
+  coef_df$Upper95CI[sex_male_row] <- 1 / old_lower
+  
+  # Rename the term to 'SexFemale'
+  coef_df$Term[sex_male_row] <- "SexFemale"
 }
 
-boot_results <- boot(data = t, statistic = boot_function, R = 500)  # R is the number of bootstrap replicates
+ggplot(coef_df, aes(x = Term, y = HR, ymin = Lower95CI, ymax = Upper95CI)) +
+  geom_pointrange() +
+  coord_flip() +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "blue") + # Corrected line addition
+  theme_minimal() +
+  xlab("Covariates") +
+  ylab("Hazard Ratio (95% CI)") +
+  ggtitle("Forest Plot of Survival Model Covariates with SexFemale")
 
-# Assuming 'boot_results' contains your bootstrap output
-boot_coefs <- boot_results$t
+#peak tail current
+model <- Surv(Age_at_event_start, Age_at_event_end, Event) ~ 
+                   Sex + QTc.adj + peak_tail #+p_mean_w + + peak_tail clinvar + pore + am_pathogenicity
 
-# Calculate mean and confidence intervals for each coefficient across rows
-mean_coefs <- apply(boot_coefs, 2, mean)
-ci_coefs <- apply(boot_coefs, 2, function(x) quantile(x, c(0.025, 0.975)))
+fit <- flexsurvspline(model, 
+                   data = t)
+fit 
 
-hr_means <- exp(mean_coefs)
-hr_ci_lower <- exp(ci_coefs[1, ])
-hr_ci_upper <- exp(ci_coefs[2, ])
+# Using the rms package
+predicted_values <- predict(fit, type="lp")
+# Extract the linear predictor as the risk score
+risk_scores <- predicted_values$.pred_link
 
-# Assign names based on the model terms
-model_terms <- c("gamma0", "gamma1", "Sex", "QTc.adj", "p_mean_w", "peak_tail", "traff_score", "revel_score", "clinvar", "am_pathogenicity")
-names(hr_means) <- model_terms
-names(hr_ci_lower) <- model_terms
-names(hr_ci_upper) <- model_terms
+c_index <- rcorr.cens(risk_scores, Surv(t$Age_at_event_end, t$Event))
+print(paste(round(1-c_index[1],3), " +/- ", round(c_index[3],3)))
 
-forest_data <- data.frame(
-  Term = names(hr_means),
-  HR = hr_means,
-  Lower = hr_ci_lower,
-  Upper = hr_ci_upper
+# Using fit$res.t to create a data frame for the forest plot, excluding gamma parameters
+coef_df <- data.frame(
+  Term = rownames(fit$res.t)[-c(1,2)],  # Exclude gamma0 and gamma1 if they're not of interest
+  HR = exp(fit$res.t[-c(1,2), "est"]),  # Calculate Hazard Ratios by exponentiating estimates
+  Lower95CI = exp(fit$res.t[-c(1,2), "L95%"]),  # Lower bound of CI for HR
+  Upper95CI = exp(fit$res.t[-c(1,2), "U95%"])   # Upper bound of CI for HR
 )
 
-# Filter out gamma0 and gamma1 from the forest data
-forest_data <- forest_data[!forest_data$Term %in% c("gamma0", "gamma1"), ]
-forest_data$Term <- forcats::fct_relevel(forest_data$Term,"QTc.adj",  "Sex", "peak_tail")
+sex_male_row <- which(coef_df$Term == "SexMale")
+if(length(sex_male_row) == 1) {  # Ensure that there is exactly one match
+  # Invert signs for interpretation as 'SexFemale'
+  coef_df$HR[sex_male_row] <- 1 / coef_df$HR[sex_male_row]  # Inverting HR
+  # Swap lower and upper CI bounds before inverting for correct order
+  old_lower <- coef_df$Lower95CI[sex_male_row]
+  coef_df$Lower95CI[sex_male_row] <- 1 / coef_df$Upper95CI[sex_male_row]
+  coef_df$Upper95CI[sex_male_row] <- 1 / old_lower
+  
+  # Rename the term to 'SexFemale'
+  coef_df$Term[sex_male_row] <- "SexFemale"
+}
 
-# Now create the forest plot without gamma0 and gamma1
-ggplot(forest_data, aes(x = Term, y = HR, ymin = Lower, ymax = Upper)) +
-  geom_point() +  # Plot the HRs
-  geom_errorbar(aes(ymin = Lower, ymax = Upper), width = 0.2) +  # Error bars for CIs
-  coord_flip() +  # Flip coordinates for horizontal plot
-  geom_hline(yintercept = 1, linetype = "dashed", color = "red") +  # Reference line at HR = 1
+# Adjusting the order of factor levels to put SexFemale and QTc.adj at the bottom
+desired_order <- c(setdiff(coef_df$Term, c("SexFemale", "QTc.adj", "peak_tail")), "QTc.adj","SexFemale","peak_tail")
+coef_df$Term <- factor(coef_df$Term, levels = desired_order)
+
+# Now, plot with the adjusted order
+ggplot(coef_df, aes(x = Term, y = HR, ymin = Lower95CI, ymax = Upper95CI)) +
+  geom_pointrange() +
+  coord_flip() +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "blue") + # Reference line
   theme_minimal() +
-  ylab("Hazard Ratio (HR)") +
-  xlab("Model Terms")
+  xlab("Covariates") +
+  ylab("Hazard Ratio (95% CI)") +
+  ggtitle("Forest Plot of Survival Model Covariates")
+
+#Penetrance
+model <- Surv(Age_at_event_start, Age_at_event_end, Event) ~ 
+                   Sex + QTc.adj + p_mean_w #+p_mean_w + + peak_tail clinvar + pore + am_pathogenicity
+
+fit <- flexsurvspline(model, 
+                   data = t)
+fit 
+
+# Using the rms package
+predicted_values <- predict(fit, type="lp")
+# Extract the linear predictor as the risk score
+risk_scores <- predicted_values$.pred_link
+
+c_index <- rcorr.cens(risk_scores, Surv(t$Age_at_event_end, t$Event))
+print(paste(round(1-c_index[1],3), " +/- ", round(c_index[3],3)))
+
+# Using fit$res.t to create a data frame for the forest plot, excluding gamma parameters
+coef_df <- data.frame(
+  Term = rownames(fit$res.t)[-c(1,2)],  # Exclude gamma0 and gamma1 if they're not of interest
+  HR = exp(fit$res.t[-c(1,2), "est"]),  # Calculate Hazard Ratios by exponentiating estimates
+  Lower95CI = exp(fit$res.t[-c(1,2), "L95%"]),  # Lower bound of CI for HR
+  Upper95CI = exp(fit$res.t[-c(1,2), "U95%"])   # Upper bound of CI for HR
+)
+
+sex_male_row <- which(coef_df$Term == "SexMale")
+if(length(sex_male_row) == 1) {  # Ensure that there is exactly one match
+  # Invert signs for interpretation as 'SexFemale'
+  coef_df$HR[sex_male_row] <- 1 / coef_df$HR[sex_male_row]  # Inverting HR
+  # Swap lower and upper CI bounds before inverting for correct order
+  old_lower <- coef_df$Lower95CI[sex_male_row]
+  coef_df$Lower95CI[sex_male_row] <- 1 / coef_df$Upper95CI[sex_male_row]
+  coef_df$Upper95CI[sex_male_row] <- 1 / old_lower
+  
+  # Rename the term to 'SexFemale'
+  coef_df$Term[sex_male_row] <- "SexFemale"
+}
+
+# Adjusting the order of factor levels to put SexFemale and QTc.adj at the bottom
+desired_order <- c(setdiff(coef_df$Term, c("SexFemale", "QTc.adj", "p_mean_w")), "QTc.adj","SexFemale","p_mean_w")
+coef_df$Term <- factor(coef_df$Term, levels = desired_order)
+
+# Now, plot with the adjusted order
+ggplot(coef_df, aes(x = Term, y = HR, ymin = Lower95CI, ymax = Upper95CI)) +
+  geom_pointrange() +
+  coord_flip() +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "blue") + # Reference line
+  theme_minimal() +
+  xlab("Covariates") +
+  ylab("Hazard Ratio (95% CI)") +
+  ggtitle("Forest Plot of Survival Model Covariates")
+
+#Penetrance + peak tail
+model <- Surv(Age_at_event_start, Age_at_event_end, Event) ~ 
+                   Sex + QTc.adj + p_mean_w + peak_tail #+ traff_score
+
+fit <- flexsurvspline(model, 
+                   data = t)
+fit 
+
+# Using the rms package
+predicted_values <- predict(fit, type="lp")
+# Extract the linear predictor as the risk score
+risk_scores <- predicted_values$.pred_link
+
+c_index <- rcorr.cens(risk_scores, Surv(t$Age_at_event_end, t$Event))
+print(paste(round(1-c_index[1],3), " +/- ", round(c_index[3],3)))
+
+# Using fit$res.t to create a data frame for the forest plot, excluding gamma parameters
+coef_df <- data.frame(
+  Term = rownames(fit$res.t)[-c(1,2)],  # Exclude gamma0 and gamma1 if they're not of interest
+  HR = exp(fit$res.t[-c(1,2), "est"]),  # Calculate Hazard Ratios by exponentiating estimates
+  Lower95CI = exp(fit$res.t[-c(1,2), "L95%"]),  # Lower bound of CI for HR
+  Upper95CI = exp(fit$res.t[-c(1,2), "U95%"])   # Upper bound of CI for HR
+)
+
+sex_male_row <- which(coef_df$Term == "SexMale")
+if(length(sex_male_row) == 1) {  # Ensure that there is exactly one match
+  # Invert signs for interpretation as 'SexFemale'
+  coef_df$HR[sex_male_row] <- 1 / coef_df$HR[sex_male_row]  # Inverting HR
+  # Swap lower and upper CI bounds before inverting for correct order
+  old_lower <- coef_df$Lower95CI[sex_male_row]
+  coef_df$Lower95CI[sex_male_row] <- 1 / coef_df$Upper95CI[sex_male_row]
+  coef_df$Upper95CI[sex_male_row] <- 1 / old_lower
+  
+  # Rename the term to 'SexFemale'
+  coef_df$Term[sex_male_row] <- "SexFemale"
+}
+
+# Adjusting the order of factor levels to put SexFemale and QTc.adj at the bottom
+desired_order <- c(setdiff(coef_df$Term, c("SexFemale", "QTc.adj", "p_mean_w","peak_tail","traff_score")), "QTc.adj","SexFemale","p_mean_w","peak_tail","traff_score")
+coef_df$Term <- factor(coef_df$Term, levels = desired_order)
+
+# Now, plot with the adjusted order
+ggplot(coef_df, aes(x = Term, y = HR, ymin = Lower95CI, ymax = Upper95CI)) +
+  geom_pointrange() +
+  coord_flip() +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "blue") + # Reference line
+  theme_minimal() +
+  xlab("Covariates") +
+  ylab("Hazard Ratio (95% CI)") +
+  ggtitle("Forest Plot of Survival Model Covariates")
+
+#Penetrance + peak tail + trafficking
+model <- Surv(Age_at_event_start, Age_at_event_end, Event) ~ 
+                   Sex + QTc.adj + p_mean_w + peak_tail + traff_score
+
+fit <- flexsurvspline(model, 
+                   data = t)
+fit 
+
+# Using fit$res.t to create a data frame for the forest plot, excluding gamma parameters
+coef_df <- data.frame(
+  Term = rownames(fit$res.t)[-c(1,2)],  # Exclude gamma0 and gamma1 if they're not of interest
+  HR = exp(fit$res.t[-c(1,2), "est"]),  # Calculate Hazard Ratios by exponentiating estimates
+  Lower95CI = exp(fit$res.t[-c(1,2), "L95%"]),  # Lower bound of CI for HR
+  Upper95CI = exp(fit$res.t[-c(1,2), "U95%"])   # Upper bound of CI for HR
+)
+
+sex_male_row <- which(coef_df$Term == "SexMale")
+if(length(sex_male_row) == 1) {  # Ensure that there is exactly one match
+  # Invert signs for interpretation as 'SexFemale'
+  coef_df$HR[sex_male_row] <- 1 / coef_df$HR[sex_male_row]  # Inverting HR
+  # Swap lower and upper CI bounds before inverting for correct order
+  old_lower <- coef_df$Lower95CI[sex_male_row]
+  coef_df$Lower95CI[sex_male_row] <- 1 / coef_df$Upper95CI[sex_male_row]
+  coef_df$Upper95CI[sex_male_row] <- 1 / old_lower
+  
+  # Rename the term to 'SexFemale'
+  coef_df$Term[sex_male_row] <- "SexFemale"
+}
+
+# Adjusting the order of factor levels to put SexFemale and QTc.adj at the bottom
+desired_order <- c(setdiff(coef_df$Term, c("SexFemale", "QTc.adj", "p_mean_w","peak_tail","traff_score")), "QTc.adj","SexFemale","p_mean_w","peak_tail","traff_score")
+coef_df$Term <- factor(coef_df$Term, levels = desired_order)
+
+# Now, plot with the adjusted order
+ggplot(coef_df, aes(x = Term, y = HR, ymin = Lower95CI, ymax = Upper95CI)) +
+  geom_pointrange() +
+  coord_flip() +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "blue") + # Reference line
+  theme_minimal() +
+  xlab("Covariates") +
+  ylab("Hazard Ratio (95% CI)") +
+  ggtitle("Forest Plot of Survival Model Covariates")
 
 ```
 
@@ -1089,7 +1242,7 @@ ggplot(forest_data, aes(x = Term, y = HR, ymin = Lower, ymax = Upper)) +
 ```{r}
 
 age_cutoff <- 40
-t <- first.event[!is.na(first.event$peak_tail) & !is.na(first.event$traff_score) & !is.na(first.event$Sex) & !is.na(first.event$QTc.adj),]
+t <- first.event[!is.na(first.event$peak_tail) & !is.na(first.event$Sex) & !is.na(first.event$QTc.adj) & first.event$Country != "France",]# & first.event$Country != "UK" & !is.na(first.event$traff_score)
 t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
 t<-t[t$Age_at_event_end > t$Age_at_event_start,]
 t$Event[t$Age_at_event_end == age_cutoff] <- 0
@@ -1101,14 +1254,15 @@ boot_auc <- function(data, indices) {
         status = boot_data$Event, 
         marker = boot_data$valid_predicted_probs, 
         predict.time = time_point, 
-        method = "KM"
+        method = "NNE",
+        span = 0.10*length(valid_t1$valid_predicted_probs)^(-0.20)
     )
     return(roc_result$AUC)  # Return the AUC
 }
 
 # Time point for AUC calculation, choose a time that makes sense for your study
-time_point <- 40 # years
-boot_number <- 500 # bootstrap repetitions
+time_point <- 20 # years
+boot_number <- 100 # bootstrap repetitions
 
 # Fit the model 1
 fit1 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, Event) ~ Sex + QTc.adj, data = t)
@@ -1129,7 +1283,8 @@ roc_result1 <- survivalROC::survivalROC(Stime = valid_t1$Age_at_event_end,
                                         status = valid_t1$Event, 
                                         marker = valid_t1$valid_predicted_probs, 
                                         predict.time = time_point, 
-                                        method = "KM")
+                                        method = "NNE",
+                                        span = 0.10*length(valid_t1$valid_predicted_probs)^(-0.20))
 
 # Extract sensitivity and specificity
 sensitivity1 <- roc_result1$TP
@@ -1165,7 +1320,8 @@ roc_result2 <- survivalROC::survivalROC(Stime = valid_t2$Age_at_event_end,
                                         status = valid_t2$Event, 
                                         marker = valid_t2$valid_predicted_probs, 
                                         predict.time = time_point, 
-                                        method = "KM")
+                                        method = "NNE",
+                                        span = 0.10*length(valid_t2$valid_predicted_probs)^(-0.20))
 
 # Extract sensitivity and specificity
 sensitivity2 <- roc_result2$TP
@@ -1183,7 +1339,7 @@ ci2 <- apply(boot_coefs2, 2, function(x) quantile(x, c(0.025, 0.975)))
 roc_curve2 <- data.frame(Specificity = specificity2, Sensitivity = sensitivity2, Model = "Base Model + LQTS Penetrance")
 
 # Fit the model 3
-fit3 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, Event) ~ Sex + QTc.adj + p_mean_w + peak_tail + traff_score, data = t)
+fit3 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, Event) ~ Sex + QTc.adj + peak_tail, data = t) # + traff_score + p_mean_w
 
 # Generate predictions and compute risk
 predicted_probs3 <- 1 - predict(fit3, newdata = t, type = "survival", times = time_point)
@@ -1201,7 +1357,8 @@ roc_result3 <- survivalROC::survivalROC(Stime = valid_t3$Age_at_event_end,
                                         status = valid_t3$Event, 
                                         marker = valid_t3$valid_predicted_probs, 
                                         predict.time = time_point, 
-                                        method = "KM")
+                                        method = "NNE",
+                                        span = 0.10*length(valid_t3$valid_predicted_probs)^(-0.20))
 
 # Extract sensitivity and specificity
 sensitivity3 <- roc_result3$TP
@@ -1216,10 +1373,47 @@ auc3 <- apply(boot_coefs3, 2, mean)
 ci3 <- apply(boot_coefs3, 2, function(x) quantile(x, c(0.025, 0.975)))
 
 # Prepare ROC curve data
-roc_curve3 <- data.frame(Specificity = specificity3, Sensitivity = sensitivity3, Model = "Base Model + LQTS Penetrance + Trafficking + Peak Tail Current")
+roc_curve3 <- data.frame(Specificity = specificity3, Sensitivity = sensitivity3, Model = "Base Model + Peak Tail Current") #LQTS Penetrance + Trafficking + 
+
+# Fit the model 1
+fit4 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, Event) ~ Sex + QTc.adj + p_mean_w + peak_tail, data = t)
+
+# Generate predictions and compute risk
+predicted_probs4 <- 1 - predict(fit4, newdata = t, type = "survival", times = time_point)
+
+# Convert to risk probabilities
+valid_predicted_probs4 <- predicted_probs4$.pred_survival[!is.na(predicted_probs4$.pred_survival)]
+
+# Filter the original dataset for valid cases
+valid_t4 <- t[!is.na(predicted_probs4$.pred_survival),]
+valid_t4$valid_predicted_probs <- valid_predicted_probs4
+#valid_t1 <- valid_t1[valid_t1$Patient=="Family Member",]
+
+# Compute ROC curve using valid data
+roc_result4 <- survivalROC::survivalROC(Stime = valid_t4$Age_at_event_end, 
+                                        status = valid_t4$Event, 
+                                        marker = valid_t4$valid_predicted_probs, 
+                                        predict.time = time_point, 
+                                        method = "NNE",
+                                        span = 0.10*length(valid_t4$valid_predicted_probs)^(-0.20))
+
+# Extract sensitivity and specificity
+sensitivity4 <- roc_result4$TP
+specificity4 <- roc_result4$FP
+
+set.seed(123)  # For reproducibility
+boot_results4 <- boot(data = valid_t4, statistic = boot_auc, R = boot_number)
+boot_coefs4 <- boot_results4$t
+
+# Calculate mean and confidence intervals for each coefficient across rows
+auc4 <- apply(boot_coefs4, 2, mean)
+ci4 <- apply(boot_coefs4, 2, function(x) quantile(x, c(0.025, 0.975)))
+
+# Prepare ROC curve data
+roc_curve4 <- data.frame(Specificity = specificity4, Sensitivity = sensitivity4, Model = "Sex and QTc (Base Model) + Penetrance + Peak Tail")
 
 # Combine ROC data from all models
-all_roc_data <- rbind(roc_curve1, roc_curve2, roc_curve3)
+all_roc_data <- rbind(roc_curve1, roc_curve2, roc_curve3, roc_curve4)
 
 ggplot(all_roc_data, aes(x = Specificity, y = Sensitivity, color = Model)) +
   geom_line(size = 1.5) +
@@ -1227,10 +1421,11 @@ ggplot(all_roc_data, aes(x = Specificity, y = Sensitivity, color = Model)) +
        x = "1 - Specificity", y = "Sensitivity") +
   theme_minimal() +
   geom_abline(linetype = "dashed") +
-  scale_color_manual(values = c("red", "blue", "green")) +
+  scale_color_manual(values = c("red", "blue", "green","black")) +
     annotate("text", x = 0.6, y = 0.1, label = paste("AUC1:", round(auc1, 2), "[", round(ci1[1],2), "-", round(ci1[2],2),"]"), size = 4, color = "black") +
   annotate("text", x = 0.6, y = 0.15, label = paste("AUC2:", round(auc2, 2), "[", round(ci2[1],2), "-", round(ci2[2],2),"]"), size = 4, color = "black") +
-  annotate("text", x = 0.6, y = 0.2, label = paste("AUC3:", round(auc3, 2), "[",round(ci3[1],2), "-", round(ci3[2],2), "]"), size = 4, color = "black")
+  annotate("text", x = 0.6, y = 0.2, label = paste("AUC3:", round(auc3, 2), "[",round(ci3[1],2), "-", round(ci3[2],2), "]"), size = 4, color = "black") +
+  annotate("text", x = 0.6, y = 0.25, label = paste("AUC4:", round(auc4, 2), "[",round(ci4[1],2), "-", round(ci4[2],2), "]"), size = 4, color = "black")
 
 ```
 
@@ -1238,7 +1433,7 @@ ggplot(all_roc_data, aes(x = Specificity, y = Sensitivity, color = Model)) +
 
 ```{r}
 age_cutoff <- 40
-t <- first.event[!is.na(first.event$peak_tail) & !is.na(first.event$p_mean_w) & !is.na(first.event$traff_score),]
+t <- first.event[!is.na(first.event$peak_tail) & !is.na(first.event$p_mean_w) & !is.na(first.event$traff_score) & first.event$Country != "France",]
 t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
 t$Event[t$Age_at_event_end == age_cutoff] <- 0
 
@@ -1248,7 +1443,7 @@ t$Event[t$Age_at_event_end == age_cutoff] <- 0
 #t$SeriousCardiacEvent[t$Age_at_event_end == age_cutoff] <- 0
 
 model <- Surv(Age_at_event_start, Age_at_event_end, Event) ~ 
-                   Sex + QTc.adj +peak_tail#p_mean_w#  #++ p_mean_w# traff_score 
+                   Sex + peak_tail#QTc.adj + p_mean_w #++ peak_tail# traff_score 
 
 fit <- flexsurvspline(model, 
                    data = t)
@@ -1317,51 +1512,265 @@ print(paste("Covariates used in the model:", paste(covariates, collapse = ", "))
 
 ```
 
-[1] "Risk category 1 : 422 individuals, Event rate: 0.83 %"
-[1] "Risk category 2 : 361 individuals, Event rate: 0.32 %"
-[1] "Risk category 3 : 148 individuals, Event rate: 0.24 %"
-[1] "Covariates used in the model: Age_at_event_end, Event, Sex, QTc.adj"
+# Royston-Parmar model, non-parametric time-to-event analysis, Serious Events
 
-[1] "Risk category 1 : 403 individuals, Event rate: 0.94 %"
-[1] "Risk category 2 : 271 individuals, Event rate: 0.33 %"
-[1] "Risk category 3 : 257 individuals, Event rate: 0.21 %"
-[1] "Covariates used in the model: Age_at_event_end, Event, Sex, QTc.adj, p_mean_w"
+```{r}
+age_cutoff <- 40
+t <- first.serious.event[!is.na(first.serious.event$Sex) & !is.na(first.serious.event$QTc.adj) & !is.na(first.serious.event$p_mean_w) & !is.na(first.serious.event$peak_tail) & !is.na(first.serious.event$traff_score) & first.serious.event$Country != "France",]# & first.serious.event$Country != "UK",]# & first.serious.event$Sex == "Male",]
+t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
+t$SeriousCardiacEvent[t$Age_at_event_end == age_cutoff] <- 0
 
-[1] "Risk category 1 : 434 individuals, Event rate: 0.94 %"
-[1] "Risk category 2 : 219 individuals, Event rate: 0.28 %"
-[1] "Risk category 3 : 278 individuals, Event rate: 0.21 %"
-[1] "Covariates used in the model: Age_at_event_end, Event, Sex, QTc.adj, peak_tail"
+model <- Surv(Age_at_event_start, Age_at_event_end, SeriousCardiacEvent) ~ 
+                   Sex + QTc.adj + p_mean_w + peak_tail #+ traff_score#+ pore #+ peak_tail+ revel_score + am_pathogenicity + traff_score + clinvar
 
-Cox proportional Hazards
+fit <- flexsurvspline(model, 
+                   data = t)
+fit 
+
+boot_function <- function(data, indices) {
+    sample_data <- data[indices, ]  # Resampling with replacement
+    model_boot <- flexsurvspline(model, data = sample_data)
+    return(coef(model_boot))  # Return coefficients
+}
+boot_results <- boot(data = t, statistic = boot_function, R = 200)  # R is the number of bootstrap replicates
+
+# Assuming 'boot_results' contains your bootstrap output
+boot_coefs <- boot_results$t
+
+# Calculate mean and confidence intervals for each coefficient across rows
+mean_coefs <- apply(boot_coefs, 2, mean)
+ci_coefs <- apply(boot_coefs, 2, function(x) quantile(x, c(0.025, 0.975)))
+
+hr_means <- exp(mean_coefs)
+hr_ci_lower <- exp(ci_coefs[1, ])
+hr_ci_upper <- exp(ci_coefs[2, ])
+
+# Assign names based on the model terms
+model_terms <- c("gamma0", "gamma1", "Sex", "QTc.adj", "p_mean_w", "traff_score", "revel_score", "clinvar", "am_pathogenicity")
+names(hr_means) <- model_terms
+names(hr_ci_lower) <- model_terms
+names(hr_ci_upper) <- model_terms
+
+forest_data <- data.frame(
+  Term = names(hr_means),
+  HR = hr_means,
+  Lower = hr_ci_lower,
+  Upper = hr_ci_upper
+)
+
+# Filter out gamma0 and gamma1 from the forest data
+forest_data <- forest_data[!forest_data$Term %in% c("gamma0", "gamma1"), ]
+
+# Now create the forest plot without gamma0 and gamma1
+ggplot(forest_data, aes(x = Term, y = HR, ymin = Lower, ymax = Upper)) +
+  geom_point() +  # Plot the HRs
+  geom_errorbar(aes(ymin = Lower, ymax = Upper), width = 0.2) +  # Error bars for CIs
+  coord_flip() +  # Flip coordinates for horizontal plot
+  geom_hline(yintercept = 1, linetype = "dashed", color = "red") +  # Reference line at HR = 1
+  theme_minimal() +
+  ylab("Hazard Ratio (HR)") +
+  xlab("Model Terms")
+
+```
+
+# Plot ROC curves Royston-Parmar model Serious Events
 
 ```{r}
 
-#t <- first.serious.event[ !is.na(first.serious.event$lqt2_dist) & !is.na(first.serious.event$revel_score) & !is.na(first.serious.event$peak_tail) & !is.na(first.serious.event$p_mean_w) & !is.na(first.serious.event$Sex) & !is.na(first.serious.event$Age_at_event_end) & !is.na(first.serious.event$traff_score) & first.serious.event$Sex == "Female",] 
+age_cutoff <- 40
+t <- first.serious.event[!is.na(first.serious.event$peak_tail) & !is.na(first.serious.event$traff_score) & !is.na(first.serious.event$Sex) & !is.na(first.serious.event$QTc.adj) & first.serious.event$Country != "France" & first.serious.event$Country != "UK",]
+t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
+t<-t[t$Age_at_event_end > t$Age_at_event_start,]
+t$SeriousCardiacEvent[t$Age_at_event_end == age_cutoff] <- 0
 
-t <- first.event[ !is.na(first.event$lqt2_dist) & !is.na(first.event$revel_score) & !is.na(first.event$peak_tail) & !is.na(first.event$p_mean_w) & !is.na(first.event$Sex) & !is.na(first.event$Age_at_event_end) & !is.na(first.event$traff_score) & first.event$Country != "UK",] 
+boot_auc <- function(data, indices) {
+    boot_data <- data[indices, ]  # Resample the data
+    roc_result <- survivalROC::survivalROC(
+        Stime = boot_data$Age_at_event_end, 
+        status = boot_data$Event, 
+        marker = boot_data$valid_predicted_probs, 
+        predict.time = time_point, 
+        method = "KM"
+    )
+    return(roc_result$AUC)  # Return the AUC
+}
+
+# Time point for AUC calculation, choose a time that makes sense for your study
+time_point <- 20 # years
+boot_number <- 100 # bootstrap repetitions, production 500-1000
+
+# Fit the model 1
+fit1 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, SeriousCardiacEvent) ~ Sex + QTc.adj, data = t)
+
+# Generate predictions and compute risk
+predicted_probs1 <- 1 - predict(fit1, newdata = t, type = "survival", times = time_point)
+
+# Convert to risk probabilities
+valid_predicted_probs1 <- predicted_probs1$.pred_survival[!is.na(predicted_probs1$.pred_survival)]
+
+# Filter the original dataset for valid cases
+valid_t1 <- t[!is.na(predicted_probs1$.pred_survival),]
+valid_t1$valid_predicted_probs1 <- valid_predicted_probs1
+#valid_t1 <- valid_t1[valid_t1$Patient=="Family Member",]
+
+# Compute ROC curve using valid data
+roc_result1 <- survivalROC::survivalROC(Stime = valid_t1$Age_at_event_end, 
+                                        status = valid_t1$SeriousCardiacEvent, 
+                                        marker = valid_t1$valid_predicted_probs1, 
+                                        predict.time = time_point, 
+                                        method = "KM")
+
+# Extract sensitivity and specificity
+sensitivity1 <- roc_result1$TP
+specificity1 <- roc_result1$FP
+
+set.seed(123)  # For reproducibility
+boot_results1 <- boot(data = valid_t1, statistic = boot_auc, R = boot_number)
+boot_coefs1 <- boot_results1$t
+
+# Calculate mean and confidence intervals for each coefficient across rows
+auc1 <- apply(boot_coefs1, 2, mean)
+ci1 <- apply(boot_coefs1, 2, function(x) quantile(x, c(0.025, 0.975)))
+
+# Prepare ROC curve data
+roc_curve1 <- data.frame(Specificity = specificity1, Sensitivity = sensitivity1, Model = "Sex and QTc (Base Model)")
+
+# Fit the model 2 
+fit2 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, SeriousCardiacEvent) ~ Sex + QTc.adj + p_mean_w, data = t)
+
+# Generate predictions and compute risk
+predicted_probs2 <- 1 - predict(fit2, newdata = t, type = "survival", times = time_point)
+
+# Convert to risk probabilities
+valid_predicted_probs2 <- predicted_probs2$.pred_survival[!is.na(predicted_probs2$.pred_survival)]
+
+# Filter the original dataset for valid cases
+valid_t2 <- t[!is.na(predicted_probs2$.pred_survival),]
+valid_t2$valid_predicted_probs <- valid_predicted_probs2
+#valid_t2 <- valid_t2[valid_t2$Patient=="Family Member",]
+
+# Compute ROC curve using valid data
+roc_result2 <- survivalROC::survivalROC(Stime = valid_t2$Age_at_event_end, 
+                                        status = valid_t2$SeriousCardiacEvent, 
+                                        marker = valid_t2$valid_predicted_probs, 
+                                        predict.time = time_point, 
+                                        method = "KM")
+
+# Extract sensitivity and specificity
+sensitivity2 <- roc_result2$TP
+specificity2 <- roc_result2$FP
+
+set.seed(123)  # For reproducibility
+boot_results2 <- boot(data = valid_t2, statistic = boot_auc, R = boot_number)
+boot_coefs2 <- boot_results2$t
+
+# Calculate mean and confidence intervals for each coefficient across rows
+auc2 <- apply(boot_coefs2, 2, mean)
+ci2 <- apply(boot_coefs2, 2, function(x) quantile(x, c(0.025, 0.975)))
+
+
+# Prepare ROC curve data
+roc_curve2 <- data.frame(Specificity = specificity2, Sensitivity = sensitivity2, Model = "Base Model + LQTS Penetrance")
+
+# Fit the model 3
+fit3 <- flexsurvspline(Surv(Age_at_event_start, Age_at_event_end, SeriousCardiacEvent) ~ Sex + QTc.adj + p_mean_w + peak_tail + traff_score, data = t)
+
+# Generate predictions and compute risk
+predicted_probs3 <- 1 - predict(fit3, newdata = t, type = "survival", times = time_point)
+
+# Convert to risk probabilities
+valid_predicted_probs3 <- predicted_probs3$.pred_survival[!is.na(predicted_probs3$.pred_survival)]
+
+# Filter the original dataset for valid cases
+valid_t3 <- t[!is.na(predicted_probs3$.pred_survival),]
+valid_t3$valid_predicted_probs <- valid_predicted_probs3
+#valid_t3 <- valid_t3[valid_t3$Patient=="Family Member",]
+
+# Compute ROC curve using valid data
+roc_result3 <- survivalROC::survivalROC(Stime = valid_t3$Age_at_event_end, 
+                                        status = valid_t3$SeriousCardiacEvent, 
+                                        marker = valid_t3$valid_predicted_probs, 
+                                        predict.time = time_point, 
+                                        method = "KM")
+
+# Extract sensitivity and specificity
+sensitivity3 <- roc_result3$TP
+specificity3 <- roc_result3$FP
+
+set.seed(123)  # For reproducibility
+boot_results3 <- boot(data = valid_t3, statistic = boot_auc, R = boot_number)
+boot_coefs3 <- boot_results3$t
+
+# Calculate mean and confidence intervals for each coefficient across rows
+auc3 <- apply(boot_coefs3, 2, mean)
+ci3 <- apply(boot_coefs3, 2, function(x) quantile(x, c(0.025, 0.975)))
+
+
+# Prepare ROC curve data
+roc_curve3 <- data.frame(Specificity = specificity3, Sensitivity = sensitivity3, Model = "Base Model + LQTS Penetrance + Trafficking + Peak Tail Current")
+
+# Combine ROC data from all models
+all_roc_data <- rbind(roc_curve1, roc_curve2, roc_curve3)
+
+ggplot(all_roc_data, aes(x = Specificity, y = Sensitivity, color = Model)) +
+  geom_line(size = 1.5) +
+  labs(title = paste("ROC Curves for life-threatening event before age ", time_point),
+       x = "1 - Specificity", y = "Sensitivity") +
+  theme_minimal() +
+  geom_abline(linetype = "dashed") +
+  scale_color_manual(values = c("red", "blue", "green")) +
+  annotate("text", x = 0.6, y = 0.1, label = paste("AUC1:", round(auc1, 2), "[", round(ci1[1],2), "-", round(ci1[2],2),"]"), size = 4, color = "black") +
+  annotate("text", x = 0.6, y = 0.15, label = paste("AUC2:", round(auc2, 2), "[", round(ci2[1],2), "-", round(ci2[2],2),"]"), size = 4, color = "black") +
+  annotate("text", x = 0.6, y = 0.2, label = paste("AUC3:", round(auc3, 2), "[",round(ci3[1],2), "-", round(ci3[2],2), "]"), size = 4, color = "black")
+
+
+```
+
+# Testing Proportional Hazards Assumption
+
+```{r}
+
+t <- cohort.var[ !is.na(cohort.var$lqt2_dist) & !is.na(cohort.var$revel_score) &  !is.na(cohort.var$p_mean_w) & !is.na(cohort.var$Age_at_event_end) & !is.na(cohort.var$traff_score) & cohort.var$Country != "France" & !is.na(cohort.var$peak_tail),]# & cohort.var$Country != "UK",]#  & cohort.var$Sex=="Female" 
 
 age_cutoff <- 40
 t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
 t<-t[t$Age_at_event_end > t$Age_at_event_start,]
 t$Event[t$Age_at_event_end == age_cutoff] <- 0
 
-# Assuming 'time' is the time until event or censoring, and 'event' is the event indicator (1 for event, 0 for censoring) SeriousCardiacEvent
-survival_data <- Surv(t$Age_at_event_start, t$Age_at_event_end, t$Event, type = "counting")
-x <- model.matrix(~ strat(Sex) + QTc.adj + traff_score + peak_tail + p_mean_w + revel_score + am_pathogenicity + clinvar + pore, data = t) #
-set.seed(123)  # for reproducibility
-cv_fit <- cv.glmnet(x, survival_data, family = "cox", alpha = 0)
-best_lambda <- cv_fit$lambda.min
-final_model <- glmnet(x, survival_data, family = "cox", lambda = best_lambda)
-
 # Fitting the Cox model using coxph
-cox_model <- coxph(Surv(Age_at_event_start, Age_at_event_end, Event) ~ #, type = "counting") ~
-                     strata(Sex) + QTc.adj + traff_score + peak_tail + p_mean_w + revel_score +
-                     am_pathogenicity + clinvar + pore, data = t)
+cox_model <- coxph(Surv(Age_at_event_start, Age_at_event_end, Event, type = "counting") ~
+                    strata(Sex) + QTc.adj + traff_score + p_mean_w + revel_score + am_pathogenicity + clinvar + pore  , data = t, cluster = Unique_ID) # + p_mean_w + traff_score + peak_tail + clinvar + revel_score + am_pathogenicity+ peak_tail
 
 test <- cox.zph(cox_model)
 print(test)
 cox_model
 summary(cox_model)
+
+```
+
+Cross-validated, Ridge Regression Cox proportional Hazards
+
+```{r}
+
+#t <- first.serious.event[ !is.na(first.serious.event$lqt2_dist) & !is.na(first.serious.event$revel_score) & !is.na(first.serious.event$peak_tail) & !is.na(first.serious.event$p_mean_w) & !is.na(first.serious.event$Sex) & !is.na(first.serious.event$Age_at_event_end) & !is.na(first.serious.event$traff_score) & first.serious.event$Sex == "Female",] 
+
+t <- cohort.var[ !is.na(cohort.var$lqt2_dist) & !is.na(cohort.var$revel_score) &  !is.na(cohort.var$p_mean_w) & !is.na(cohort.var$Age_at_event_end) & !is.na(cohort.var$traff_score) & cohort.var$Country != "France" & !is.na(cohort.var$peak_tail),]# & cohort.var$Country != "UK",]#  & cohort.var$Sex=="Female" 
+
+age_cutoff <- 40
+t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
+t<-t[t$Age_at_event_end > t$Age_at_event_start,]
+t$Event[t$Age_at_event_end == age_cutoff] <- 0
+
+y <- Surv(t$Age_at_event_start, t$Age_at_event_end, t$Event, type = "counting")
+strata <- as.integer(factor(t$Sex))  # Ensure this matches the number of rows in `t`
+y2 <- stratifySurv(y, strata)
+x <- model.matrix(~ QTc + traff_score + p_mean_w + am_pathogenicity + clinvar + pore - 1, data = t) #p_mean_w + + peak_tail + revel_scorepeak_tail + 
+x_scaled <- scale(x)  # Scales each variable in the matrix
+
+set.seed(123)  # for reproducibility
+cv_fit <- cv.glmnet(x_scaled, y2, family = "cox", alpha = 1)
+best_lambda <- cv_fit$lambda.1se
+final_model <- glmnet(x_scaled, y2, family = "cox", lambda = best_lambda, alpha=1)
 
 # Extract coefficients
 model_coefficients <- coef(final_model, s = best_lambda)
@@ -1369,15 +1778,15 @@ model_coefficients <- coef(final_model, s = best_lambda)
 # Print the coefficients
 print(model_coefficients)
 
-lasso_model <- glmnet(x, survival_data, family = "cox")
+lasso_model <- glmnet(x_scaled, y2, family = "cox")
 plot(lasso_model, xvar = "lambda", label = TRUE)
-abline(v = log(cv_fit$lambda.min), col = "red")
+abline(v = log(cv_fit$lambda.1se), col = "red")
 
 plot(cv_fit)
 
 bootstrap_ci <- function(original_model, data, model_matrix, n_boot = 1000) {
     original_coefs <- coef(original_model, s = best_lambda)
-    original_coefs <- original_coefs[-1, , drop = FALSE]
+    #original_coefs <- original_coefs[-1, , drop = FALSE]
     num_coefs <- length(original_coefs)
     variable_names <- rownames(original_coefs)
     boot_hrs <- matrix(NA, ncol = num_coefs, nrow = n_boot)
@@ -1391,7 +1800,8 @@ bootstrap_ci <- function(original_model, data, model_matrix, n_boot = 1000) {
         # Refit the model with the resampled data
         boot_model <- glmnet(boot_matrix, Surv(boot_data$Age_at_event_end, boot_data$Event), family = "cox", lambda = best_lambda) #SeriousCardiacEvent
         boot_coefs <- as.matrix(coef(boot_model, s = best_lambda))
-        boot_coefs <- boot_coefs[-1, , drop = FALSE]
+        #print(boot_coefs)
+        #boot_coefs <- boot_coefs[-1, , drop = FALSE]
        # Ensure matching by names and use NA for missing coefficients
         boot_hr <- rep(NA, num_coefs)
         for (j in 1:num_coefs) {
@@ -1410,7 +1820,7 @@ bootstrap_ci <- function(original_model, data, model_matrix, n_boot = 1000) {
 
     return(list(variables = variable_names, mean = hr_means, lower = lower_ci, upper = upper_ci))
 }
-ci_results <- bootstrap_ci(final_model, t, x, n_boot=400)
+ci_results <- bootstrap_ci(final_model, t, x_scaled, n_boot=500)
 
 # Create data frame for plotting
 plot_data <- data.frame(
@@ -1421,7 +1831,7 @@ plot_data <- data.frame(
 )
 
 # Convert 'Variable' to a factor and reorder
-plot_data$Variable <- factor(plot_data$Variable, levels = c("Sex", "QTc.adj.s", setdiff(plot_data$Variable, c("Sex", "QTc.adj.s"))))
+plot_data$Variable <- factor(plot_data$Variable, levels = c("QTc.adj", setdiff(plot_data$Variable, "QTc.adj")))
 
 # Use ggplot2 for plotting
 ggplot(plot_data, aes(x = Variable, y = HR)) +
@@ -1439,10 +1849,10 @@ ggplot(plot_data, aes(x = Variable, y = HR)) +
 ```{r}
 # The Anderson-Gill (AG) extension of the Cox Proportional Hazards model
 model <- Surv(Age_at_event_start, Age_at_event_end, Event, type = "counting") ~ #
-        strat(Sex) + QTc.adj + p_mean_w 
+        strata(Sex) + QTc.adj #+ p_mean_w 
 
-age_cutoff <- 20
-t <- cohort.var[!is.na(cohort.var$peak_tail) & !is.na(cohort.var$p_mean_w) & !is.na(cohort.var$traff_score),] 
+age_cutoff <- 40
+t <- cohort.var[ !is.na(cohort.var$p_mean_w)  & cohort.var$Country != "France",]# & cohort.var$Country != "UK",] #!is.na(cohort.var$peak_tail) &  & !is.na(cohort.var$traff_score)
 t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
 t<-t[t$Age_at_event_end > t$Age_at_event_start,]
 t$Event[t$Age_at_event_end == age_cutoff] <- 0
@@ -1472,6 +1882,11 @@ family_member_data <- t[t$Patient == "Family Member", ]
 # Generate predictions
 predicted_risks <- predict(fit, newdata = t, type = "risk")
 
+roc_data <- pROC::roc(response = t$Event, predictor = predicted_risks, 
+                      times = 20, cause = 1)
+
+plot(roc_data)
+roc_data$auc
 
 
 bootstrap_cox <- function(data, formula, n_boot = 1000) {
@@ -1555,7 +1970,7 @@ options(datadist='dd')
 
 cph_model <- cph(model, data = t, x=TRUE, y=TRUE, surv=TRUE, id = Unique_ID)
 
-nom <- nomogram(cph_model,fun = plogis, fun.at = c(.25, .5, .75), funlabel = "Survival Probability")# fun = exp, fun.at=c(0.05,0.25,0.5,1,2,3,4,5), funlabel="Hazard Ratio")
+nom <- nomogram(cph_model, fun = exp, fun.at=c(0.05,0.25,0.5,1,2,3,4,5), funlabel="Hazard Ratio")#fun = plogis, fun.at = c(.25, .5, .75), funlabel = "Survival Probability"
 
 plot(nom)# Assuming 'fit' is your fitted Cox model
 
@@ -1583,15 +1998,15 @@ plot(nom)
 # Cox proportional hazards nomogram
 
 ```{r}
-model <- Surv(Age_at_event_start, Age_at_event_end, SeriousCardiacEvent) ~ # type = "counting") ~ #SeriousCardiac
-         QTc.adj +p_mean_w + peak_tail + traff_score
+model <- Surv(Age_at_event_start, Age_at_event_end, Event, type = "counting") ~ #SeriousCardiac
+         QTc.adj + peak_tail#p_mean_w # traff_score  #
 
-age_cutoff <- 20
-t <- first.serious.event[!is.na(first.serious.event$Age_at_event_end) & !is.na(first.serious.event$p_mean_w)  & !is.na(first.serious.event$peak_tail) &  !is.na(first.serious.event$traff_score), ]
-#t <- cohort.var[!is.na(cohort.var$Age_at_event_end) & !is.na(cohort.var$p_mean_w) & !is.na(cohort.var$peak_tail) & cohort.var$Country != "UK" & !is.na(cohort.var$traff_score), ]# 
+age_cutoff <- 40
+t <- first.serious.event[!is.na(first.serious.event$Age_at_event_end) & !is.na(first.serious.event$p_mean_w) & first.serious.event$Country != "France",]# & !is.na(first.serious.event$peak_tail) & first.serious.event$Country != "UK",]# &  !is.na(first.serious.event$traff_score) , ]
+t <- cohort.var[!is.na(cohort.var$Age_at_event_end) & !is.na(cohort.var$p_mean_w) &  cohort.var$Country != "France",]#  & !is.na(cohort.var$peak_tail) & cohort.var$Country != "UK" & !is.na(cohort.var$traff_score), ]# 
 t$Age_at_event_end[t$Age_at_event_end > age_cutoff] <- age_cutoff
 t<-t[t$Age_at_event_end > t$Age_at_event_start,]
-t$SeriousCardiacEvent[t$Age_at_event_end == age_cutoff] <- 0
+t$Event[t$Age_at_event_end == age_cutoff] <- 0
 
 dd <- datadist(t)
 options(datadist='dd')
@@ -1601,6 +2016,7 @@ t_female <- subset(t, Sex == "Female")
 
 cph_model_male <- cph(model, data = t_male, x=TRUE, y=TRUE, surv=TRUE)
 cph_model_female <- cph(model, data = t_female, x=TRUE, y=TRUE, surv=TRUE)
+cph_model <- cph(model, data = t, x=TRUE, y=TRUE, surv=TRUE)
 
 # Test Proportional Hazards
 test <- cox.zph(cph_model_male)
@@ -1610,13 +2026,13 @@ print(test)
 cox.zph(cph_model_female) %>%
   plot()
 
-nom_male <- nomogram(cph_model_male, fun = plogis, fun.lp.at = c( -2, -1, 0.0, 2), funlabel = "Survival Probability")
-nom_female <- nomogram(cph_model_female, fun = plogis, fun.lp.at = c( -2, -1, 0.0, 2), funlabel = "Survival Probability")
-
+nom_male <- nomogram(cph_model_male,  fun = exp, fun.at=c(0.25,0.5,1,2,3,4,5), funlabel="Hazard Ratio") #fun = plogis, fun.lp.at = c( -2, -1, 0.0, 2), funlabel = "Survival Probability")
+nom_female <- nomogram(cph_model_female,  fun = exp, fun.at=c(0.25,0.5,1,2,3,4,5), funlabel="Hazard Ratio") #fun = plogis, fun.lp.at = c( -2, -1, 0.0, 2), funlabel = "Survival Probability")
+nom <- nomogram(cph_model,  fun = exp, fun.at=c(0.25,0.5,1,2,3,4,5), funlabel="Hazard Ratio")
+  
 plot(nom_male) # Nomogram for males
 plot(nom_female) # Nomogram for females
-
-
+plot(nom) # Nomogram for females
 
 ```
 
