@@ -202,7 +202,7 @@ d<-d[,c("var", "isoform", "mut_type", "pph2_prob", "blast_pssm", "provean_score"
 d<-merge(d,e,all = T)
 
 #Import new gnomAD
-gnomad.v4<-read.csv('/Users/KRONCKE/Dropbox/sat paper/Modelling/gnomad_v4_simple.csv')
+gnomad.v4<-read.csv('/Users/KRONCKE/Dropbox/sat paper/Modelling/gnomAD_v4.1.0_(non-UKB)_simple.csv')
 gnomad.v4<-unique(gnomad.v4)
 gnomad.v4<-gnomad.v4[,c("var","gnomad.v4")]
 
