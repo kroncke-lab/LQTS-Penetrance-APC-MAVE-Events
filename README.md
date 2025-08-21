@@ -118,7 +118,5 @@ Unless otherwise noted in file headers, code is released under a permissive open
 
 * For scientific questions, reference the manuscript and then open an issue with section/table context.
 
-* [medRxiv](https://www.medrxiv.org)
 
-* [AHA Journals](https://www.ahajournals.org)
 
